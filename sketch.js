@@ -6,7 +6,8 @@ const mapOptions = {
   lat: 45.4642, //Latitude of Milan
   lng: 9.19000, //Longitude of Milan
   zoom: 13,
-  style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+  // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png" //Uncomment to see light map
+  style: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
 }
 
 // This is for testing purpose.
