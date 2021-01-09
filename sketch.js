@@ -60,8 +60,13 @@ function drawFlowers() {
     //     lat: latitude,
     //     lng: longitude
     //   })) {
-      const pos = myMap.latLngToPixel(latitude, longitude);
-      ellipse(pos.x, pos.y, 20);
+    const pos = myMap.latLngToPixel(latitude, longitude);
+    ellipse(pos.x, pos.y, 20);
     // }
   }
+}
+
+function mouseClicked() {
+  const position = myMap.pixelToLatLng(mouseX, mouseY);
+  console.log("Latitude: " + position.lat + "\n" + "Longitutde: " + position.lng);
 }
