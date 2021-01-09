@@ -1,14 +1,23 @@
-let myMap;
-let canvas;
-const mappa = new Mappa('Leaflet');
+const key = "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
+
+const bounds = [
+  [9.08081, 45.41012], // Southwest coordinates
+  [9.29474, 45.53344] // Northeast coordinates
+];
 
 const mapOptions = {
   lat: 45.4642, //Latitude of Milan
   lng: 9.19000, //Longitude of Milan
-  zoom: 13,
-  // style: "http://{s}.tile.osm.org/{z}/{x}/{y}.png" //Uncomment to see light map
-  style: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+  zoom: 10,
+  style: 'mapbox://styles/mapbox/light-v9',
+  pitch: 50,
+  maxBounds: bounds
 }
+
+const mappa = new Mappa('MapboxGL', key);
+let myMap;
+
+let canvas;
 
 // This is for testing purpose.
 // The actual data will come from the database.
@@ -47,12 +56,12 @@ function drawFlowers() {
     const latitude = Number(flowers[i].lat);
     const longitude = Number(flowers[i].lng);
     // Only draw the objects that are within the canvas
-    if (myMap.map.getBounds().contains({
-        lat: latitude,
-        lng: longitude
-      })) {
+    // if (myMap.map.getBounds().contains({
+    //     lat: latitude,
+    //     lng: longitude
+    //   })) {
       const pos = myMap.latLngToPixel(latitude, longitude);
       ellipse(pos.x, pos.y, 20);
-    }
+    // }
   }
 }
