@@ -1,0 +1,22 @@
+{
+  "name": "a-connected-garden",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maariaah/a-connected-garden.git"
+  },
+  "author": "Alia Kaouel, Marija Nikolic, Gaganjot Kaur, Tim Olbrich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maariaah/a-connected-garden/issues"
+  },
+  "homepage": "https://github.com/Maariaah/a-connected-garden#readme",
+  "dependencies": {
+    "mappa-mundi": "0.0.5"
+  }
+}
