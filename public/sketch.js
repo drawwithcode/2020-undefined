@@ -6,6 +6,7 @@ let flowerName = "";
 let flowerLocation = null;
 let currentDate = null;
 let userId;
+let data = [];
 
 // let socket = io();
 const key =
@@ -25,39 +26,6 @@ const mapOptions = {
   maxBounds: bounds,
 };
 
-// This is for testing purpose.
-// The actual data will come from the database.
-const users = [
-  {
-    name: "Marija",
-    date: null,
-    location: null,
-    flower: [
-      {
-        f_name: "flower_1",
-        f_location: {
-          lat: 45.4642,
-          lng: 9.19,
-        },
-      },
-    ],
-  },
-  {
-    name: "Tim",
-    date: null,
-    location: null,
-    flower: [
-      {
-        f_name: "flower_2",
-        f_location: {
-          lat: 45.4645,
-          lng: 9.22,
-        },
-      },
-    ],
-  },
-];
-
 function preload() {
   // put preload code here
 }
@@ -67,15 +35,8 @@ function setup() {
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
-
-  function getDate() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
-    currentDate = mm + "/" + dd + "/" + yyyy;
-  }
   getDate();
+  getData();
 }
 
 // socket.on("connect", newConnection);
@@ -83,31 +44,6 @@ function setup() {
 // function newConnection() {
 //   console.log("Your ID:", socket.id);
 // }
-
-function drawFlowers() {
-  clear();
-  // Get the coordinates for every flower object for all users
-  for (let i = 0; i < users.length; i++) {
-    const latitude = Number(users[i].lat);
-    const longitude = Number(users[i].lng);
-    // Only draw the objects that are within the canvas
-    // if (myMap.map.getBounds().contains({
-    //     lat: latitude,
-    //     lng: longitude
-    //   })) {
-    const pos = myMap.latLngToPixel(latitude, longitude);
-    ellipse(pos.x, pos.y, 20);
-    // }
-  }
-}
-
-function mouseClicked() {
-  const position = myMap.pixelToLatLng(mouseX, mouseY);
-  console.log(
-    "Latitude: " + position.lat + "\n" + "Longitutde: " + position.lng
-  );
-  openForm();
-}
 
 // Write data into db
 function writeData() {
@@ -130,23 +66,50 @@ function writeData() {
         },
       ],
     });
-  getData();
 }
 
 // Read data from db
 function getData() {
-  var data = firebase.firestore().collection("users");
-
-  data
+  firebase
+    .firestore()
+    .collection("users")
     .get()
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
-        console.log(doc.id, " => ", doc.data());
+        data.push(doc.data());
       });
     })
     .catch(function (error) {
       console.log("Error getting document:", error);
     });
+}
+
+function drawFlowers() {
+  clear();
+  // Get the coordinates for every flower object for all users
+  for (let i = 0; i < data.length; i++) {
+    const location = data[i].flower[0];
+    const latitude = Number(location ? location.f_location.lat : null);
+    const longitude = Number(location ? location.f_location.lng : null);
+
+    // Only draw the objects that are within the canvas
+    // if (myMap.map.getBounds().contains({
+    //     lat: latitude,
+    //     lng: longitude
+    //   })) {
+
+    const pos = myMap.latLngToPixel(latitude, longitude);
+    ellipse(pos.x, pos.y, 20);
+    // }
+  }
+}
+
+function mouseClicked() {
+  const position = myMap.pixelToLatLng(mouseX, mouseY);
+  console.log(
+    "Latitude: " + position.lat + "\n" + "Longitutde: " + position.lng
+  );
+  openForm();
 }
 
 function openForm() {
@@ -155,4 +118,12 @@ function openForm() {
 
 function onSubmit() {
   writeData();
+}
+
+function getDate() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = today.getFullYear();
+  currentDate = mm + "/" + dd + "/" + yyyy;
 }
