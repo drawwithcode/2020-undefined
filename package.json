@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Maariaah/a-connected-garden#readme",
   "dependencies": {
-    "mappa-mundi": "0.0.5"
+    "autoprefixer": "^10.2.1",
+    "mappa-mundi": "0.0.5",
+    "tailwindcss": "^2.0.2"
   }
 }
