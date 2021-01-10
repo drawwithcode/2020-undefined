@@ -1,3 +1,4 @@
+let socket = io();
 const key = "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
 
 const bounds = [
@@ -47,6 +48,12 @@ function setup() {
 
 function draw() {
 
+}
+
+socket.on("connect", newConnection);
+
+function newConnection() {
+  console.log("Your ID:", socket.id);
 }
 
 function drawFlowers() {
