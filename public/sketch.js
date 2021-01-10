@@ -1,9 +1,15 @@
-
 let canvas;
 let myMap;
+let userName = "";
+let userLocation = null;
+let flowerName = "";
+let flowerLocation = null;
+let currentDate = null;
+let userId;
 
 // let socket = io();
-const key = "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
+const key =
+  "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
 const bounds = [
   [9.08081, 45.41012], // Southwest coordinates
   [9.29474, 45.53344], // Northeast coordinates
@@ -21,16 +27,34 @@ const mapOptions = {
 
 // This is for testing purpose.
 // The actual data will come from the database.
-const flowers = [
+const users = [
   {
-    name: "flower_1",
-    lat: 45.4642,
-    lng: 9.19,
+    name: "Marija",
+    date: null,
+    location: null,
+    flower: [
+      {
+        f_name: "flower_1",
+        f_location: {
+          lat: 45.4642,
+          lng: 9.19,
+        },
+      },
+    ],
   },
   {
-    name: "flower_2",
-    lat: 45.4645,
-    lng: 9.22,
+    name: "Tim",
+    date: null,
+    location: null,
+    flower: [
+      {
+        f_name: "flower_2",
+        f_location: {
+          lat: 45.4645,
+          lng: 9.22,
+        },
+      },
+    ],
   },
 ];
 
@@ -44,27 +68,14 @@ function setup() {
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
 
-  // Write data into db
-  function writeData() {
-    firebase.database()
-      .ref("users/" + userId)
-      .set({
-        name: "",
-        flower_name: "",
-        flower_position: null,
-        message: "",
-      });
-    getData();
+  function getDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = today.getFullYear();
+    currentDate = mm + "/" + dd + "/" + yyyy;
   }
-
-  // Fetch data from db
-  function getData() {
-    firebase.database()
-      .ref("users")
-      .once("value", function (snapshot) {
-        const data = snapshot.val();
-      });
-  }
+  getDate();
 }
 
 // socket.on("connect", newConnection);
@@ -75,10 +86,10 @@ function setup() {
 
 function drawFlowers() {
   clear();
-  // Get the coordinates for every object in the flowers-array
-  for (let i = 0; i < flowers.length; i++) {
-    const latitude = Number(flowers[i].lat);
-    const longitude = Number(flowers[i].lng);
+  // Get the coordinates for every flower object for all users
+  for (let i = 0; i < users.length; i++) {
+    const latitude = Number(users[i].lat);
+    const longitude = Number(users[i].lng);
     // Only draw the objects that are within the canvas
     // if (myMap.map.getBounds().contains({
     //     lat: latitude,
@@ -95,4 +106,53 @@ function mouseClicked() {
   console.log(
     "Latitude: " + position.lat + "\n" + "Longitutde: " + position.lng
   );
+  openForm();
+}
+
+// Write data into db
+function writeData() {
+  userId = Math.random().toString(36).substr(2, 9);
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(userId)
+    .set({
+      name: userName,
+      date: currentDate,
+      location: userLocation,
+      flower: [
+        {
+          f_name: flowerName,
+          f_location: {
+            lat: 45.4642,
+            lng: 9.19,
+          },
+        },
+      ],
+    });
+  getData();
+}
+
+// Read data from db
+function getData() {
+  var data = firebase.firestore().collection("users");
+
+  data
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        console.log(doc.id, " => ", doc.data());
+      });
+    })
+    .catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+}
+
+function openForm() {
+  // open a popup with a form
+}
+
+function onSubmit() {
+  writeData();
 }
