@@ -1,12 +1,14 @@
 
-const key =
-  "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
-const database = firebase.database();
+let canvas;
+let myMap;
 
+// let socket = io();
+const key = "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
 const bounds = [
   [9.08081, 45.41012], // Southwest coordinates
   [9.29474, 45.53344], // Northeast coordinates
 ];
+let mappa = new Mappa("MapboxGL", key);
 
 const mapOptions = {
   lat: 45.4642, //Latitude of Milan
@@ -16,10 +18,6 @@ const mapOptions = {
   pitch: 50,
   maxBounds: bounds,
 };
-
-const mappa = new Mappa("MapboxGL", key);
-let myMap;
-let canvas;
 
 // This is for testing purpose.
 // The actual data will come from the database.
@@ -48,7 +46,7 @@ function setup() {
 
   // Write data into db
   function writeData() {
-    database
+    firebase.database()
       .ref("users/" + userId)
       .set({
         name: "",
@@ -61,7 +59,7 @@ function setup() {
 
   // Fetch data from db
   function getData() {
-    database
+    firebase.database()
       .ref("users")
       .once("value", function (snapshot) {
         const data = snapshot.val();
@@ -69,7 +67,11 @@ function setup() {
   }
 }
 
-function draw() {}
+// socket.on("connect", newConnection);
+
+// function newConnection() {
+//   console.log("Your ID:", socket.id);
+// }
 
 function drawFlowers() {
   clear();
