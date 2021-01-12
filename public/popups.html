@@ -1,0 +1,160 @@
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta
+  name="viewport"
+  width="device-width,"
+  initial-scale="1.0,"
+  maximum-scale="1.0,"
+  user-scalable="0"
+  />
+  <link rel="stylesheet" href="./css/tailwind.css" />
+  <script
+  src="https://kit.fontawesome.com/4f99054617.js"
+  crossorigin="anonymous"
+  ></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+  <script src="../config.js"></script>
+  <script src="p5.min.js"></script>
+  <!-- <script src="../socket.io/socket.io.js"></script> -->
+  <!-- <script src="popups.js"></script> -->
+</head>
+
+
+
+<body class="bg-gray-300">
+
+  <!-- BUTTON -->
+  <div id="clickPlant" class="flex items-center justify-center h-screen">
+
+    <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+    class="text-xl px-10 bg-green-500 text-gray-800 rounded-full"
+    type="button"><b>SAVE PLANT</b></button>
+
+  </div>
+  <!-- TRYING ANOTHER POPUP BUTTON -->
+  <div class="popup" onclick="myFunction()">  <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+    class="text-xl px-10 bg-green-500 text-gray-800 rounded-full"
+    type="button"><b>SAVE PLANT</b></button>
+    <span class="popuptext" id="myPopup">
+      <div class="h-screen flex items-center justify-center">
+        <div class="relative">
+          <img src=".\svg\Group 26.svg">
+
+          <div class="absolute   left-8 top-7 ">
+            <h2 class="text-white text-left"><b>Name of plant</b></h2>
+          </div>
+
+          <div class="absolute left-8 top-16">
+            <img src=".\images\plant.png">
+          </div>
+
+          <div class="absolute left-8 bottom-20">
+            <p class="text-white text-left">
+              <b>Name of user:</b> Lorenzo di Grazia <br>
+              <b>User location:</b> Milan, Italy<br>
+              <b>Green level:</b> Average<br>
+              <b>Remaining days:</b> 10<br>
+              <br>
+              <b>Other participants:</b><br>
+              John Doe, Peter Smith</p>
+            </div>
+
+            <div class="absolute left-8 bottom-5">
+              <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+              class="text-base px-10 bg-green-500 text-gray-800 rounded-full uppercase"
+              type="button"><b>Help maintain this plant</b></button>
+            </div>
+          </div>
+        </div>
+      </span>
+
+  </div>
+
+
+  <!-- POPUP PLANT INFORMATION -->
+  <!-- <div class="infoplant" style="display:flex; "> -->
+  <div class="h-screen flex items-center justify-center">
+    <div class="relative   ">
+      <img src=".\svg\Group 26.svg">
+
+      <div class="absolute   left-8 top-7 ">
+        <h2 class="text-white text-left"><b>Name of plant</b></h2>
+      </div>
+
+      <div class="absolute left-8 top-16">
+        <img src=".\images\plant.png">
+      </div>
+
+      <div class="absolute left-8 bottom-20">
+        <p class="text-white text-left">
+          <b>Name of user:</b> Lorenzo di Grazia <br>
+          <b>User location:</b> Milan, Italy<br>
+          <b>Green level:</b> Average<br>
+          <b>Remaining days:</b> 10<br>
+          <br>
+          <b>Other participants:</b><br>
+          John Doe, Peter Smith</p>
+        </div>
+
+        <div class="absolute left-8 bottom-5">
+          <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+          class="text-base px-10 bg-green-500 text-gray-800 rounded-full uppercase"
+          type="button"><b>Help maintain this plant</b></button>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+
+    <!-- POPUP GROWING PLANT -->
+    <div class="flex items-center justify-center h-screen">
+
+      <div class="relative inline-block align-middle	">
+
+        <img src=".\svg\Rectangle2.svg">
+        <div class="absolute  top-8 inset-0 flex justify-center ">
+          <h2 class="text-white text-center"><b>Thanks for keeping this plant alive!</b></h2>
+        </div>
+        <div class=" absolute bottom-0 inset-0  flex items-center justify-center ">
+          <img src=".\images\babyplant.png" class="">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- POPUP ADD INFORMATION -->
+
+    <div class="flex  justify-center h-screen">
+      <div class="relative  ">
+        <img src=".\svg\infobox.svg">
+        <div class="absolute top-16 inset-0 flex justify-center ">
+          <h2 class="text-black text-center uppercase	text-xl"><b>Add your information</b></h2>
+        </div>
+
+        <div class=" absolute top-40 inset-0 flex  justify-center">
+          <input style="padding-top: 0.5em; padding-bottom: 0.5rem"
+          class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
+          w-300 mx-auto "
+          type="text" placeholder="Name" class="placeholder-black" required >
+        </div>
+
+        <div class="absolute top-56 inset-0 flex justify-center">
+          <input style="padding-top: 0.5em; padding-bottom: 0.5rem"
+          class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
+          w-300 mx-auto "
+          type="text" placeholder="E-mail" class="placeholder-black" required >
+        </div>
+        <div class="absolute right-16">
+          <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+          class=" text-base px-10 bg-green-500 text-gray-800 rounded-full"
+          type="button"><b>NEXT</b></button>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+  </html>
