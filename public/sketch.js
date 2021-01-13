@@ -116,6 +116,12 @@ function openForm() {
   // open a popup with a form
 }
 
+function saveFormData() {
+  let name = document.getElementById("name").value;
+  let location = document.getElementById("email").value;
+  (userName = name), (userLocation = location);
+}
+
 function onSubmit() {
   writeData();
 }

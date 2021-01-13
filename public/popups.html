@@ -20,7 +20,8 @@
   <script src="../config.js"></script>
   <script src="p5.min.js"></script>
   <!-- <script src="../socket.io/socket.io.js"></script> -->
-  <!-- <script src="popups.js"></script> -->
+  <script src="popups.js"></script>
+  <!-- <script src="sketch.js"></script> -->
 </head>
 
 
@@ -30,13 +31,14 @@
   <!-- BUTTON -->
   <div id="clickPlant" class="flex items-center justify-center h-screen">
 
-    <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+    <button  style="padding-top: 0.5em; padding-bottom: 0.5rem"
     class="text-xl px-10 bg-green-500 text-gray-800 rounded-full"
     type="button"><b>SAVE PLANT</b></button>
 
   </div>
   <!-- TRYING ANOTHER POPUP BUTTON -->
-  <div class="popup" onclick="myFunction()">  <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+  <div class="popup">  <button  style="padding-top: 0.5em; padding-bottom: 0.5rem"
+    onclick="myFunction()"
     class="text-xl px-10 bg-green-500 text-gray-800 rounded-full"
     type="button"><b>SAVE PLANT</b></button>
     <span class="popuptext" id="myPopup">
@@ -64,7 +66,7 @@
             </div>
 
             <div class="absolute left-8 bottom-5">
-              <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+              <button  style="padding-top: 0.5em; padding-bottom: 0.5rem"
               class="text-base px-10 bg-green-500 text-gray-800 rounded-full uppercase"
               type="button"><b>Help maintain this plant</b></button>
             </div>
@@ -125,32 +127,47 @@
     </div>
 
 
-    <!-- POPUP ADD INFORMATION -->
+    <!-- POPUP FORM -->
 
     <div class="flex  justify-center h-screen">
-      <div class="relative  ">
+      <div class="relative">
         <img src=".\svg\infobox.svg">
         <div class="absolute top-16 inset-0 flex justify-center ">
           <h2 class="text-black text-center uppercase	text-xl"><b>Add your information</b></h2>
         </div>
+        <form id="form">
+          <div class="absolute top-40 inset-0 flex justify-center">
+            <input 
+            style="padding-top: 0.5em; padding-bottom: 0.5rem"
+            id="name"
+            value="name"
+            class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
+            w-300 mx-auto placeholder-black"
+            type="text" placeholder="Name" required
+            />
+          </div>
 
-        <div class=" absolute top-40 inset-0 flex  justify-center">
-          <input style="padding-top: 0.5em; padding-bottom: 0.5rem"
-          class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
-          w-300 mx-auto "
-          type="text" placeholder="Name" class="placeholder-black" required >
-        </div>
+          <div class="absolute top-56 inset-0 flex justify-center">
+            <input 
+            style="padding-top: 0.5em; padding-bottom: 0.5rem"
+            class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
+            w-300 mx-auto placeholder-black"
+            id="email"
+            value="email"
+            type="text" 
+            placeholder="E-mail"
+            required 
+            />
+          </div>
 
-        <div class="absolute top-56 inset-0 flex justify-center">
-          <input style="padding-top: 0.5em; padding-bottom: 0.5rem"
-          class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
-          w-300 mx-auto "
-          type="text" placeholder="E-mail" class="placeholder-black" required >
-        </div>
-        <div class="absolute right-16">
-          <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
-          class=" text-base px-10 bg-green-500 text-gray-800 rounded-full"
-          type="button"><b>NEXT</b></button>
+          <div class="absolute right-16">
+            <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
+            class="text-
+            base px-10 bg-green-500 text-gray-800 rounded-full"
+            type="button"
+            onclick="saveFormData()";
+            >NEXT</button>
+          </form>
         </div>
       </div>
     </div>
