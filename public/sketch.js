@@ -7,6 +7,9 @@ let flowerLocation = null;
 let currentDate = null;
 let userId;
 let data = [];
+let pos;
+let latitude;
+let longitude;
 
 // let socket = io();
 const key =
@@ -89,8 +92,9 @@ function drawFlowers() {
   // Get the coordinates for every flower object for all users
   for (let i = 0; i < data.length; i++) {
     const location = data[i].flower[0];
-    const latitude = Number(location ? location.f_location.lat : null);
-    const longitude = Number(location ? location.f_location.lng : null);
+    latitude = Number(location ? location.f_location.lat : null);
+    longitude = Number(location ? location.f_location.lng : null);
+    pos = myMap.latLngToPixel(latitude, longitude);
 
     // Only draw the objects that are within the canvas
     // if (myMap.map.getBounds().contains({
@@ -98,7 +102,7 @@ function drawFlowers() {
     //     lng: longitude
     //   })) {
 
-    const pos = myMap.latLngToPixel(latitude, longitude);
+    //Draw the flower
     ellipse(pos.x, pos.y, 20);
     // }
   }
@@ -106,14 +110,27 @@ function drawFlowers() {
 
 function mouseClicked() {
   const position = myMap.pixelToLatLng(mouseX, mouseY);
+  let d = dist(mouseX, mouseY, pos.x, pos.y);
+  if (d < 100) {
+    openFlowerDetails();
+  } else {
+    removeFlowerDetails();
+  }
   console.log(
     "Latitude: " + position.lat + "\n" + "Longitutde: " + position.lng
   );
-  openForm();
 }
 
-function openForm() {
-  // open a popup with a form
+function openFlowerDetails() {
+  // open a popup modal
+  let popup = document.getElementById("popup_1");
+  popup.classList.add("show");
+}
+
+function removeFlowerDetails() {
+  // close popup modal
+  let popup = document.getElementById("popup_1");
+  popup.classList.remove("show");
 }
 
 function saveFormData() {

@@ -10,6 +10,7 @@
       user-scalable="0"
     />
     <link rel="stylesheet" href="./css/tailwind.css" />
+    <link rel="stylesheet" href="../main.css" />
     <script
       src="https://kit.fontawesome.com/4f99054617.js"
       crossorigin="anonymous"
@@ -25,17 +26,55 @@
   </head>
 
   <body>
+    <!-- POPUP PLANT INFORMATION -->
+      <div class="absolute" id="popup_1">
+        <img src=".\svg\Group 26.svg" />
+
+        <div class="absolute left-8 top-7">
+          <h2 class="text-white text-left"><b>Name of plant</b></h2>
+        </div>
+
+        <div class="absolute left-8 top-16">
+          <img src=".\images\plant.png" />
+        </div>
+
+        <div class="absolute left-8 bottom-20">
+          <p class="text-white text-left">
+            <b>Name of user:</b> Lorenzo di Grazia <br />
+            <b>User location:</b> Milan, Italy<br />
+            <b>Green level:</b> Average<br />
+            <b>Remaining days:</b> 10<br />
+            <br />
+            <b>Other participants:</b><br />
+            John Doe, Peter Smith
+          </p>
+        </div>
+
+        <div class="absolute left-8 bottom-5">
+          <button
+            style="padding-top: 0.5em; padding-bottom: 0.5rem"
+            class="text-base px-10 bg-green-500 text-gray-800 rounded-full uppercase"
+            type="button"
+          >
+            <b>Help maintain this plant</b>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
     <div
       class="z-10 w-full md:w-48 text-center fixed bottom-0 md:top-0 md:left-0 h-16 md:h-screen md:p-5 md"
     >
       <div
         class="bg-gray-700 h-full w-full py-2 shadow-xl md:rounded-full md:flex items-center justify-center"
       >
-        <div class="md:relative mx-auto">
+        <div
+         class="md:relative mx-auto">
           <ul
             class="list-reset flex flex-row md:flex-col text-center md:text-left"
           >
-            <li class="flex-1 text-center">
+            <li
+             class="flex-1 text-center" >
               <a
                 href="#"
                 class="block py-1 md:py-3 align-middle text-gray-400 no-underline hover:text-green-600"
