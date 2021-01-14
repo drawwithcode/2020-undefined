@@ -4,7 +4,7 @@ let userName = "";
 let userLocation = null;
 let flowerName = "";
 let flowerLocation = null;
-let currentDate = null;
+// let currentDate = null; // I changed the method to return it's value, this could be deleted
 let userId;
 let data = [];
 let pos;
@@ -38,7 +38,7 @@ function setup() {
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
-  getDate();
+  // getDate(); // I changed the method to return it's value, this could be deleted
   getData();
 }
 
@@ -57,7 +57,7 @@ function writeData() {
     .doc(userId)
     .set({
       name: userName,
-      date: currentDate,
+      date: getDate(),
       location: userLocation,
       flower: [
         {
@@ -103,8 +103,9 @@ function drawFlowers() {
     //   })) {
 
     //Draw the flower
-    ellipse(pos.x, pos.y, 20);
-    // }
+    // ellipse(pos.x, pos.y, 20);
+
+
   }
 }
 
@@ -148,5 +149,57 @@ function getDate() {
   var dd = String(today.getDate()).padStart(2, "0");
   var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
   var yyyy = today.getFullYear();
-  currentDate = mm + "/" + dd + "/" + yyyy;
+  let currentDate = mm + "/" + dd + "/" + yyyy;
+  return currentDate;
 }
+
+class Flower {
+  constructor(
+              flower_id,
+              flower_coordinates,
+              flower_type,
+              user_name,
+              user_location,
+              date_added
+            ) {
+              this.id = flower_id;
+              this.position = flower_coordinates;
+              this.type = flower_type;
+              this.user = user_name;
+              this.location = user_location;
+              this.date = date_added;
+              this.watered = [];
+  }
+
+  display() {
+    // replace ellipse with image
+    ellipse(position.x, position.y, 20);
+  }
+
+  water() {
+    this.watered.push(getDate());
+  }
+}
+
+
+
+// This code belongs somewhere, maybe
+//
+// let flower_id = 1
+// let flower_coordinates = {
+//   lat: 45.4642,
+//   lng: 9.19,
+// };
+// let flower_type = "Picture";
+// let user_name = "Username";
+// let user_location = "Location";
+// let date_added = getDate();
+//
+// data.push(new Flower(
+//                       flower_id,
+//                       flower_coordinates,
+//                       flower_type,
+//                       user_name,
+//                       user_location,
+//                       date_added
+//                     ));
