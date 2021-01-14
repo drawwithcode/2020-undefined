@@ -124,13 +124,13 @@ function mouseClicked() {
 function openFlowerDetails() {
   // open a popup modal
   let popup = document.getElementById("popup_1");
-  popup.classList.add("show");
+  popup.classList.remove("hidden");
 }
 
 function removeFlowerDetails() {
   // close popup modal
   let popup = document.getElementById("popup_1");
-  popup.classList.remove("show");
+  popup.classList.add("hidden");
 }
 
 function saveFormData() {
