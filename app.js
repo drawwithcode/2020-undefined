@@ -13,6 +13,10 @@ app.get("/mappa.js", function(req, res) {
     res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
 });
 
+app.get("/config.js", function(req, res) {
+    res.sendFile(__dirname + "/config.js");
+});
+
 app.use(express.static("public"));
 console.log("Server running!");
 

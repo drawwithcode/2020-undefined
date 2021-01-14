@@ -3,14 +3,3 @@
 @tailwind components;
 
 @tailwind utilities;
-
-#popup_1 {
-  z-index: 1;
-  right: 20px;
-  top: 20px;
-  display: none;
-}
-
-.show {
-    display: block !important;
-}
