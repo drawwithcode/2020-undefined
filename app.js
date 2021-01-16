@@ -41,9 +41,11 @@ console.log("Server is running!")
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// get the flowers once, at the start of the server
+getFromDatabase();
+
 // listen for incoming client events
 io.on("connection", newConnection);
-
 
 function newConnection(socket) {
   console.log("Client connected");
@@ -52,9 +54,9 @@ function newConnection(socket) {
 
   socket.on("createFlower", function(data) {
     writeToDatabase(data);
-    setTimeout(function () {
-  getFromDatabase();
-}, 5000)
+    setTimeout(function() {
+      getFromDatabase();
+    }, 1000)
   });
   socket.on("disconnect", function() {
     console.log("Client disconnected");
@@ -89,6 +91,7 @@ function writeToDatabase(data) {
 }
 
 getFromDatabase();
+
 function getFromDatabase() {
   firebase
     .firestore()
