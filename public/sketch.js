@@ -48,6 +48,10 @@ function newConnection() {
   console.log("Your ID:", socket.id);
 }
 
+socket.on("updateFlowers", function(data) {
+  updateFlowers(data);
+});
+
 // Write data into db
 function writeData() {
 
@@ -129,11 +133,15 @@ function createFlower() {
     },
     flower_type: "some/path/to/be/defined.png",
     flower_name: "Flower Name",
-    user_name: "Username",
+    user_name: "Username Testname",
     user_location: "City, Country",
   }
   console.log(flower);
   socket.emit("createFlower", flower)
+}
+
+function updateFlowers(data) {
+  console.log(data);
 }
 
 
