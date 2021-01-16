@@ -50,7 +50,11 @@ io.on("connection", newConnection);
 function newConnection(socket) {
   console.log("Client connected");
 
-  io.emit("updateFlowers", allFlowers);
+
+
+  socket.on("firstConnection", function() {
+    io.emit("updateFlowers", allFlowers);
+  });
 
   socket.on("createFlower", function(data) {
     writeToDatabase(data);
@@ -58,6 +62,7 @@ function newConnection(socket) {
       getFromDatabase();
     }, 1000)
   });
+
   socket.on("disconnect", function() {
     console.log("Client disconnected");
   });
@@ -90,8 +95,6 @@ function writeToDatabase(data) {
     })
 }
 
-getFromDatabase();
-
 function getFromDatabase() {
   firebase
     .firestore()
@@ -102,7 +105,7 @@ function getFromDatabase() {
       querySnapshot.forEach(function(doc) {
         data.push(doc.data());
       });
-      let allFlowers = data;
+      allFlowers = data;
       io.emit("updateFlowers", allFlowers);
     })
     .catch(function(error) {
@@ -118,36 +121,4 @@ function getDate() {
   var yyyy = today.getFullYear();
   let currentDate = mm + "/" + dd + "/" + yyyy;
   return currentDate;
-}
-
-class Flower {
-  constructor(
-    flower_id,
-    flower_coordinates,
-    flower_type,
-    flower_name,
-    user_name,
-    user_location,
-    date_added
-  ) {
-    this.id = flower_id;
-    this.position = flower_coordinates;
-    this.type = flower_type;
-    this.flowername = flower_name;
-    this.user = user_name;
-    this.location = user_location;
-    this.date = date_added;
-    // watere will be an array of objects containing the date and the username
-    this.watered = [];
-  }
-
-  display() {
-    // replace ellipse with image
-    ellipse(position.x, position.y, 20);
-  }
-
-  water() {
-    // here we will also add a username
-    this.watered.push(getDate());
-  }
 }

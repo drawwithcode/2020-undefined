@@ -1,17 +1,9 @@
 let canvas;
 let myMap;
-let userName = "";
-let userLocation = null;
-let flowerName = "";
-let flowerLocation = null;
-// let currentDate = null; // I changed the method to return it's value, this could be deleted
-let userId;
-let data = [];
-let pos;
-let latitude;
-let longitude;
+let allFlowers = [];
 
 let socket = io();
+
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
 const bounds = [
@@ -38,63 +30,20 @@ function setup() {
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
-  // getDate(); // I changed the method to return it's value, this could be deleted
-  getData();
-}
-
-socket.on("connect", newConnection);
-
-function newConnection() {
-  console.log("Your ID:", socket.id);
-}
-
-socket.on("updateFlowers", function(data) {
-  updateFlowers(data);
-});
-
-// Write data into db
-function writeData() {
-
-}
-
-// Read data from db
-function getData() {
-
+  // keep emit at the end, so it executes
+  // when everything else has already been loaded
+  socket.emit("firstConnection");
 }
 
 function drawFlowers() {
   clear();
-  // Get the coordinates for every flower object for all users
-  for (let i = 0; i < data.length; i++) {
-    const location = data[i].flower[0];
-    latitude = Number(location ? location.f_location.lat : null);
-    longitude = Number(location ? location.f_location.lng : null);
-    pos = myMap.latLngToPixel(latitude, longitude);
-
-    // Only draw the objects that are within the canvas
-    // if (myMap.map.getBounds().contains({
-    //     lat: latitude,
-    //     lng: longitude
-    //   })) {
-
-    //Draw the flower
-    // ellipse(pos.x, pos.y, 20);
-
-
+  for (let i = 0; i < allFlowers.length; i++) {
+    const coordinates = allFlowers[i].getCoordinates();
+    if (typeof coordinates.lat == "number" && typeof coordinates.lng == "number") {
+      pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
+      allFlowers[i].display(pos.x, pos.y);
+    }
   }
-}
-
-function mouseClicked() {
-  const position = myMap.pixelToLatLng(mouseX, mouseY);
-  let d = dist(mouseX, mouseY, pos.x, pos.y);
-  if (d < 100) {
-    openFlowerDetails();
-  } else {
-    removeFlowerDetails();
-  }
-  console.log(
-    "Latitude: " + position.lat + "\n" + "Longitutde: " + position.lng
-  );
 }
 
 function openFlowerDetails() {
@@ -115,54 +64,100 @@ function saveFormData() {
   (userName = name), (userLocation = location);
 }
 
-function onSubmit() {
-  writeData();
-}
-
-
-
-
-
-createFlower();
-
 function createFlower() {
+  // random numbers are added for testing
+  let r1 = random(-10, 10) / 1000;
+  let r2 = random(-10, 10) / 1000;
+
   let flower = {
     flower_coordinates: {
-      lat: 45.4642,
-      lng: 9.19
+      lat: 45.4642 + r1,
+      lng: 9.19 + r2
     },
     flower_type: "some/path/to/be/defined.png",
     flower_name: "Flower Name",
     user_name: "Username Testname",
     user_location: "City, Country",
   }
-  console.log(flower);
+
   socket.emit("createFlower", flower)
 }
 
-function updateFlowers(data) {
-  console.log(data);
+// when server emits a new array of flowers, update local flowers
+socket.on("updateFlowers", function(data) {
+  for (let i = 0; i < data.length; i++) {
+
+    allFlowers.push(new Flower(
+      data[i].flower_coordinates,
+      data[i].flower_type,
+      data[i].flower_name,
+      data[i].user_name,
+      data[i].user_location,
+      data[i].date_added
+    ));
+  }
+
+  drawFlowers();
+});
+
+function mouseClicked() {
+  const mapZoom = myMap.zoom();
+  const position = myMap.pixelToLatLng(mouseX, mouseY);
+  // check if cursor is over one of the flowers
+  for (let i = 0; i < allFlowers.length; i++) {
+    allFlowers[i].isClicked(position.lat, position.lng, mapZoom);
+  }
 }
 
+class Flower {
+  constructor(
+    flower_coordinates,
+    flower_type,
+    flower_name,
+    user_name,
+    user_location,
+    date_added
+  ) {
+    this.position = flower_coordinates;
+    this.type = flower_type;
+    this.flowername = flower_name;
+    this.user = user_name;
+    this.location = user_location;
+    this.date = date_added;
+    // watere will be an array of objects containing the date and the username
+    this.watered = [];
+  }
 
+  display(posX, posY) {
+    // replace ellipse with image
+    ellipse(posX, posY, 20);
+  }
 
-// This code belongs somewhere, maybe
-//
-// let flower_id = 1
-// let flower_coordinates = {
-//   lat: 45.4642,
-//   lng: 9.19,
-// };
-// let flower_type = "Picture";
-// let user_name = "Username";
-// let user_location = "Location";
-// let date_added = getDate();
-//
-// data.push(new Flower(
-//                       flower_id,
-//                       flower_coordinates,
-//                       flower_type,
-//                       user_name,
-//                       user_location,
-//                       date_added
-//                     ));
+  water() {
+    // here we will also add a username
+    this.watered.push(getDate());
+  }
+
+  isClicked(mousePosX, mousePosY, mapZoom) {
+    let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
+    // the users zoom (11–22) is maped to a scale from 1–100 to assure click
+    // accuracy on all zoom levels
+    let zoom = map(mapZoom, 11, 22, 1, 100);
+    // we're using 0.0001 here because we are using coordinates and not pixels
+    if (d < 0.001 / zoom) {
+      console.log("Mouse clicked!");
+      openFlowerDetails();
+    } else {
+      removeFlowerDetails();
+    }
+  }
+
+  getCoordinates() {
+    let coordinates = {
+      lat: this.position.lat,
+      lng: this.position.lng
+    }
+
+    return coordinates
+  }
+}
