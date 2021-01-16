@@ -39,41 +39,55 @@ console.log("Server is running!")
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// exectute when a new user connects
-io.on('connection', newConnection);
+// listen for incoming client events
+io.on("connection", newConnection);
 
-function newConnection(socket){
-	console.log("New connection: ", socket.client.id);
+
+function newConnection(socket) {
+  console.log("Client connected");
+
+  socket.on("createFlower", function(data) {
+    writeToDatabase(data);
+  });
+  socket.on("disconnect", function() {
+    console.log("Client disconnected");
+  });
 }
 
 
-writeToDatabase();
-function writeToDatabase() {
-  userId = Math.random().toString(36).substr(2, 9);
+
+
+function writeToDatabase(data) {
+  console.log("New flower added to database");
+  let flower_id = Math.random().toString(36).substr(2, 9);
+  let flower_coordinates = {
+    lat: data.flower_coordinates.lat,
+    lng: data.flower_coordinates.lng
+  };
+  let flower_type = data.flower_type;
+  let flower_name = data.flower_name;
+  let user_name = data.user_name;
+  let user_location = data.user_location;
+  let date_added = getDate();
+
   firebase
     .firestore()
-    .collection("users")
-    .doc(userId)
+    .collection("flowers")
+    .doc()
     .set({
-      name: "userName",
-      date: "01/01/2021",
-      location: "userLocation",
-      flower: [
-        {
-          f_name: "flowerName",
-          f_location: {
-            lat: 45.4642,
-            lng: 9.19,
-          },
-        },
-      ],
+      flower_coordinates: flower_coordinates,
+      flower_type: flower_type,
+      flower_name: flower_name,
+      user_name: user_name,
+      user_location: user_location,
+      date_added: date_added
     });
 }
 
 function getFromDatabase() {
   firebase
     .firestore()
-    .collection("users")
+    .collection("flowers")
     .get()
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
@@ -83,4 +97,49 @@ function getFromDatabase() {
     .catch(function (error) {
       console.log("Error getting document:", error);
     });
+}
+
+
+function getDate() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = today.getFullYear();
+  let currentDate = mm + "/" + dd + "/" + yyyy;
+  return currentDate;
+}
+
+
+
+
+class Flower {
+  constructor(
+              flower_id,
+              flower_coordinates,
+              flower_type,
+              flower_name,
+              user_name,
+              user_location,
+              date_added
+            ) {
+              this.id = flower_id;
+              this.position = flower_coordinates;
+              this.type = flower_type;
+              this.flowername = flower_name;
+              this.user = user_name;
+              this.location = user_location;
+              this.date = date_added;
+              // watere will be an array of objects containing the date and the username
+              this.watered = [];
+  }
+
+  display() {
+    // replace ellipse with image
+    ellipse(position.x, position.y, 20);
+  }
+
+  water() {
+    // here we will also add a username
+    this.watered.push(getDate());
+  }
 }
