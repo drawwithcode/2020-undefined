@@ -50,41 +50,12 @@ function setup() {
 
 // Write data into db
 function writeData() {
-  userId = Math.random().toString(36).substr(2, 9);
-  firebase
-    .firestore()
-    .collection("users")
-    .doc(userId)
-    .set({
-      name: userName,
-      date: getDate(),
-      location: userLocation,
-      flower: [
-        {
-          f_name: flowerName,
-          f_location: {
-            lat: 45.4642,
-            lng: 9.19,
-          },
-        },
-      ],
-    });
+
 }
 
 // Read data from db
 function getData() {
-  firebase
-    .firestore()
-    .collection("users")
-    .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        data.push(doc.data());
-      });
-    })
-    .catch(function (error) {
-      console.log("Error getting document:", error);
-    });
+  
 }
 
 function drawFlowers() {
