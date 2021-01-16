@@ -4,7 +4,6 @@ let userName = "";
 let userLocation = null;
 let flowerName = "";
 let flowerLocation = null;
-// let currentDate = null; // I changed the method to return it's value, this could be deleted
 let userId;
 let data = [];
 let pos;
@@ -38,7 +37,6 @@ function setup() {
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
-  // getDate(); // I changed the method to return it's value, this could be deleted
   getData();
 }
 
@@ -115,10 +113,6 @@ function onSubmit() {
   writeData();
 }
 
-
-
-
-
 createFlower();
 
 function createFlower() {
@@ -127,7 +121,7 @@ function createFlower() {
       lat: 45.4642,
       lng: 9.19
     },
-    flower_type: "some/path/to/be/defined.png",
+    flower_type: "gs://a-connected-garden.appspot.com/sakura.png",
     flower_name: "Flower Name",
     user_name: "Username",
     user_location: "City, Country",
@@ -135,26 +129,3 @@ function createFlower() {
   console.log(flower);
   socket.emit("createFlower", flower)
 }
-
-
-
-// This code belongs somewhere, maybe
-//
-// let flower_id = 1
-// let flower_coordinates = {
-//   lat: 45.4642,
-//   lng: 9.19,
-// };
-// let flower_type = "Picture";
-// let user_name = "Username";
-// let user_location = "Location";
-// let date_added = getDate();
-//
-// data.push(new Flower(
-//                       flower_id,
-//                       flower_coordinates,
-//                       flower_type,
-//                       user_name,
-//                       user_location,
-//                       date_added
-//                     ));
