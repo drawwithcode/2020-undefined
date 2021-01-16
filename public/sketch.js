@@ -158,6 +158,7 @@ class Flower {
               flower_id,
               flower_coordinates,
               flower_type,
+              flower_name,
               user_name,
               user_location,
               date_added
@@ -165,9 +166,11 @@ class Flower {
               this.id = flower_id;
               this.position = flower_coordinates;
               this.type = flower_type;
+              this.flowername = flower_name;
               this.user = user_name;
               this.location = user_location;
               this.date = date_added;
+              // watere will be an array of objects containing the date and the username
               this.watered = [];
   }
 
@@ -177,6 +180,7 @@ class Flower {
   }
 
   water() {
+    // here we will also add a username
     this.watered.push(getDate());
   }
 }
