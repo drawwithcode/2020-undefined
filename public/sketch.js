@@ -37,7 +37,7 @@ function setup() {
 function drawFlowers() {
   clear();
   for (let i = 0; i < allFlowers.length; i++) {
-    const coordinates = allFlowers[i].getFlowerCoordinates();
+    const coordinates = allFlowers[i].getFlowerData().coordinates;
     if (typeof coordinates.lat == "number" && typeof coordinates.lng == "number") {
       pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
       allFlowers[i].display(pos.x, pos.y);
@@ -61,7 +61,7 @@ function removeFlowerDetails() {
 function getFlowerDetailsOpen() {
   // this function checks if the popup is open
   let popup = document.getElementById("popup_1");
-  if(popup.classList.contains("hidden")) {
+  if (popup.classList.contains("hidden")) {
     return false
   } else {
     return true
@@ -116,19 +116,10 @@ function mouseClicked() {
   // check if cursor is over one of the flowers
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
-
-      data = {
-        flower_coordinates: allFlowers[i].getFlowerCoordinates(),
-        flower_type: allFlowers[i].getFlowerType(),
-        flower_name: allFlowers[i].getFlowerName(),
-        user_name: allFlowers[i].getUserName(),
-        user_location: allFlowers[i].getUserLocation(),
-        date_added: allFlowers[i].getDateAdded(),
-        watered: allFlowers[i].getWatered()
-      }
+      let data = allFlowers[i].getFlowerData();
       openFlowerDetails(data);
       return
-    } else if(getFlowerDetailsOpen()) {
+    } else if (getFlowerDetailsOpen()) {
       removeFlowerDetails();
     }
   }
@@ -181,41 +172,19 @@ class Flower {
     }
   }
 
-  getFlowerCoordinates() {
-    let coordinates = {
-      lat: this.position.lat,
-      lng: this.position.lng
+  getFlowerData() {
+    let data = {
+      coordinates: {
+        lat: this.position.lat,
+        lng: this.position.lng
+      },
+      flowerType: this.type,
+      flowerName: this.flowerName,
+      userName: this.user,
+      userLocation: this.location,
+      dateAdded: this.date,
+      watered: this.watered
     }
-    return coordinates
-  }
-
-  getFlowerType() {
-    let flowerType = this.type
-    return flowerType
-  }
-
-  getFlowerName() {
-    let flowerName = this.flowerName
-    return flowerName
-  }
-
-  getUserName() {
-    let userName = this.user
-    return userName
-  }
-
-  getUserLocation() {
-    let userLocation = this.location
-    return userLocation
-  }
-
-  getDateAdded() {
-    let dateAdded = this.date
-    return dateAdded
-  }
-
-  getWatered() {
-    let watered = this.watered
-    return watered
+    return data
   }
 }
