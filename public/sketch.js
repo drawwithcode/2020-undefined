@@ -159,9 +159,13 @@ class Flower {
     ellipse(posX, posY, 20);
   }
 
-  water() {
+  water(username) {
     // here we will also add a username
-    this.watered.push(getDate());
+    let data = {
+      user: username,
+      date: getDate()
+    }
+    this.watered.push(data);
   }
 
   isClicked(mousePosX, mousePosY, mapZoom) {
