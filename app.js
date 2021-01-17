@@ -22,8 +22,10 @@ let port = process.env.PORT || 3000;
 let server = app.listen(port);
 let io = socket(server);
 
+let allFlowers = [];
+
 app.get("/mappa.js", function(req, res) {
-    res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
+  res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
 });
 
 
@@ -39,23 +41,32 @@ console.log("Server is running!")
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// get the flowers once, at the start of the server
+getFromDatabase();
+
 // listen for incoming client events
 io.on("connection", newConnection);
-
 
 function newConnection(socket) {
   console.log("Client connected");
 
+
+
+  socket.on("firstConnection", function() {
+    io.emit("updateFlowers", allFlowers);
+  });
+
   socket.on("createFlower", function(data) {
     writeToDatabase(data);
+    setTimeout(function() {
+      getFromDatabase();
+    }, 1000)
   });
+
   socket.on("disconnect", function() {
     console.log("Client disconnected");
   });
 }
-
-
-
 
 function writeToDatabase(data) {
   console.log("New flower added to database");
@@ -81,7 +92,7 @@ function writeToDatabase(data) {
       user_name: user_name,
       user_location: user_location,
       date_added: date_added
-    });
+    })
 }
 
 function getFromDatabase() {
@@ -89,12 +100,15 @@ function getFromDatabase() {
     .firestore()
     .collection("flowers")
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
+    .then(function(querySnapshot) {
+      let data = [];
+      querySnapshot.forEach(function(doc) {
         data.push(doc.data());
       });
+      allFlowers = data;
+      io.emit("updateFlowers", allFlowers);
     })
-    .catch(function (error) {
+    .catch(function(error) {
       console.log("Error getting document:", error);
     });
 }
@@ -107,39 +121,4 @@ function getDate() {
   var yyyy = today.getFullYear();
   let currentDate = mm + "/" + dd + "/" + yyyy;
   return currentDate;
-}
-
-
-
-
-class Flower {
-  constructor(
-              flower_id,
-              flower_coordinates,
-              flower_type,
-              flower_name,
-              user_name,
-              user_location,
-              date_added
-            ) {
-              this.id = flower_id;
-              this.position = flower_coordinates;
-              this.type = flower_type;
-              this.flowername = flower_name;
-              this.user = user_name;
-              this.location = user_location;
-              this.date = date_added;
-              // watere will be an array of objects containing the date and the username
-              this.watered = [];
-  }
-
-  display() {
-    // replace ellipse with image
-    ellipse(position.x, position.y, 20);
-  }
-
-  water() {
-    // here we will also add a username
-    this.watered.push(getDate());
-  }
 }
