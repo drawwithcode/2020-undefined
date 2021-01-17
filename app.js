@@ -48,7 +48,7 @@ getFromDatabase();
 io.on("connection", newConnection);
 
 function newConnection(socket) {
-  console.log("Client connected");
+  console.log("Client connected at: " + getDate());
 
 
 
@@ -115,10 +115,12 @@ function getFromDatabase() {
 
 
 function getDate() {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, "0");
-  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  var yyyy = today.getFullYear();
-  let currentDate = mm + "/" + dd + "/" + yyyy;
+  let today = new Date();
+  let minute = String(today.getMinutes()).padStart(2, "0");
+  let hour = String(today.getHours()).padStart(2, "0");
+  let day = String(today.getDate()).padStart(2, "0");
+  let month = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  let year = today.getFullYear();
+  let currentDate = day + "/" + month + "/" + year + " " + hour + ":" + minute;
   return currentDate;
 }
