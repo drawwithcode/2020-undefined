@@ -38,7 +38,7 @@ function setup() {
 function drawFlowers() {
   clear();
   for (let i = 0; i < allFlowers.length; i++) {
-    const coordinates = allFlowers[i].getCoordinates();
+    const coordinates = allFlowers[i].getFlowerCoordinates();
     if (typeof coordinates.lat == "number" && typeof coordinates.lng == "number") {
       pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
       allFlowers[i].display(pos.x, pos.y);
@@ -46,8 +46,9 @@ function drawFlowers() {
   }
 }
 
-function openFlowerDetails() {
+function openFlowerDetails(data) {
   // open a popup modal
+  console.log(data);
   let popup = document.getElementById("popup_1");
   popup.classList.remove("hidden");
 }
@@ -56,6 +57,16 @@ function removeFlowerDetails() {
   // close popup modal
   let popup = document.getElementById("popup_1");
   popup.classList.add("hidden");
+}
+
+function getFlowerDetailsOpen() {
+  // this function checks if the popup is open
+  let popup = document.getElementById("popup_1");
+  if(popup.classList.contains("hidden")) {
+    return false
+  } else {
+    return true
+  }
 }
 
 function saveFormData() {
@@ -83,8 +94,8 @@ function createFlower() {
   socket.emit("createFlower", flower)
 }
 
-// when server emits a new array of flowers, update local flowers
 socket.on("updateFlowers", function(data) {
+  // when server emits a new array of flowers, update local flowers
   for (let i = 0; i < data.length; i++) {
 
     allFlowers.push(new Flower(
@@ -105,7 +116,22 @@ function mouseClicked() {
   const position = myMap.pixelToLatLng(mouseX, mouseY);
   // check if cursor is over one of the flowers
   for (let i = 0; i < allFlowers.length; i++) {
-    allFlowers[i].isClicked(position.lat, position.lng, mapZoom);
+    if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
+
+      data = {
+        flower_coordinates: allFlowers[i].getFlowerCoordinates(),
+        flower_type: allFlowers[i].getFlowerType(),
+        flower_name: allFlowers[i].getFlowerName(),
+        user_name: allFlowers[i].getUserName(),
+        user_location: allFlowers[i].getUserLocation(),
+        date_added: allFlowers[i].getDateAdded(),
+        watered: allFlowers[i].getWatered()
+      }
+      openFlowerDetails(data);
+      return
+    } else if(getFlowerDetailsOpen()) {
+      removeFlowerDetails();
+    }
   }
 }
 
@@ -120,7 +146,7 @@ class Flower {
   ) {
     this.position = flower_coordinates;
     this.type = flower_type;
-    this.flowername = flower_name;
+    this.flowerName = flower_name;
     this.user = user_name;
     this.location = user_location;
     this.date = date_added;
@@ -145,19 +171,47 @@ class Flower {
     let zoom = map(mapZoom, 11, 22, 1, 100);
     // we're using 0.0001 here because we are using coordinates and not pixels
     if (d < 0.001 / zoom) {
-      console.log("Mouse clicked!");
-      openFlowerDetails();
+      return true
     } else {
-      removeFlowerDetails();
+      return false
     }
   }
 
-  getCoordinates() {
+  getFlowerCoordinates() {
     let coordinates = {
       lat: this.position.lat,
       lng: this.position.lng
     }
-
     return coordinates
+  }
+
+  getFlowerType() {
+    let flowerType = this.type
+    return flowerType
+  }
+
+  getFlowerName() {
+    let flowerName = this.flowerName
+    return flowerName
+  }
+
+  getUserName() {
+    let userName = this.user
+    return userName
+  }
+
+  getUserLocation() {
+    let userLocation = this.location
+    return userLocation
+  }
+
+  getDateAdded() {
+    let dateAdded = this.date
+    return dateAdded
+  }
+
+  getWatered() {
+    let watered = this.watered
+    return watered
   }
 }
