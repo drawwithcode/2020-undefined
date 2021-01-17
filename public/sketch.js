@@ -159,14 +159,15 @@ class Flower {
     ellipse(posX, posY, 20);
   }
 
-  water(username) {
-    // here we will also add a username
-    let data = {
-      user: username,
-      date: getDate()
-    }
-    this.watered.push(data);
-  }
+  // the following has to be moved to the server in order to update the database
+  // water(username) {
+  //   // here we will also add a username
+  //   let data = {
+  //     user: username,
+  //     date: getDate()
+  //   }
+  //   this.watered.push(data);
+  // }
 
   isClicked(mousePosX, mousePosY, mapZoom) {
     let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
