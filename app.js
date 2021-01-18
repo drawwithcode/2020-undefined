@@ -63,6 +63,28 @@ function newConnection(socket) {
     }, 1000)
   });
 
+  socket.on("waterFlower", function(data) {
+    console.log("Water flower with ID: " + data.id);
+    let id = data.id;
+    let water = {
+      user: data.user,
+      date: getDate()
+    };
+
+    firebase
+      .firestore()
+      .collection("flowers")
+      .doc(id)
+      .update({
+        watered: firebase.firestore.FieldValue.arrayUnion(water)
+      });
+
+      setTimeout(function() {
+        getFromDatabase();
+      }, 1000)
+
+  });
+
   socket.on("disconnect", function() {
     console.log("Client disconnected");
   });
@@ -70,7 +92,6 @@ function newConnection(socket) {
 
 function writeToDatabase(data) {
   console.log("New flower added to database");
-  let flower_id = Math.random().toString(36).substr(2, 9);
   let flower_coordinates = {
     lat: data.flower_coordinates.lat,
     lng: data.flower_coordinates.lng
@@ -96,6 +117,7 @@ function writeToDatabase(data) {
 }
 
 function getFromDatabase() {
+  console.log("Receive updated list of flowers!");
   firebase
     .firestore()
     .collection("flowers")

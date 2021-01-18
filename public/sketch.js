@@ -50,6 +50,9 @@ function openFlowerDetails(data) {
   console.log(data);
   let popup = document.getElementById("popup_1");
   popup.classList.remove("hidden");
+  // The following line is for testing
+  // pass the username and the flower_id
+  waterFlower("Tim", "3Mdnja11cjVQ5KxRDzFJ");
 }
 
 function removeFlowerDetails() {
@@ -104,7 +107,8 @@ socket.on("updateFlowers", function(data) {
       data[i].flower_data.flower_name,
       data[i].flower_data.user_name,
       data[i].flower_data.user_location,
-      data[i].flower_data.date_added
+      data[i].flower_data.date_added,
+      data[i].flower_data.watered
     ));
   }
 
@@ -126,6 +130,15 @@ function mouseClicked() {
   }
 }
 
+function waterFlower(user, flowerId) {
+  console.log("Water flower!");
+  let data = {
+    user: user,
+    id: flowerId
+  }
+  socket.emit("waterFlower", data);
+}
+
 class Flower {
   constructor(
     flower_id,
@@ -134,7 +147,8 @@ class Flower {
     flower_name,
     user_name,
     user_location,
-    date_added
+    date_added,
+    watered
   ) {
     this.id = flower_id;
     this.position = flower_coordinates;
@@ -143,8 +157,7 @@ class Flower {
     this.user = user_name;
     this.location = user_location;
     this.date = date_added;
-    // watere will be an array of objects containing the date and the username
-    this.watered = [];
+    this.watered = watered
   }
 
   display(posX, posY) {
