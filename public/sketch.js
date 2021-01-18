@@ -163,7 +163,7 @@ class Flower {
     let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
     // the users zoom (11–22) is maped to a scale from 1–100 to assure click
     // accuracy on all zoom levels
-    let zoom = map(mapZoom, 11, 22, 1, 100);
+    let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.0001 here because we are using coordinates and not pixels
     if (d < 0.001 / zoom) {
       return true
