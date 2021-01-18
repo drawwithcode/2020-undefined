@@ -98,12 +98,13 @@ socket.on("updateFlowers", function(data) {
   for (let i = 0; i < data.length; i++) {
 
     allFlowers.push(new Flower(
-      data[i].flower_coordinates,
-      data[i].flower_type,
-      data[i].flower_name,
-      data[i].user_name,
-      data[i].user_location,
-      data[i].date_added
+      data[i].flower_id,
+      data[i].flower_data.flower_coordinates,
+      data[i].flower_data.flower_type,
+      data[i].flower_data.flower_name,
+      data[i].flower_data.user_name,
+      data[i].flower_data.user_location,
+      data[i].flower_data.date_added
     ));
   }
 
@@ -127,6 +128,7 @@ function mouseClicked() {
 
 class Flower {
   constructor(
+    flower_id,
     flower_coordinates,
     flower_type,
     flower_name,
@@ -134,6 +136,7 @@ class Flower {
     user_location,
     date_added
   ) {
+    this.id = flower_id;
     this.position = flower_coordinates;
     this.type = flower_type;
     this.flowerName = flower_name;
@@ -174,6 +177,7 @@ class Flower {
 
   getFlowerData() {
     let data = {
+      id: this.id,
       coordinates: {
         lat: this.position.lat,
         lng: this.position.lng

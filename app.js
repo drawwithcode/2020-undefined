@@ -103,7 +103,11 @@ function getFromDatabase() {
     .then(function(querySnapshot) {
       let data = [];
       querySnapshot.forEach(function(doc) {
-        data.push(doc.data());
+        let docData = {
+          flower_id: doc.id,
+          flower_data: doc.data()
+        }
+        data.push(docData);
       });
       allFlowers = data;
       io.emit("updateFlowers", allFlowers);
