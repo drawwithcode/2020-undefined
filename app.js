@@ -1,5 +1,6 @@
 let express = require("express");
 let socket = require("socket.io");
+let dayjs = require("dayjs");
 let firebase = require("firebase/app");
 require("firebase/firestore");
 
@@ -48,7 +49,7 @@ getFromDatabase();
 io.on("connection", newConnection);
 
 function newConnection(socket) {
-  console.log("Client connected at: " + getDate());
+  console.log("Client connected at: " + getDate().time);
 
 
 
@@ -125,13 +126,19 @@ function getFromDatabase() {
     .then(function(querySnapshot) {
       let data = [];
       querySnapshot.forEach(function(doc) {
+        // compares the date when the flower was added with the current day
+        let date_added = doc.data().date_added.date;
+        let age = getDateDifference(date_added);
+
         let docData = {
           flower_id: doc.id,
-          flower_data: doc.data()
+          flower_data: doc.data(),
+          flower_age: age
         }
         data.push(docData);
       });
       allFlowers = data;
+      // console.log(data);
       io.emit("updateFlowers", allFlowers);
     })
     .catch(function(error) {
@@ -141,12 +148,17 @@ function getFromDatabase() {
 
 
 function getDate() {
-  let today = new Date();
-  let minute = String(today.getMinutes()).padStart(2, "0");
-  let hour = String(today.getHours()).padStart(2, "0");
-  let day = String(today.getDate()).padStart(2, "0");
-  let month = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  let year = today.getFullYear();
-  let currentDate = day + "/" + month + "/" + year + " " + hour + ":" + minute;
-  return currentDate;
+  let now = dayjs();
+  // substract days to test if the difference works
+  let d2 = now.subtract('3', 'day');
+  let day = {
+    date: d2.format("MMMM D YYYY"),
+    time: now.format("HH:mm:ss")
+  }
+  return day
+}
+
+function getDateDifference(inputDate) {
+  let difference = dayjs().diff(inputDate, "day");
+  return difference
 }
