@@ -175,7 +175,6 @@ class Flower {
   }
 
   display(posX, posY) {
-    let flower_type = this.type;
     image(imgs[this.type], posX, posY, 30, 30);
   }
 
