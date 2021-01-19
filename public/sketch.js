@@ -32,6 +32,7 @@ function setup() {
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
+  createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
   socket.emit("firstConnection");
@@ -62,7 +63,7 @@ function openFlowerDetails(data) {
   popup.classList.remove("hidden");
   // The following line is for testing
   // pass the username and the flower_id
-  waterFlower("Tim", "3Mdnja11cjVQ5KxRDzFJ");
+  // waterFlower("Tim", "3Mdnja11cjVQ5KxRDzFJ");
 }
 
 function removeFlowerDetails() {
@@ -109,18 +110,18 @@ function createFlower() {
 socket.on("updateFlowers", function (data) {
   // when server emits a new array of flowers, update local flowers
   for (let i = 0; i < data.length; i++) {
-    allFlowers.push(
-      new Flower(
-        data[i].flower_id,
-        data[i].flower_data.flower_coordinates,
-        data[i].flower_data.flower_type,
-        data[i].flower_data.flower_name,
-        data[i].flower_data.user_name,
-        data[i].flower_data.user_location,
-        data[i].flower_data.date_added,
-        data[i].flower_data.watered
-      )
-    );
+
+    allFlowers.push(new Flower(
+      data[i].flower_id,
+      data[i].flower_data.flower_coordinates,
+      data[i].flower_data.flower_type,
+      data[i].flower_data.flower_name,
+      data[i].flower_data.user_name,
+      data[i].flower_data.user_location,
+      data[i].flower_data.date_added,
+      data[i].flower_data.watered,
+      data[i].flower_age
+    ));
   }
 
   drawFlowers();
@@ -159,7 +160,8 @@ class Flower {
     user_name,
     user_location,
     date_added,
-    watered
+    watered,
+    age
   ) {
     this.id = flower_id;
     this.position = flower_coordinates;
@@ -168,7 +170,8 @@ class Flower {
     this.user = user_name;
     this.location = user_location;
     this.date = date_added;
-    this.watered = watered;
+    this.watered = watered
+    this.age = age
   }
 
   display(posX, posY, flowerImage) {
@@ -213,7 +216,8 @@ class Flower {
       userLocation: this.location,
       dateAdded: this.date,
       watered: this.watered,
-    };
-    return data;
+      age: this.age
+    }
+    return data
   }
 }
