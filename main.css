@@ -2,4 +2,27 @@
 
 @tailwind components;
 
+@font-face {
+  font-family: 'Minecraftia-20';
+  src: local('Minecraftia-20'), url(./fonts/Roboto-Regular.ttf) format('ttf');
+}
+
+@font-face {
+    font-family: 'Nokia-Cellphone-Small';
+    src:url('./../fonts/Nokia-Cellphone-Small.ttf.woff') format('woff'),
+        url('./../fonts/Nokia-Cellphone-Small.ttf.svg#Nokia-Cellphone-Small') format('svg'),
+        url('./../fonts/Nokia-Cellphone-Small.ttf.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Minecraftia-20';
+    src:url('./../fonts/Minecraftia-20.ttf.woff') format('woff'),
+        url('./../fonts/Minecraftia-20.ttf.svg#Minecraftia-20') format('svg'),
+        url('./../fonts/Minecraftia-20.ttf.eot');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @tailwind utilities;
