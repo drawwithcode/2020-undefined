@@ -25,7 +25,7 @@ let io = socket(server);
 
 let allFlowers = [];
 
-let maxAge = 4;
+let maxAge = 10;
 
 app.get("/mappa.js", function(req, res) {
   res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
