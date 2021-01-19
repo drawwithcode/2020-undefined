@@ -580,6 +580,36 @@ video {
   }
 }
 
+@font-face {
+  font-family: 'Minecraftia-20';
+
+  src: local('Minecraftia-20'), url(./fonts/Roboto-Regular.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Nokia-Cellphone-Small';
+
+  src:url('./../fonts/Nokia-Cellphone-Small.ttf.woff') format('woff'),
+        url('./../fonts/Nokia-Cellphone-Small.ttf.svg#Nokia-Cellphone-Small') format('svg'),
+        url('./../fonts/Nokia-Cellphone-Small.ttf.eot');
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Minecraftia-20';
+
+  src:url('./../fonts/Minecraftia-20.ttf.woff') format('woff'),
+        url('./../fonts/Minecraftia-20.ttf.svg#Minecraftia-20') format('svg'),
+        url('./../fonts/Minecraftia-20.ttf.eot');
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
 .space-y-0 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
@@ -11216,6 +11246,14 @@ video {
 
 .font-mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.font-minecraftia {
+  font-family: Minecraftia-20, serif;
+}
+
+.font-nokia {
+  font-family: Nokia-Cellphone-Small, serif;
 }
 
 .font-thin {
@@ -41840,6 +41878,14 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .sm\:font-minecraftia {
+    font-family: Minecraftia-20, serif;
+  }
+
+  .sm\:font-nokia {
+    font-family: Nokia-Cellphone-Small, serif;
+  }
+
   .sm\:font-thin {
     font-weight: 100;
   }
@@ -72382,6 +72428,14 @@ video {
 
   .md\:font-mono {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .md\:font-minecraftia {
+    font-family: Minecraftia-20, serif;
+  }
+
+  .md\:font-nokia {
+    font-family: Nokia-Cellphone-Small, serif;
   }
 
   .md\:font-thin {
@@ -102928,6 +102982,14 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .lg\:font-minecraftia {
+    font-family: Minecraftia-20, serif;
+  }
+
+  .lg\:font-nokia {
+    font-family: Nokia-Cellphone-Small, serif;
+  }
+
   .lg\:font-thin {
     font-weight: 100;
   }
@@ -133472,6 +133534,14 @@ video {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .xl\:font-minecraftia {
+    font-family: Minecraftia-20, serif;
+  }
+
+  .xl\:font-nokia {
+    font-family: Nokia-Cellphone-Small, serif;
+  }
+
   .xl\:font-thin {
     font-weight: 100;
   }
@@ -164014,6 +164084,14 @@ video {
 
   .\32xl\:font-mono {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .\32xl\:font-minecraftia {
+    font-family: Minecraftia-20, serif;
+  }
+
+  .\32xl\:font-nokia {
+    font-family: Nokia-Cellphone-Small, serif;
   }
 
   .\32xl\:font-thin {

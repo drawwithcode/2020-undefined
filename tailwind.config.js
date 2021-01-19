@@ -2,7 +2,12 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'minecraftia': ['Minecraftia-20', 'serif'],
+        'nokia': ['Nokia-Cellphone-Small', 'serif']
+      }
+    },
   },
   variants: {
     extend: {},
