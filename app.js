@@ -25,6 +25,8 @@ let io = socket(server);
 
 let allFlowers = [];
 
+let maxAge = 4;
+
 app.get("/mappa.js", function(req, res) {
   res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
 });
@@ -129,13 +131,18 @@ function getFromDatabase() {
         // compares the date when the flower was added with the current day
         let date_added = doc.data().date_added.date;
         let age = getDateDifference(date_added);
-
-        let docData = {
-          flower_id: doc.id,
-          flower_data: doc.data(),
-          flower_age: age
+        // delete if flower is older than the maximum age
+        // or add it to the flower array to be displayed
+        if(age >= maxAge) {
+          deleteInDatabase(doc.id);
+        } else {
+          let docData = {
+            flower_id: doc.id,
+            flower_data: doc.data(),
+            flower_age: age
+          }
+          data.push(docData);
         }
-        data.push(docData);
       });
       allFlowers = data;
       // console.log(data);
@@ -144,6 +151,16 @@ function getFromDatabase() {
     .catch(function(error) {
       console.log("Error getting document:", error);
     });
+}
+
+function deleteInDatabase(data){
+  console.log("Delete flower with ID: " + data);
+  let id = data
+  firebase
+    .firestore()
+    .collection("flowers")
+    .doc(id)
+    .delete();
 }
 
 
