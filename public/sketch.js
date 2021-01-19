@@ -2,7 +2,7 @@ let canvas;
 let myMap;
 let allFlowers = [];
 let socket = io();
-let img = [];
+let img;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -26,13 +26,12 @@ function preload() {
 }
 
 function setup() {
-  img = [loadImage("images/rafflesia-arnoldii.png")]; //placeholder
+  img = loadImage("images/rafflesia-arnoldii.png"); //placeholder
 
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
-  createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
   socket.emit("firstConnection");
@@ -51,8 +50,8 @@ function drawFlowers() {
     ) {
       pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
       let src = img[i];
-      image(src, pos.x, pos.y);
-      allFlowers[i].display(pos.x, pos.y, flowerImage);
+      // image(src, pos.x, pos.y);
+      allFlowers[i].display(pos.x, pos.y);
     }
   }
 }
@@ -174,10 +173,8 @@ class Flower {
     this.age = age
   }
 
-  display(posX, posY, flowerImage) {
-    img.push(loadImage(flowerImage));
-    // replace ellipse with image
-    ellipse(posX, posY, 20);
+  display(posX, posY) {
+    image(img, posX, posY, 30, 30);
   }
 
   // the following has to be moved to the server in order to update the database
