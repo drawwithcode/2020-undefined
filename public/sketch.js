@@ -2,6 +2,7 @@ let canvas;
 let myMap;
 let allFlowers = [];
 let socket = io();
+let img = [];
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -25,6 +26,8 @@ function preload() {
 }
 
 function setup() {
+  img = [loadImage("images/rafflesia-arnoldii.png")]; //placeholder
+
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
@@ -36,18 +39,25 @@ function setup() {
 
 function drawFlowers() {
   clear();
+
   for (let i = 0; i < allFlowers.length; i++) {
-    const coordinates = allFlowers[i].getFlowerData().coordinates;
-    if (typeof coordinates.lat == "number" && typeof coordinates.lng == "number") {
+    const flowerData = allFlowers[i].getFlowerData();
+    const coordinates = flowerData.coordinates;
+    const flowerImage = flowerData.flowerType;
+    if (
+      typeof coordinates.lat == "number" &&
+      typeof coordinates.lng == "number"
+    ) {
       pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
-      allFlowers[i].display(pos.x, pos.y);
+      let src = img[i];
+      image(src, pos.x, pos.y);
+      allFlowers[i].display(pos.x, pos.y, flowerImage);
     }
   }
 }
 
 function openFlowerDetails(data) {
   // open a popup modal
-  console.log(data);
   let popup = document.getElementById("popup_1");
   popup.classList.remove("hidden");
   // The following line is for testing
@@ -65,9 +75,9 @@ function getFlowerDetailsOpen() {
   // this function checks if the popup is open
   let popup = document.getElementById("popup_1");
   if (popup.classList.contains("hidden")) {
-    return false
+    return false;
   } else {
-    return true
+    return true;
   }
 }
 
@@ -85,31 +95,32 @@ function createFlower() {
   let flower = {
     flower_coordinates: {
       lat: 45.4642 + r1,
-      lng: 9.19 + r2
+      lng: 9.19 + r2,
     },
-    flower_type: "gs://a-connected-garden.appspot.com/sakura.png",
+    flower_type: "images/rafflesia-arnoldii.png",
     flower_name: "Flower Name",
     user_name: "Username Testname",
     user_location: "City, Country",
-  }
+  };
 
-  socket.emit("createFlower", flower)
+  socket.emit("createFlower", flower);
 }
 
-socket.on("updateFlowers", function(data) {
+socket.on("updateFlowers", function (data) {
   // when server emits a new array of flowers, update local flowers
   for (let i = 0; i < data.length; i++) {
-
-    allFlowers.push(new Flower(
-      data[i].flower_id,
-      data[i].flower_data.flower_coordinates,
-      data[i].flower_data.flower_type,
-      data[i].flower_data.flower_name,
-      data[i].flower_data.user_name,
-      data[i].flower_data.user_location,
-      data[i].flower_data.date_added,
-      data[i].flower_data.watered
-    ));
+    allFlowers.push(
+      new Flower(
+        data[i].flower_id,
+        data[i].flower_data.flower_coordinates,
+        data[i].flower_data.flower_type,
+        data[i].flower_data.flower_name,
+        data[i].flower_data.user_name,
+        data[i].flower_data.user_location,
+        data[i].flower_data.date_added,
+        data[i].flower_data.watered
+      )
+    );
   }
 
   drawFlowers();
@@ -123,7 +134,7 @@ function mouseClicked() {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
       let data = allFlowers[i].getFlowerData();
       openFlowerDetails(data);
-      return
+      return;
     } else if (getFlowerDetailsOpen()) {
       removeFlowerDetails();
     }
@@ -134,8 +145,8 @@ function waterFlower(user, flowerId) {
   console.log("Water flower!");
   let data = {
     user: user,
-    id: flowerId
-  }
+    id: flowerId,
+  };
   socket.emit("waterFlower", data);
 }
 
@@ -157,10 +168,11 @@ class Flower {
     this.user = user_name;
     this.location = user_location;
     this.date = date_added;
-    this.watered = watered
+    this.watered = watered;
   }
 
-  display(posX, posY) {
+  display(posX, posY, flowerImage) {
+    img.push(loadImage(flowerImage));
     // replace ellipse with image
     ellipse(posX, posY, 20);
   }
@@ -182,9 +194,9 @@ class Flower {
     let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.0001 here because we are using coordinates and not pixels
     if (d < 0.001 / zoom) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
@@ -193,15 +205,15 @@ class Flower {
       id: this.id,
       coordinates: {
         lat: this.position.lat,
-        lng: this.position.lng
+        lng: this.position.lng,
       },
       flowerType: this.type,
       flowerName: this.flowerName,
       userName: this.user,
       userLocation: this.location,
       dateAdded: this.date,
-      watered: this.watered
-    }
-    return data
+      watered: this.watered,
+    };
+    return data;
   }
 }
