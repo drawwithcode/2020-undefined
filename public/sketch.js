@@ -6,6 +6,9 @@ let imgs = [];
 let aboutPopup;
 let plantInfoPopup;
 let addPopup;
+let isAboutModalOpen;
+let isAddModalOpen;
+let isPlantInfoModalOpen;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -31,6 +34,9 @@ function preload() {
 }
 
 function setup() {
+  isAboutModalOpen = false;
+  isAddModalOpen = false;
+  isPlantInfoModalOpen = false;
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
@@ -61,7 +67,11 @@ function drawFlowers() {
 
 //// About modal
 function openAboutModal() {
-  aboutPopup.classList.remove("hidden");
+  isAboutModalOpen
+    ? aboutPopup.classList.add("hidden")
+    : aboutPopup.classList.remove("hidden");
+  //when clicked anywhere else except button area, cloe the modal
+  isAboutModalOpen = !isAboutModalOpen;
 }
 
 function closeAboutModal() {
@@ -70,7 +80,10 @@ function closeAboutModal() {
 
 //// Add new plant modal
 function openAddModal() {
-  addPopup.classList.remove("hidden");
+  isAddModalOpen
+    ? addPopup.classList.add("hidden")
+    : addPopup.classList.remove("hidden");
+  isAddModalOpen = !isAddModalOpen;
 }
 
 function closeAddModal() {
@@ -79,7 +92,12 @@ function closeAddModal() {
 
 //// Plant Info modal
 function openFlowerDetails() {
-  plantInfoPopup.classList.remove("hidden");
+  isPlantInfoModalOpen
+    ? plantInfoPopup.classList.add("hidden")
+    : plantInfoPopup.classList.remove("hidden");
+
+  isPlantInfoModalOpen = !isPlantInfoModalOpen;
+
   // The following line is for testing
   // pass the username and the flower_id
   // waterFlower("Tim", "3Mdnja11cjVQ5KxRDzFJ");
@@ -146,6 +164,17 @@ socket.on("updateFlowers", function (data) {
 function mouseClicked() {
   const mapZoom = myMap.zoom();
   const position = myMap.pixelToLatLng(mouseX, mouseY);
+  const currentTarget = event.target;
+  let aboutButton = document.getElementById("about_button");
+  let addButton = document.getElementById("add_button");
+
+  if (aboutButton !== currentTarget) {
+    closeAboutModal();
+  }
+
+  if (addButton !== currentTarget) {
+    closeAddModal();
+  }
 
   // check if cursor is over one of the flowers
   for (let i = 0; i < allFlowers.length; i++) {
@@ -159,25 +188,25 @@ function mouseClicked() {
   }
 }
 
-function mouseMoved() {
-  const mapZoom = myMap.zoom();
-  const position = myMap.pixelToLatLng(mouseX, mouseY);
+// function mouseMoved() {
+//   const mapZoom = myMap.zoom();
+//   const position = myMap.pixelToLatLng(mouseX, mouseY);
 
-  // check if cursor is over one of the flowers
-  for (let i = 0; i < allFlowers.length; i++) {
-    let data = allFlowers[i].getFlowerData();
-    const coordinates = data.coordinates;
-    pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
+//   // check if cursor is over one of the flowers
+//   for (let i = 0; i < allFlowers.length; i++) {
+//     let data = allFlowers[i].getFlowerData();
+//     const coordinates = data.coordinates;
+//     pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
 
-    if (allFlowers[i].isHovered(position.lat, position.lng, mapZoom)) {
-      console.log("on");
-      allFlowers[i].focusFlowerOn(pos.x, pos.y);
-    } else {
-      console.log("off");
-      allFlowers[i].focusFlowerOff();
-    }
-  }
-}
+//     if (allFlowers[i].isHovered(position.lat, position.lng, mapZoom)) {
+//       console.log("on");
+//       allFlowers[i].focusFlowerOn(pos.x, pos.y);
+//     } else {
+//       console.log("off");
+//       allFlowers[i].focusFlowerOff();
+//     }
+//   }
+// }
 
 function waterFlower(user, flowerId) {
   console.log("Water flower!");
