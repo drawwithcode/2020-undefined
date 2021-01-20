@@ -194,26 +194,6 @@ function mouseClicked() {
   }
 }
 
-// function mouseMoved() {
-//   const mapZoom = myMap.zoom();
-//   const position = myMap.pixelToLatLng(mouseX, mouseY);
-
-//   // check if cursor is over one of the flowers
-//   for (let i = 0; i < allFlowers.length; i++) {
-//     let data = allFlowers[i].getFlowerData();
-//     const coordinates = data.coordinates;
-//     pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
-
-//     if (allFlowers[i].isHovered(position.lat, position.lng, mapZoom)) {
-//       console.log("on");
-//       allFlowers[i].focusFlowerOn(pos.x, pos.y);
-//     } else {
-//       console.log("off");
-//       allFlowers[i].focusFlowerOff();
-//     }
-//   }
-// }
-
 function mouseMoved() {
   const mapZoom = myMap.zoom();
   const position = myMap.pixelToLatLng(mouseX, mouseY);
@@ -264,14 +244,6 @@ class Flower {
     // ellipse(posX, posY, 30, 30);
   }
 
-  focusFlowerOn(posX, posY) {
-    //ellipse(posX, posY, 30, 30);
-  }
-
-  focusFlowerOff() {
-    //noFill();
-  }
-
   // the following has to be moved to the server in order to update the database
   // water(username) {
   //   // here we will also add a username
@@ -289,17 +261,7 @@ class Flower {
     let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.03 here because we are using coordinates and not pixels
     // when changin keep in mind that the image might have transparency
-    if (d < 0.003 / zoom) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  isHovered(mousePosX, mousePosY, mapZoom) {
-    let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
-    let zoom = map(mapZoom, 11, 22, 1, 150);
-    if (d < 0.1 / zoom) {
+    if (d < 0.008 / zoom) {
       return true;
     } else {
       return false;
