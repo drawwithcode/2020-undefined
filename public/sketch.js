@@ -168,11 +168,11 @@ function mouseClicked() {
   let aboutButton = document.getElementById("about_button");
   let addButton = document.getElementById("add_button");
 
-  if (aboutButton !== currentTarget) {
+  if (aboutButton !== currentTarget && aboutPopup !== currentTarget ) {
     closeAboutModal();
   }
 
-  if (addButton !== currentTarget) {
+  if (addButton !== currentTarget && addPopup !== currentTarget ) {
     closeAddModal();
   }
 
