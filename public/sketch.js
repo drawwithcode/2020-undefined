@@ -23,17 +23,16 @@ const mapOptions = {
 
 function preload() {
   for (var i = 0; i < 2; i++) {
-    imgs[i] = loadImage("images/flower_"+i+".png");
+    imgs[i] = loadImage("images/flower_" + i + ".png");
   }
 }
 
 function setup() {
-
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
-  createFlower();
+  //createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
   socket.emit("firstConnection");
@@ -41,17 +40,14 @@ function setup() {
 
 function drawFlowers() {
   clear();
-
   for (let i = 0; i < allFlowers.length; i++) {
     const flowerData = allFlowers[i].getFlowerData();
     const coordinates = flowerData.coordinates;
-    const flowerImage = flowerData.flowerType;
     if (
       typeof coordinates.lat == "number" &&
       typeof coordinates.lng == "number"
     ) {
       pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
-      // image(src, pos.x, pos.y);
       allFlowers[i].display(pos.x, pos.y);
     }
   }
@@ -103,25 +99,25 @@ function createFlower() {
     user_name: "Username Testname",
     user_location: "City, Country",
   };
-
   socket.emit("createFlower", flower);
 }
 
 socket.on("updateFlowers", function (data) {
   // when server emits a new array of flowers, update local flowers
   for (let i = 0; i < data.length; i++) {
-
-    allFlowers.push(new Flower(
-      data[i].flower_id,
-      data[i].flower_data.flower_coordinates,
-      data[i].flower_data.flower_type,
-      data[i].flower_data.flower_name,
-      data[i].flower_data.user_name,
-      data[i].flower_data.user_location,
-      data[i].flower_data.date_added,
-      data[i].flower_data.watered,
-      data[i].flower_age
-    ));
+    allFlowers.push(
+      new Flower(
+        data[i].flower_id,
+        data[i].flower_data.flower_coordinates,
+        data[i].flower_data.flower_type,
+        data[i].flower_data.flower_name,
+        data[i].flower_data.user_name,
+        data[i].flower_data.user_location,
+        data[i].flower_data.date_added,
+        data[i].flower_data.watered,
+        data[i].flower_age
+      )
+    );
   }
 
   drawFlowers();
@@ -130,6 +126,7 @@ socket.on("updateFlowers", function (data) {
 function mouseClicked() {
   const mapZoom = myMap.zoom();
   const position = myMap.pixelToLatLng(mouseX, mouseY);
+
   // check if cursor is over one of the flowers
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
@@ -138,6 +135,26 @@ function mouseClicked() {
       return;
     } else if (getFlowerDetailsOpen()) {
       removeFlowerDetails();
+    }
+  }
+}
+
+function mouseMoved() {
+  const mapZoom = myMap.zoom();
+  const position = myMap.pixelToLatLng(mouseX, mouseY);
+
+  // check if cursor is over one of the flowers
+  for (let i = 0; i < allFlowers.length; i++) {
+    let data = allFlowers[i].getFlowerData();
+    const coordinates = data.coordinates;
+    pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
+
+    if (allFlowers[i].isHovered(position.lat, position.lng, mapZoom)) {
+      console.log("on");
+      allFlowers[i].focusFlowerOn(pos.x, pos.y);
+    } else {
+      console.log("off");
+      allFlowers[i].focusFlowerOff();
     }
   }
 }
@@ -170,13 +187,21 @@ class Flower {
     this.user = user_name;
     this.location = user_location;
     this.date = date_added;
-    this.watered = watered
-    this.age = age
+    this.watered = watered;
+    this.age = age;
   }
 
   display(posX, posY) {
     let flower_type = this.type;
     image(imgs[flower_type], posX, posY, 30, 30);
+  }
+
+  focusFlowerOn(posX, posY) {
+    //ellipse(posX, posY, 30, 30);
+  }
+
+  focusFlowerOff() {
+    //noFill();
   }
 
   // the following has to be moved to the server in order to update the database
@@ -194,8 +219,18 @@ class Flower {
     // the users zoom (11–22) is maped to a scale from 1–100 to assure click
     // accuracy on all zoom levels
     let zoom = map(mapZoom, 11, 22, 1, 150);
-    // we're using 0.0001 here because we are using coordinates and not pixels
-    if (d < 0.001 / zoom) {
+    // we're using 0.03 here because we are using coordinates and not pixels
+    if (d < 0.03 / zoom) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isHovered(mousePosX, mousePosY, mapZoom) {
+    let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
+    let zoom = map(mapZoom, 11, 22, 1, 150);
+    if (d < 0.1 / zoom) {
       return true;
     } else {
       return false;
@@ -215,8 +250,8 @@ class Flower {
       userLocation: this.location,
       dateAdded: this.date,
       watered: this.watered,
-      age: this.age
-    }
-    return data
+      age: this.age,
+    };
+    return data;
   }
 }
