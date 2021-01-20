@@ -9,6 +9,7 @@ let addPopup;
 let isAboutModalOpen;
 let isAddModalOpen;
 let isPlantInfoModalOpen;
+let mapboxCanvas;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -44,11 +45,14 @@ function setup() {
   aboutPopup = document.getElementById("popup_about");
   plantInfoPopup = document.getElementById("popup_plant_info");
   addPopup = document.getElementById("popup_add_plant");
+  mapboxCanvas = select("#defaultCanvas0");
+  imageMode(CENTER);
   //createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
   socket.emit("firstConnection");
 }
+
 
 function drawFlowers() {
   clear();
@@ -80,6 +84,8 @@ function closeAboutModal() {
 
 //// Add new plant modal
 function openAddModal() {
+  // the cursor has to be changed by adding a class to overide the default
+  mapboxCanvas.addClass('cursorPointer');
   isAddModalOpen
     ? addPopup.classList.add("hidden")
     : addPopup.classList.remove("hidden");
@@ -208,6 +214,19 @@ function mouseClicked() {
 //   }
 // }
 
+function mouseMoved() {
+  const mapZoom = myMap.zoom();
+  const position = myMap.pixelToLatLng(mouseX, mouseY);
+  for (let i = 0; i < allFlowers.length; i++) {
+    if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
+      mapboxCanvas.addClass('cursorPointer');
+      return
+    } else {
+      mapboxCanvas.removeClass('cursorPointer');
+    }
+  }
+}
+
 function waterFlower(user, flowerId) {
   console.log("Water flower!");
   let data = {
@@ -242,6 +261,7 @@ class Flower {
 
   display(posX, posY) {
     image(imgs[this.type], posX, posY, 30, 30);
+    // ellipse(posX, posY, 30, 30);
   }
 
   focusFlowerOn(posX, posY) {
@@ -264,11 +284,12 @@ class Flower {
 
   isClicked(mousePosX, mousePosY, mapZoom) {
     let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
-    // the users zoom (11–22) is maped to a scale from 1–100 to assure click
+    // the users zoom (11–22) is maped to a scale from 1–150 to assure click
     // accuracy on all zoom levels
     let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.03 here because we are using coordinates and not pixels
-    if (d < 0.03 / zoom) {
+    // when changin keep in mind that the image might have transparency
+    if (d < 0.003 / zoom) {
       return true;
     } else {
       return false;
@@ -283,6 +304,10 @@ class Flower {
     } else {
       return false;
     }
+  }
+
+  setSize(size) {
+    this.size = size;
   }
 
   getFlowerData() {

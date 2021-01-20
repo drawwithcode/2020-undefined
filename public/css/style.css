@@ -1,1 +1,13 @@
 /* Use this file if necessary or use https://tailwindcss.com */
+
+.cursorPointer {
+  cursor: pointer !important;
+}
+
+.cursorGrab {
+  cursor: grab !important;
+}
+
+.cursorCrosshair {
+  cursor: crosshair !important;
+}
