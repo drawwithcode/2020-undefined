@@ -10,6 +10,8 @@ let isAboutModalOpen;
 let isAddModalOpen;
 let isPlantInfoModalOpen;
 let mapboxCanvas;
+let addMode;
+let lStorage;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -38,6 +40,8 @@ function setup() {
   isAboutModalOpen = false;
   isAddModalOpen = false;
   isPlantInfoModalOpen = false;
+  addMode = false;
+  lStorage={lng: null, lat: null}
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
@@ -69,6 +73,11 @@ function drawFlowers() {
   }
 }
 
+function emitAddPlantMode() {
+  addMode = true;
+  mapboxCanvas.addClass('cursorCrosshair');
+}
+
 //// About modal
 function openAboutModal() {
   isAboutModalOpen
@@ -90,6 +99,7 @@ function openAddModal() {
     ? addPopup.classList.add("hidden")
     : addPopup.classList.remove("hidden");
   isAddModalOpen = !isAddModalOpen;
+  addMode = false;
 }
 
 function closeAddModal() {
@@ -178,8 +188,16 @@ function mouseClicked() {
     closeAboutModal();
   }
 
-  if (addButton !== currentTarget && addPopup !== currentTarget ) {
+  if (addPopup !== currentTarget ) {
     closeAddModal();
+  }
+
+  if (addMode && (addButton !== currentTarget && aboutButton !== currentTarget)) {
+    //store lat and long
+    lStorage.lng = position.lng;
+    lStorage.lat = position.lat
+    mapboxCanvas.removeClass('cursorCrosshair');
+    openAddModal();
   }
 
   // check if cursor is over one of the flowers
