@@ -192,8 +192,7 @@ class Flower {
   }
 
   display(posX, posY) {
-    let flower_type = this.type;
-    image(imgs[flower_type], posX, posY, 30, 30);
+    image(imgs[this.type], posX, posY, 30, 30);
   }
 
   focusFlowerOn(posX, posY) {
