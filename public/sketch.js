@@ -3,6 +3,9 @@ let myMap;
 let allFlowers = [];
 let socket = io();
 let imgs = [];
+let aboutPopup;
+let plantInfoPopup;
+let addPopup;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -32,6 +35,9 @@ function setup() {
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
+  aboutPopup = document.getElementById("popup_about");
+  plantInfoPopup = document.getElementById("popup_plant_info");
+  addPopup = document.getElementById("popup_add_plant");
   //createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
@@ -53,25 +59,39 @@ function drawFlowers() {
   }
 }
 
-function openFlowerDetails(data) {
-  // open a popup modal
-  let popup = document.getElementById("popup_1");
-  popup.classList.remove("hidden");
+//// About modal
+function openAboutModal() {
+  aboutPopup.classList.remove("hidden");
+}
+
+function closeAboutModal() {
+  aboutPopup.classList.add("hidden");
+}
+
+//// Add new plant modal
+function openAddModal() {
+  addPopup.classList.remove("hidden");
+}
+
+function closeAddModal() {
+  addPopup.classList.add("hidden");
+}
+
+//// Plant Info modal
+function openFlowerDetails() {
+  plantInfoPopup.classList.remove("hidden");
   // The following line is for testing
   // pass the username and the flower_id
   // waterFlower("Tim", "3Mdnja11cjVQ5KxRDzFJ");
 }
 
-function removeFlowerDetails() {
-  // close popup modal
-  let popup = document.getElementById("popup_1");
-  popup.classList.add("hidden");
+function closeFlowerDetails() {
+  plantInfoPopup.classList.add("hidden");
 }
 
 function getFlowerDetailsOpen() {
   // this function checks if the popup is open
-  let popup = document.getElementById("popup_1");
-  if (popup.classList.contains("hidden")) {
+  if (plantInfoPopup.classList.contains("hidden")) {
     return false;
   } else {
     return true;
@@ -134,7 +154,7 @@ function mouseClicked() {
       openFlowerDetails(data);
       return;
     } else if (getFlowerDetailsOpen()) {
-      removeFlowerDetails();
+      closeFlowerDetails();
     }
   }
 }
