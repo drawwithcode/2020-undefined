@@ -112,9 +112,8 @@
 
   <!-- POPUP PLANT INFORMATION -->
 
-  <div id="popup_plant_info" class="absolute grid place-items-center mx-2 my-10 sm:my-auto z-20 right-10 top-10 hidden">
-    <div class="w-100 bg-yellow-100 border-4 border-black">
-
+  <div id="popup_plant_info" class="absolute grid place-items-center z-20 h-screen rinset-y-0 right-0 mr-10 py-10">
+    <div class="w-100 bg-yellow-100 border-4 border-black flex-1">
       <!-- Card Title -->
       <div class="border-b-4 border-black flex justify-between">
         <h2 class=" p-3 font-nokia text-lg text-black">
@@ -124,7 +123,7 @@
           <img src="images/close.svg" />
         </button>
       </div>
-      <div class="m-5 pr-5">
+      <div class="m-5 pr-5 overflow-y">
         <h2 id="plant-name" class=" p-b-3 font-nokia text-2xl tracking-widest text-black">
           Plant Name
         </h2>
@@ -145,17 +144,19 @@
         <p class="font-nokia">Green level:</p>
         <p id="green-level" class="font-minecraftia">Average</p>
         <p class="font-nokia">
-          Remaining days:
+          Age:
         </p>
-        <p id="remaining-days" class="font-minecraftia">
+        <p id="age" class="font-minecraftia">
           10
         </p>
         <p class="font-nokia">
           Other participants:
         </p>
-        <p id="other-participants" class="font-minecraftia">
-          John Doe, Peter Smith
-        </p>
+        <div id="gardeners" class="font-minecraftia">
+          <p>John Doe</p>
+          <p>John Doe</p>
+          <p>John Doe</p>
+        </div>
       </div>
       <div class="py-6 px-16">
         <button class=" font-nokia text-md px-4 py-3 bg-white border-4 border-black text-black " type="button">

@@ -58,6 +58,7 @@ function setup() {
   body = document.getElementById("body");
   mapboxCanvas = select("#defaultCanvas0");
   imageMode(CENTER);
+  // createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
   socket.emit("firstConnection");
@@ -123,15 +124,58 @@ function toggleAddModal(isOpen) {
 
 //// Plant Info modal
 function toggleFlowerDetailsModal(data, isOpen) {
+  console.log(data);
   isOpen
     ? plantInfoPopup.classList.remove("hidden")
     : plantInfoPopup.classList.add("hidden");
 
   isFlowertDetailsModalOpen = isOpen;
 
+  let flowerType = "";
+  switch(data.flowerType) {
+    case 0:
+      flowerType = "Type 0";
+      break;
+    case 1:
+      flowerType = "Type 1";
+      break;
+    default:
+      flowerType = "Type Unknown";
+      break;
+  }
+
+  let waterNeed = "";
+  if(data.no_water >= 0 && data.no_water <= 3) {
+    waterNeed = "Alive and fresh";
+  } else if (data.no_water >= 4 && data.no_water <= 7) {
+    waterNeed = "It's getting hot";
+  } else {
+    waterNeed = "Needs water immediately";
+  }
+
+  select("#plant-name").html(data.flowerName);
+  select("#plant-type").html(flowerType);
+  select("#user-name").html(data.userName);
+  select("#user-location").html(data.userLocation);
+  select("#green-level").html(waterNeed);
+  select("#age").html(data.age + " days old");
+
+  let watered = data.watered;
+  let participants = select("#gardeners");
+  if (Array.isArray(watered) && watered.length > 0) {
+    participants.html("");
+  for (let i = 0; i < watered.length; i++) {
+    participants.html("<p><span class='font-black'>" + watered[i].date.date + ":</span> " + watered[i].user + "</p>", true);
+  }
+} else {
+  participants.html("<p>No one watered this plant yet</p>");
+}
+
+
+
   // The following line is for testing
   // pass the username and the flower_id
-  // waterFlower("Tim", "3Mdnja11cjVQ5KxRDzFJ");
+  // waterFlower("Tim", "uaH46IbwMffA1PsXXEK2");
 }
 
 function nextButton() {
@@ -188,7 +232,8 @@ socket.on("updateFlowers", function (data) {
         data[i].flower_data.user_location,
         data[i].flower_data.date_added,
         data[i].flower_data.watered,
-        data[i].flower_age
+        data[i].flower_age,
+        data[i].no_water
       )
     );
   }
@@ -257,7 +302,8 @@ class Flower {
     user_location,
     date_added,
     watered,
-    age
+    age,
+    no_water
   ) {
     this.id = flower_id;
     this.position = flower_coordinates;
@@ -268,6 +314,7 @@ class Flower {
     this.date = date_added;
     this.watered = watered;
     this.age = age;
+    this.no_water = no_water;
   }
 
   display(posX, posY) {
@@ -316,6 +363,7 @@ class Flower {
       dateAdded: this.date,
       watered: this.watered,
       age: this.age,
+      no_water: this.no_water
     };
     return data;
   }
