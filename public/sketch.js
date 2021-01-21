@@ -105,10 +105,11 @@ function toggleAddModal(isOpen) {
 }
 
 //// Plant Info modal
-function toggleFlowerDetails(isOpen) {
-  isFlowertDetailsModalOpen
-    ? plantInfoPopup.classList.add("hidden")
-    : plantInfoPopup.classList.remove("hidden");
+function toggleFlowerDetailsModal(isOpen) {
+  console.log(isOpen)
+  isOpen
+    ? plantInfoPopup.classList.remove("hidden")
+    : plantInfoPopup.classList.add("hidden");
 
   isFlowertDetailsModalOpen = isOpen;
 
@@ -123,15 +124,6 @@ function nextButton() {
   console.log("local storage:", lStorage);
   //switch the modal
 }
-
-// function getFlowerDetailsOpen() {
-//   // this function checks if the popup is open
-//   if (plantInfoPopup.classList.contains("hidden")) {
-//     return false;
-//   } else {
-//     return true;
-//   }
-// }
 
 function saveFormData() {
   lStorage.name = document.getElementById("name").value;
@@ -200,10 +192,10 @@ function mouseClicked() {
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
       let data = allFlowers[i].getFlowerData();
-      toggleFlowerDetails(true);
+      toggleFlowerDetailsModal(true);
       return;
     } else {
-      toggleFlowerDetails(false);
+      toggleFlowerDetailsModal(false);
     }
   }
 }
