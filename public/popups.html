@@ -26,152 +26,116 @@
 
 
 
+
+
 <body class="bg-gray-300">
 
-  <!-- BUTTON -->
-  <div id="clickPlant" class="flex items-center justify-center h-screen">
 
-    <button  style="padding-top: 0.5em; padding-bottom: 0.5rem"
-    class="text-xl px-10 bg-green-500 text-gray-800 rounded-full"
-    type="button"><b>SAVE PLANT</b></button>
 
-  </div>
-  <!-- TRYING ANOTHER POPUP BUTTON -->
-  <div class="popup">  <button  style="padding-top: 0.5em; padding-bottom: 0.5rem"
-    onclick="myFunction()"
-    class="text-xl px-10 bg-green-500 text-gray-800 rounded-full"
-    type="button"><b>SAVE PLANT</b></button>
-    <div class="popuptext" id="myPopup">
-      <div class="h-screen flex items-center justify-center">
-        <div class="relative">
-          <img src=".\svg\Group 26.svg">
+  <div class="flex flex-col h-screen "
 
-          <div class="absolute   left-8 top-7 ">
-            <h2 class="text-white text-left"><b>Name of plant</b></h2>
-          </div>
+  <!-- Auth Card Container -->
+  <div class="  grid place-items-center mx-2 my-20 sm:my-auto">
+    <!-- Auth Card -->
+    <div class="  w-100 bg-yellow-100 border-2 border-black ">
 
-          <div class="absolute left-8 top-16">
-            <img src=".\images\plant.png">
-          </div>
+      <!-- Card Title -->
+      <div class="border-b-2 border-black">
+        <h2 class=" p-3 font-nokia text-lg  text-black">
+          Information
+        </h2>
+      </div>
+      <div class="m-5 pr-5">
+        <h2 class=" p-3 font-nokia text-2xl tracking-widest		 text-black">
+          Plant Name
+        </h2>
+        <img src=".\svg\hibiscus.svg" class="w-40 m-10">
 
-          <div class="absolute left-8 bottom-20">
-            <p class="text-white text-left">
-              <b>Name of user:</b> Lorenzo di Grazia <br>
-              <b>User location:</b> Milan, Italy<br>
-              <b>Green level:</b> Average<br>
-              <b>Remaining days:</b> 10<br>
-              <br>
-              <b>Other participants:</b><br>
-              John Doe, Peter Smith</p>
-            </div>
+        <p class="font-minecraftia text-l leading-loose "><b>Name of user</b>: Lorenzo di Grazia <br>
 
-            <div class="absolute left-8 bottom-5">
-              <button  style="padding-top: 0.5em; padding-bottom: 0.5rem"
-              class="text-base px-10 bg-green-500 text-gray-800 rounded-full uppercase"
-              type="button"><b>Help maintain this plant</b></button>
-            </div>
-          </div>
+          <b>User location:</b>  Milan, Italy <br>
+
+          <b>Green level:</b>  Average <br>
+          <b>Remaining days:</b>  10 <br>
+            <br>
+          <b>Other participants:</b> <br>
+          John Doe, Peter Smith </p>
+
+        </div>
+        <div class="pt-10 pb-7 px-20 border-t-2 border-black" >
+          <button
+          class=" font-nokia text-sm p-2.5 bg-white border-2 border-black text-black "
+          type="button">Maintain this plant</button>
         </div>
       </div>
 
+      </div>
+    </div>
   </div>
 
 
-  <!-- POPUP PLANT INFORMATION -->
-  <!-- <div class="infoplant" style="display:flex; "> -->
-  <div class="h-screen flex items-center justify-center">
-    <div class="relative   ">
-      <img src=".\svg\Group 26.svg">
-
-      <div class="absolute   left-8 top-7 ">
-        <h2 class="text-white text-left"><b>Name of plant</b></h2>
-      </div>
-
-      <div class="absolute left-8 top-16">
-        <img src=".\images\plant.png">
-      </div>
-
-      <div class="absolute left-8 bottom-20">
-        <p class="text-white text-left">
-          <b>Name of user:</b> Lorenzo di Grazia <br>
-          <b>User location:</b> Milan, Italy<br>
-          <b>Green level:</b> Average<br>
-          <b>Remaining days:</b> 10<br>
-          <br>
-          <b>Other participants:</b><br>
-          John Doe, Peter Smith</p>
-        </div>
-
-        <div class="absolute left-8 bottom-5">
-          <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
-          class="text-base px-10 bg-green-500 text-gray-800 rounded-full uppercase"
-          type="button"><b>Help maintain this plant</b></button>
-        </div>
+  <!-- THANKS POPUP -->
+  <div class="flex flex-col h-screen "
+  style="background-image: radial-gradient( #000000 2px, transparent 2px); background-size: 20px 20px">
+  <div class="  grid place-items-center mx-2 my-20 sm:my-auto">
+    <div class=" flex justify-center w-4/12  bg-yellow-100 border-2 border-black p-20 ">
+      <h2 class="flex justify-left p-3 font-nokia text-xl tracking-wide	  text-black">
+        Thanks for helping this plant live!  </h2>
+        <img src=".\svg\babyplant.svg" class="w-">
       </div>
     </div>
-    <!-- </div> -->
+  </div>
 
-    <!-- POPUP GROWING PLANT -->
-    <div class="flex items-center justify-center h-screen">
 
-      <div class="relative inline-block align-middle	">
 
-        <img src=".\svg\Rectangle2.svg">
-        <div class="absolute  top-8 inset-0 flex justify-center ">
-          <h2 class="text-white text-center"><b>Thanks for keeping this plant alive!</b></h2>
-        </div>
-        <div class=" absolute bottom-0 inset-0  flex items-center justify-center ">
-          <img src=".\images\babyplant.png" class="">
-        </div>
+
+
+  <!-- INFORMATION USER -->
+  <div class="flex flex-col h-screen "
+  style="background-image: radial-gradient( #000000 2px, transparent 2px); background-size: 20px 20px">
+  <!-- Auth Card Container -->
+  <div class="  grid place-items-center mx-2 my-20 sm:my-auto">
+    <!-- Auth Card -->
+    <div class="  w-4/12  bg-yellow-100 border-2 border-black ">
+
+      <!-- Card Title -->
+      <div class="border-b-2 border-black">
+        <h2 class="flex justify-center p-3 font-nokia text-lg  text-black">
+          Name of the plant
+        </h2>
       </div>
-    </div>
 
+      <form class=" p-5 mt-10">
+        <!-- Email Input -->
+        <label  class="block font-minecraftia text-xs font-semibold text-black">My name is</label>
+        <input  type="name" name="name" placeholder="name"
+        class="block w-full py-3 px-1 mt-2 bg-yellow-100
+        text-gray-800 appearance-none
+        border-2 border-black
+        focus:text-gray-500 focus:outline-none focus:border-gray-200"
+        required />
+        <br>
 
-    <!-- POPUP FORM -->
+        <!-- Password Input -->
+        <label class="block font-minecraftia text-xs font-semibold text-black">I am from</label>
+        <input   placeholder="I am from"
+        class="block w-full py-3 px-1 mt-2 bg-yellow-100
+        text-gray-800 appearance-none
+        border-2 border-black
+        focus:text-gray-500 focus:outline-none focus:border-gray-200"
+        required />
 
-    <div class="flex  justify-center h-screen">
-      <div class="relative">
-        <img src=".\svg\infobox.svg">
-        <div class="absolute top-16 inset-0 flex justify-center ">
-          <h2 class="text-black text-center uppercase	text-xl"><b>Add your information</b></h2>
-        </div>
-        <form id="form">
-          <div class="absolute top-40 inset-0 flex justify-center">
-            <input 
-            style="padding-top: 0.5em; padding-bottom: 0.5rem"
-            id="name"
-            value="name"
-            class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
-            w-300 mx-auto placeholder-black"
-            type="text" placeholder="Name" required
-            />
-          </div>
+        <!-- Auth Buttton -->
+        <button type="submit"
+        class="w-full px-10 py-5  mt-16 bg-gray-800
+        font-minecraftia text-white uppercase
+        focus:outline-none hover:bg-gray-700 hover:shadow-none">
+        next
+      </button>
+    </form>
+  </div>
+</div>
+</div>
 
-          <div class="absolute top-56 inset-0 flex justify-center">
-            <input 
-            style="padding-top: 0.5em; padding-bottom: 0.5rem"
-            class="absolute text-base px-10 bg-gray-300 text-gray-800 rounded-full
-            w-300 mx-auto placeholder-black"
-            id="email"
-            value="email"
-            type="text" 
-            placeholder="E-mail"
-            required 
-            />
-          </div>
-
-          <div class="absolute right-16">
-            <button  style="padding-top: 0.5em; padding-bottom: 0.5rem "
-            class="text-
-            base px-10 bg-green-500 text-gray-800 rounded-full"
-            type="button"
-            onclick="saveFormData()";
-            >NEXT</button>
-          </form>
-        </div>
-      </div>
-    </div>
-
-
-  </body>
-  </html>
+      </body>
+      </html>
