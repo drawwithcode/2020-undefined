@@ -7,6 +7,7 @@ let imgs = [];
 let aboutPopup;
 let plantInfoPopup;
 let addPopup;
+let helperMsg;
 let isAboutModalOpen;
 let isAddModalOpen;
 let isFlowertDetailsModalOpen;
@@ -50,6 +51,7 @@ function setup() {
   aboutPopup = document.getElementById("popup_about");
   plantInfoPopup = document.getElementById("popup_plant_info");
   addPopup = document.getElementById("popup_add_plant");
+  helperMsg = document.getElementById('helper_message')
   body = document.getElementById("body");
   mapboxCanvas = select("#defaultCanvas0");
   imageMode(CENTER);
@@ -77,6 +79,18 @@ function drawFlowers() {
 function emitAddPlantMode() {
   addMode = true;
   mapboxCanvas.addClass("cursorCrosshair");
+  toggleHelperMessage(true);
+}
+
+function toggleHelperMessage(isOpen) {
+  console.log(isOpen)
+  if(isOpen) {
+    helperMsg.classList.remove("hidden");
+    frame.classList.add("border");
+  } else {
+    helperMsg.classList.add("hidden");
+    frame.classList.remove("border");
+  }
 }
 
 //// About modal
@@ -96,17 +110,19 @@ function toggleAddModal(isOpen) {
   if (isOpen) {
     addPopup.classList.remove("hidden");
     body.classList.add("preventScroll");
+    toggleHelperMessage(false);
   } else {
     addPopup.classList.add("hidden");
     body.classList.remove("preventScroll");
   }
+  
+
   isAddModalOpen = isOpen;
   addMode = isOpen;
 }
 
 //// Plant Info modal
 function toggleFlowerDetailsModal(isOpen) {
-  console.log(isOpen)
   isOpen
     ? plantInfoPopup.classList.remove("hidden")
     : plantInfoPopup.classList.add("hidden");
@@ -193,7 +209,6 @@ function mouseClicked() {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
       let data = allFlowers[i].getFlowerData();
       toggleFlowerDetailsModal(true);
-      return;
     } else {
       toggleFlowerDetailsModal(false);
     }

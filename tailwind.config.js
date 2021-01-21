@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'minecraftia': ['Minecraftia-20', 'serif'],
-        'nokia': ['Nokia-Cellphone-Small', 'serif']
+        'nokia': ['Nokia-Cellphone-Small', 'serif'],
       }
     },
   },
