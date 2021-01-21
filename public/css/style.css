@@ -11,3 +11,8 @@
 .cursorCrosshair {
   cursor: crosshair !important;
 }
+
+.preventScroll {
+  position: fixed;
+  overflow: hidden;
+}

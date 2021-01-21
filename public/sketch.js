@@ -1,4 +1,5 @@
 let canvas;
+let body;
 let myMap;
 let allFlowers = [];
 let socket = io();
@@ -41,7 +42,7 @@ function setup() {
   isAddModalOpen = false;
   isFlowertDetailsModalOpen = false;
   addMode = false;
-  lStorage = { lng: null, lat: null };
+  lStorage = { lng: null, lat: null, name: "", location: "" };
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
@@ -49,6 +50,7 @@ function setup() {
   aboutPopup = document.getElementById("popup_about");
   plantInfoPopup = document.getElementById("popup_plant_info");
   addPopup = document.getElementById("popup_add_plant");
+  body = document.getElementById("body");
   mapboxCanvas = select("#defaultCanvas0");
   imageMode(CENTER);
   //createFlower();
@@ -93,10 +95,10 @@ function toggleAddModal(isOpen) {
   mapboxCanvas.addClass("cursorPointer");
   if (isOpen) {
     addPopup.classList.remove("hidden");
-    //unlock map movement
+    body.classList.add("preventScroll");
   } else {
     addPopup.classList.add("hidden");
-    //lock map movement
+    body.classList.remove("preventScroll");
   }
   isAddModalOpen = isOpen;
   addMode = isOpen;
@@ -115,6 +117,13 @@ function toggleFlowerDetails(isOpen) {
   // waterFlower("Tim", "3Mdnja11cjVQ5KxRDzFJ");
 }
 
+function nextButton() {
+  //Store form data
+  saveFormData();
+  console.log("local storage:", lStorage);
+  //switch the modal
+}
+
 // function getFlowerDetailsOpen() {
 //   // this function checks if the popup is open
 //   if (plantInfoPopup.classList.contains("hidden")) {
@@ -125,9 +134,8 @@ function toggleFlowerDetails(isOpen) {
 // }
 
 function saveFormData() {
-  let name = document.getElementById("name").value;
-  let location = document.getElementById("email").value;
-  (userName = name), (userLocation = location);
+  lStorage.name = document.getElementById("name").value;
+  lStorage.location = document.getElementById("email").value;
 }
 
 function createFlower() {
@@ -179,8 +187,6 @@ function mouseClicked() {
   if (aboutPopup !== currentTarget) {
     toggleAboutModal(false);
   }
-
-  console.log(addMode);
 
   if (addMode && addButton !== currentTarget && aboutButton !== currentTarget) {
     //store lat and long
