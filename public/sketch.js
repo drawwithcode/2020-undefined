@@ -7,6 +7,8 @@ let imgs = [];
 let aboutPopup;
 let plantInfoPopup;
 let addPopup;
+let steps;
+let n = 0;
 let helperMsg;
 let isAboutModalOpen;
 let isAddModalOpen;
@@ -39,6 +41,7 @@ function preload() {
 }
 
 function setup() {
+  steps = document.querySelectorAll('[id^="step-"]');
   isAboutModalOpen = false;
   isAddModalOpen = false;
   isFlowertDetailsModalOpen = false;
@@ -51,11 +54,10 @@ function setup() {
   aboutPopup = document.getElementById("popup_about");
   plantInfoPopup = document.getElementById("popup_plant_info");
   addPopup = document.getElementById("popup_add_plant");
-  helperMsg = document.getElementById('helper_message')
+  helperMsg = document.getElementById("helper_message");
   body = document.getElementById("body");
   mapboxCanvas = select("#defaultCanvas0");
   imageMode(CENTER);
-  //createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
   socket.emit("firstConnection");
@@ -83,8 +85,7 @@ function emitAddPlantMode() {
 }
 
 function toggleHelperMessage(isOpen) {
-  console.log(isOpen)
-  if(isOpen) {
+  if (isOpen) {
     helperMsg.classList.remove("hidden");
     frame.classList.add("border");
   } else {
@@ -115,14 +116,13 @@ function toggleAddModal(isOpen) {
     addPopup.classList.add("hidden");
     body.classList.remove("preventScroll");
   }
-  
 
   isAddModalOpen = isOpen;
   addMode = isOpen;
 }
 
 //// Plant Info modal
-function toggleFlowerDetailsModal(isOpen) {
+function toggleFlowerDetailsModal(data, isOpen) {
   isOpen
     ? plantInfoPopup.classList.remove("hidden")
     : plantInfoPopup.classList.add("hidden");
@@ -139,11 +139,22 @@ function nextButton() {
   saveFormData();
   console.log("local storage:", lStorage);
   //switch the modal
+  // TODO - Beautify this code
+  document.getElementById(steps[n].getAttribute("id")).classList.add("hidden");
+  document
+    .getElementById(steps[n + 1].getAttribute("id"))
+    .classList.remove("hidden");
+  n++;
 }
 
 function saveFormData() {
   lStorage.name = document.getElementById("name").value;
   lStorage.location = document.getElementById("email").value;
+}
+
+function submitForm() {
+  //createFlower(data);
+  toggleAddModal(false);
 }
 
 function createFlower() {
@@ -192,12 +203,13 @@ function mouseClicked() {
   let aboutButton = document.getElementById("about_button");
   let addButton = document.getElementById("add_button");
 
+  //if clicked outside if about popup, close it
   if (aboutPopup !== currentTarget) {
     toggleAboutModal(false);
   }
 
+  // check if add mode is on and if not clicked to any of buttons
   if (addMode && addButton !== currentTarget && aboutButton !== currentTarget) {
-    //store lat and long
     lStorage.lng = position.lng;
     lStorage.lat = position.lat;
     mapboxCanvas.removeClass("cursorCrosshair");
@@ -208,9 +220,7 @@ function mouseClicked() {
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
       let data = allFlowers[i].getFlowerData();
-      toggleFlowerDetailsModal(true);
-    } else {
-      toggleFlowerDetailsModal(false);
+      toggleFlowerDetailsModal(data, true);
     }
   }
 }
@@ -262,7 +272,6 @@ class Flower {
 
   display(posX, posY) {
     image(imgs[this.type], posX, posY, 30, 30);
-    // ellipse(posX, posY, 30, 30);
   }
 
   // the following has to be moved to the server in order to update the database
