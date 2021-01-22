@@ -198,6 +198,10 @@ function saveFormData() {
   lStorage.location = document.getElementById("email").value;
 }
 
+function savePlantChoice(type) {
+  lStorage.type = type;
+}
+
 function submitForm() {
   //createFlower(lStorage);
   toggleAddModal(false);
