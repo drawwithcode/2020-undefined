@@ -25,7 +25,7 @@ let io = socket(server);
 
 let allFlowers = [];
 
-let maxAge = 10;
+let maxNoWaterDays = 10;
 
 app.get("/mappa.js", function(req, res) {
   res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
@@ -104,6 +104,10 @@ function writeToDatabase(data) {
   let user_name = data.user_name;
   let user_location = data.user_location;
   let date_added = getDate();
+  let water = {
+    user: data.user_name,
+    date: getDate()
+  };
 
   firebase
     .firestore()
@@ -115,7 +119,7 @@ function writeToDatabase(data) {
       flower_name: flower_name,
       user_name: user_name,
       user_location: user_location,
-      date_added: date_added
+      date_added: date_added,
     })
 }
 
@@ -128,18 +132,30 @@ function getFromDatabase() {
     .then(function(querySnapshot) {
       let data = [];
       querySnapshot.forEach(function(doc) {
+        // delete(doc.id);
         // compares the date when the flower was added with the current day
         let date_added = doc.data().date_added.date;
         let age = getDateDifference(date_added);
-        // delete if flower is older than the maximum age
-        // or add it to the flower array to be displayed
-        if(age >= maxAge) {
+
+        let noWaterDays = 0;
+        let wateredList = doc.data().watered;
+        // check if flower has ever been watered
+        // then take the last date and compare it to today
+        if (Array.isArray(wateredList)) {
+          let lastWatered = wateredList[wateredList.length - 1];
+          noWaterDays = getDateDifference(lastWatered.date.date);
+        }
+
+        if (noWaterDays >= maxNoWaterDays) {
+          // delete if flower is older than the maximum days without
+          // water or add it to the flower array to be displayed
           deleteInDatabase(doc.id);
         } else {
           let docData = {
             flower_id: doc.id,
             flower_data: doc.data(),
-            flower_age: age
+            flower_age: age,
+            no_water: noWaterDays
           }
           data.push(docData);
         }
@@ -167,7 +183,7 @@ function deleteInDatabase(data){
 function getDate() {
   let now = dayjs();
   // substract days to test if the difference works
-  let d2 = now.subtract('3', 'day');
+  let d2 = now.subtract('2', 'day');
   let day = {
     date: d2.format("MMMM D YYYY"),
     time: now.format("HH:mm:ss")
