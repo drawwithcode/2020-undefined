@@ -31,3 +31,91 @@
   pointer-events: none;
   background: none;
 }
+
+ /* Custom scrollbar  */
+/* width */
+::-webkit-scrollbar {
+  width: 25px;
+  height: auto;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border: 3px solid black;
+  padding: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: transparent;
+	background-image: radial-gradient(black 33%, transparent 33%);
+	background-size: 3.5px 3.5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: black; 
+}
+
+/* Arrows up and down */
+
+::-webkit-scrollbar-button:vertical:decrement:start {
+  background-image: url(/images/arrow-up.svg);
+  background-repeat: no-repeat;
+  display: block;
+  margin-top: 10px;
+}
+
+::-webkit-scrollbar-button:vertical:increment:end {
+  background-image: url(/images/arrow-down.svg);
+  display: block;
+  background-repeat: no-repeat;
+}
+
+.shadow { 
+  position: relative;
+}
+
+button.shadow:hover { 
+	left: 20px;
+  top: 20px;
+  /* transition: .3s ease; */
+}
+
+button.shadow:hover:before { 
+	left: 0;
+  top: 0;
+}
+
+.shadow:before {
+  content: '';
+	display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+	left: 20px;
+	top: 20px;
+	background: transparent;
+	background-image: radial-gradient(black 33%, transparent 33%);
+  background-size: 3.5px 3.5px;
+  z-index: -1;
+}
+
+.button-shadow {
+  position: relative;
+  box-shadow: 12px 12px 0 0 black;
+}
+
+.button-shadow:hover {
+  top: 12px;
+  left: 12px;
+  box-shadow: 0 0 0 0 black;
+  color: blue;
+}
