@@ -67,7 +67,6 @@ function setup() {
 }
 
 function drawFlowers() {
-  console.log(allFlowers);
   clear();
   for (let i = 0; i < allFlowers.length; i++) {
     const flowerData = allFlowers[i].getFlowerData();
@@ -137,17 +136,29 @@ function openFlowerDetailsModal(data) {
   }
 
   let flowerType = "";
-  switch(data.flowerType) {
-    case 0:
-      flowerType = "Type 0";
-      break;
-    case 1:
-      flowerType = "Type 1";
-      break;
-    default:
-      flowerType = "Type Unknown";
-      break;
-  }
+switch (data.flowerType) {
+  case 0:
+    flowerType = "Guaiacum Sanctum";
+    break;
+  case 1:
+    flowerType = "Amorphophallus Titanum,";
+    break;
+  case 2:
+    flowerType = "Bois Dentelle";
+    break;
+  case 3:
+    flowerType = "Australian Orchid";
+    break;
+  case 4:
+    flowerType = "Green Pitcher Plant";
+    break;
+  case 5:
+    flowerType = "Rafflesia Arnoldii";
+    break;
+  default:
+    flowerType = "Type Unknown";
+    break;
+}
 
   let waterNeed = "";
   if(data.no_water >= 0 && data.no_water <= 3) {
@@ -360,7 +371,7 @@ class Flower {
   }
 
   display(posX, posY) {
-    image(imgs[this.type], posX, posY, 30, 30);
+    image(imgs[this.type], posX, posY, 40, 40);
   }
 
   // the following has to be moved to the server in order to update the database
