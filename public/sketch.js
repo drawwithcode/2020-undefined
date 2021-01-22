@@ -5,7 +5,7 @@ let allFlowers = [];
 let socket = io();
 let imgs = [];
 let aboutPopup;
-let plantInfoPopup;
+// let plantInfoPopup;
 let addPopup;
 let steps;
 let n = 0;
@@ -53,7 +53,7 @@ function setup() {
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
   aboutPopup = document.getElementById("popup_about");
-  plantInfoPopup = document.getElementById("popup_plant_info");
+  // plantInfoPopup = document.getElementById("popup_plant_info");
   addPopup = document.getElementById("popup_add_plant");
   helperMsg = document.getElementById("helper_message");
   body = document.getElementById("body");
@@ -81,57 +81,49 @@ function drawFlowers() {
   }
 }
 
-function emitAddPlantMode() {
-  addMode = true;
-  mapboxCanvas.addClass("cursorCrosshair");
-  toggleHelperMessage(true);
+function openHelperMessage() {
+  let modal = select("#helper_message");
+    modal.elt.classList.remove("hidden");
+
 }
 
-function toggleHelperMessage(isOpen) {
-  if (isOpen) {
-    helperMsg.classList.remove("hidden");
-    frame.classList.add("border");
-  } else {
-    helperMsg.classList.add("hidden");
-    frame.classList.remove("border");
-  }
+function closeHelperMessage() {
+  let modal = select("#helper_message");
+    modal.elt.classList.add("hidden");
 }
 
 //// About modal
-function toggleAboutModal(isOpen) {
-  if (isAboutModalOpen) {
-    aboutPopup.classList.remove("hidden");
+function toggleAboutModal() {
+  let modal = select("#popup_about");
+  if(modal.elt.classList.contains("hidden")) {
+    modal.elt.classList.remove("hidden");
   } else {
-    aboutPopup.classList.add("hidden");
+    modal.elt.classList.add("hidden");
   }
-  isAboutModalOpen = isOpen;
 }
 
 //// Add new plant modal
-function toggleAddModal(isOpen) {
-  // the cursor has to be changed by adding a class to overide the default
-  mapboxCanvas.addClass("cursorPointer");
-  if (isOpen) {
-    addPopup.classList.remove("hidden");
-    body.classList.add("preventScroll");
-    toggleHelperMessage(false);
-  } else {
-    addPopup.classList.add("hidden");
-    body.classList.remove("preventScroll");
+function openAddModal() {
+  let modal = select("#popup_add_plant");
+  if(modal.elt.classList.contains("hidden")) {
+    select("body").elt.classList.add("preventScroll");
+    modal.elt.classList.remove("hidden");
   }
+}
 
-  isAddModalOpen = isOpen;
-  addMode = isOpen;
+function closeAddModal() {
+  let modal = select("#popup_add_plant");
+    select("body").elt.classList.remove("preventScroll");
+    modal.elt.classList.add("hidden");
 }
 
 //// Plant Info modal
-function toggleFlowerDetailsModal(data, isOpen) {
+function openFlowerDetailsModal(data) {
   console.log(data);
-  isOpen
-    ? plantInfoPopup.classList.remove("hidden")
-    : plantInfoPopup.classList.add("hidden");
-
-  isFlowertDetailsModalOpen = isOpen;
+  let modal = select("#popup_plant_info");
+  if(modal.elt.classList.contains("hidden")) {
+    modal.elt.classList.remove("hidden");
+  }
 
   let flowerType = "";
   switch(data.flowerType) {
@@ -172,12 +164,14 @@ function toggleFlowerDetailsModal(data, isOpen) {
 } else {
   participants.html("<p>No one watered this plant yet</p>");
 }
-
-
-
   // The following line is for testing
   // pass the username and the flower_id
   // waterFlower("Tim", "uaH46IbwMffA1PsXXEK2");
+}
+
+function closeFlowerDetailsModal(){
+  let modal = select("#popup_plant_info");
+    modal.elt.classList.add("hidden");
 }
 
 function nextButton() {
@@ -202,10 +196,10 @@ function savePlantChoice(type) {
   lStorage.type = type;
 }
 
-function submitForm() {
-  //createFlower(lStorage);
-  toggleAddModal(false);
-}
+// function submitForm() {
+//   //createFlower(lStorage);
+//   toggleAddModal(false);
+// }
 
 function createFlower() {
   // random numbers are added for testing
@@ -250,30 +244,41 @@ socket.on("updateFlowers", function (data) {
 function mouseClicked() {
   const mapZoom = myMap.zoom();
   const position = myMap.pixelToLatLng(mouseX, mouseY);
-  const currentTarget = event.target;
-  let aboutButton = document.getElementById("about_button");
-  let addButton = document.getElementById("add_button");
+
+  // const currentTarget = event.target;
+  // let aboutButton = document.getElementById("about_button");
+  // let addButton = document.getElementById("add_button");
 
   //if clicked outside if about popup, close it
-  if (aboutPopup !== currentTarget) {
-    toggleAboutModal(false);
-  }
+  // if (aboutPopup !== currentTarget) {
+  //   toggleAboutModal(false);
+  // }
 
   // check if add mode is on and if not clicked to any of buttons
-  if (addMode && addButton !== currentTarget && aboutButton !== currentTarget) {
+  if (addMode) {
+    addMode = false;
     lStorage.lng = position.lng;
     lStorage.lat = position.lat;
     mapboxCanvas.removeClass("cursorCrosshair");
-    toggleAddModal(true);
-  }
-
+    closeHelperMessage();
+    openAddModal();
+  } else {
   // check if cursor is over one of the flowers
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
       let data = allFlowers[i].getFlowerData();
-      toggleFlowerDetailsModal(data, true);
+      openFlowerDetailsModal(data);
     }
   }
+}
+}
+
+function emitAddPlantMode() {
+  setTimeout(function() {
+    addMode = true;
+  }, 500)
+  mapboxCanvas.addClass("cursorCrosshair");
+  openHelperMessage();
 }
 
 function mouseMoved() {
@@ -344,7 +349,7 @@ class Flower {
     let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.03 here because we are using coordinates and not pixels
     // when changin keep in mind that the image might have transparency
-    if (d < 0.008 / zoom) {
+    if (d < 0.001 / zoom) {
       return true;
     } else {
       return false;

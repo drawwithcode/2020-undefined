@@ -14,11 +14,11 @@
 </head>
 
 <body id="body" class="body leading-8">
-  <div id="frame"></div>
+  <!-- <div id="frame"></div> -->
   <!-- BUTTONS -->
   <div class="absolute z-20 top-10 left-10">
     <button class="relative w-24 h-24 display-block bg-white border-4 border-black mr-4 font-minecraftia shadow"
-      onclick="toggleAboutModal(true)" id='about_button'>
+      onclick="toggleAboutModal()" id='about_button'>
       ?
       </br>
       about
@@ -34,7 +34,7 @@
   <div id="popup_about"
     class="absolute left-0 right-0 w-96 h-96 z-20 bg-white border-4 border-black mx-auto top-60 hidden">
     <div class="popup_heading flex border-b-4 border-black">
-      <button class="flex-end p-2" onclick="toggleAboutModal(false)">
+      <button class="flex-end p-2" onclick="toggleAboutModal()">
         <img src="images/close.svg" />
       </button>
       <h2 class=" p-3 font-nokia text-md text-black">
@@ -52,9 +52,8 @@
       <p class="font-minecraftia p-10">Pick a location to plant.</p>
     </div>
   </div>
-
   <!-- POPUP ADD PLANT -->
-  <div id="popup_add_plant" class="absolute w-full flex flex-col h-screen hidden z-30 "
+  <div id="popup_add_plant" class="absolute w-full flex flex-col h-screen hidden z-30 hidden"
     style="background-image: radial-gradient( #000000 2px, transparent 2px); background-size: 20px 20px">
     <!-- Auth Card Container -->
     <div class="grid place-items-center mx-2 my-20 sm:my-auto">
@@ -66,7 +65,7 @@
           <h2 class="flex justify-center p-3 font-nokia text-lg  text-black">
             Plant a flower
           </h2>
-          <button class="flex-end p-2" onclick="toggleAddModal(false)">
+          <button class="flex-end p-2" onclick="closeAddModal()">
             <img src="images/close.svg" />
           </button>
         </div>
@@ -124,16 +123,17 @@
       </div>
     </div>
   </div>
+</div>
 
   <!-- POPUP PLANT INFORMATION -->
-  <div id="popup_plant_info" class="absolute grid place-items-center z-20 h-screen rinset-y-0 right-0 mr-10 py-10 ">
+  <div id="popup_plant_info" class="absolute grid place-items-center z-20 h-screen rinset-y-0 right-0 mr-10 py-10 hidden">
     <div class="w-100 bg-yellow-100 border-4 border-black flex-1 shadow relative">
       <!-- Card Title -->
       <div class="border-b-4 border-black flex justify-between">
         <h2 class=" p-3 font-nokia text-lg text-black">
           Information
         </h2>
-        <button class="p-2" onclick="toggleFlowerDetailsModal(false)">
+        <button class="p-2" onclick="closeFlowerDetailsModal()">
           <img src="images/close.svg" />
         </button>
       </div>
