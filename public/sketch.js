@@ -153,7 +153,7 @@ function saveFormData() {
 }
 
 function submitForm() {
-  //createFlower(data);
+  //createFlower(lStorage);
   toggleAddModal(false);
 }
 
