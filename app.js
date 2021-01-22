@@ -132,7 +132,7 @@ function getFromDatabase() {
     .then(function(querySnapshot) {
       let data = [];
       querySnapshot.forEach(function(doc) {
-        // delete(doc.id);
+        // deleteInDatabase(doc.id);
         // compares the date when the flower was added with the current day
         let date_added = doc.data().date_added.date;
         let age = getDateDifference(date_added);
@@ -188,7 +188,6 @@ function getDate() {
     date: d2.format("MMM DD YY"),
     time: now.format("HH:mm:ss")
   }
-  console.log(day);
   return day
 }
 

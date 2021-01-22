@@ -37,7 +37,7 @@ const mapOptions = {
 };
 
 function preload() {
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < 6; i++) {
     imgs[i] = loadImage("images/flower_" + i + ".png");
   }
 }
@@ -48,7 +48,7 @@ function setup() {
   isAddModalOpen = false;
   isFlowertDetailsModalOpen = false;
   addMode = false;
-  lStorage = { lng: null, lat: null, name: "", location: "" };
+  lStorage = { lng: null, lat: null, name: "", location: "", flowername: "" };
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
@@ -67,6 +67,7 @@ function setup() {
 }
 
 function drawFlowers() {
+  console.log(allFlowers);
   clear();
   for (let i = 0; i < allFlowers.length; i++) {
     const flowerData = allFlowers[i].getFlowerData();
@@ -84,31 +85,41 @@ function drawFlowers() {
 function openHelperMessage() {
   let modal = select("#helper_message");
     modal.elt.classList.remove("hidden");
+    closeFlowerDetailsModal();
+    closeAddModal();
+    closeAboutModal();
 
 }
 
 function closeHelperMessage() {
   let modal = select("#helper_message");
     modal.elt.classList.add("hidden");
+    addMode = false;
 }
 
 //// About modal
-function toggleAboutModal() {
+function openAboutModal() {
   let modal = select("#popup_about");
-  if(modal.elt.classList.contains("hidden")) {
     modal.elt.classList.remove("hidden");
-  } else {
+    closeFlowerDetailsModal();
+    closeAddModal();
+    closeHelperMessage();
+}
+
+function closeAboutModal() {
+  let modal = select("#popup_about");
     modal.elt.classList.add("hidden");
-  }
 }
 
 //// Add new plant modal
 function openAddModal() {
   let modal = select("#popup_add_plant");
-  if(modal.elt.classList.contains("hidden")) {
-    select("body").elt.classList.add("preventScroll");
-    modal.elt.classList.remove("hidden");
-  }
+  select("body").elt.classList.add("preventScroll");
+  modal.elt.classList.remove("hidden");
+
+  closeFlowerDetailsModal();
+  closeAboutModal();
+  closeHelperMessage();
 }
 
 function closeAddModal() {
@@ -178,23 +189,33 @@ function nextButton() {
   //Get input data
   let nameInput = select("#name");
   let locationInput = select("#location");
+  let flowerName = select("#flowername");
 
   let nameString = nameInput.elt.value.trim();
   let locationString = locationInput.elt.value.trim();
+  let flowerNameString = flowerName.elt.value.trim();
 
-  if (!nameString == ""){
-    if (!locationString == ""){
-      lStorage.name = nameString;
-      lStorage.location = locationString;
+  if (!nameString == "") {
+    if (!locationString == "") {
+      if (!flowerNameString == "") {
+        lStorage.name = nameString;
+        lStorage.location = locationString;
+        lStorage.flowername = flowerNameString;
 
-      select("#input-form").elt.classList.add("hidden");
-      select("#flower-selection").elt.classList.remove("hidden");
+        select("#input-form").elt.classList.add("hidden");
+        select("#flower-selection").elt.classList.remove("hidden");
 
+      } else {
+        flowerName.elt.classList.add("border-red-600");
+        return
+      }
     } else {
       locationInput.elt.classList.add("border-red-600");
+      return
     }
   } else {
     nameInput.elt.classList.add("border-red-600");
+    return
   }
 }
 
@@ -205,6 +226,8 @@ function savePlantChoice(type) {
 function submitForm() {
   if (typeof lStorage.type == "number") {
     createFlower();
+    closeAddModal();
+    select("#flower-selection").elt.classList.add("hidden");
   } else {
     select("#selection-label").elt.classList.add("text-red-600");
   }
@@ -218,11 +241,12 @@ function createFlower() {
       lng: lStorage.lng
     },
     flower_type: lStorage.type,
-    flower_name: "Flower Name",
+    flower_name: lStorage.flowername,
     user_name: lStorage.name,
     user_location: lStorage.location,
   };
   socket.emit("createFlower", flower);
+  console.log(flower);
 }
 
 socket.on("updateFlowers", function (data) {
@@ -285,6 +309,7 @@ function emitAddPlantMode() {
   }, 500)
   mapboxCanvas.addClass("cursorCrosshair");
   openHelperMessage();
+  closeAddModal();
 }
 
 function mouseMoved() {

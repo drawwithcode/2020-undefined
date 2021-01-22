@@ -18,7 +18,7 @@
   <!-- BUTTONS -->
   <div class="absolute z-20 top-10 left-10">
     <button class="relative w-24 h-24 display-block bg-white border-4 border-black mr-4 font-minecraftia shadow"
-      onclick="toggleAboutModal()" id='about_button'>
+      onclick="openAboutModal()" id='about_button'>
       ?
       </br>
       about
@@ -34,7 +34,7 @@
   <div id="popup_about"
     class="absolute left-0 right-0 w-96 h-96 z-20 bg-white border-4 border-black mx-auto top-60 hidden">
     <div class="popup_heading flex border-b-4 border-black">
-      <button class="flex-end p-2" onclick="toggleAboutModal()">
+      <button class="flex-end p-2" onclick="closeAboutModal()">
         <img src="images/close.svg" />
       </button>
       <h2 class=" p-3 font-nokia text-md text-black">
@@ -71,30 +71,36 @@
         </div>
 
         <div id="input-form">
-          <form class=" p-5 mt-10">
-            <!-- Name Input -->
-            <label class="block font-minecraftia text-xs font-semibold text-black">My name is:</label>
-            <input name="name" id="name" type="text" placeholder="I am from" class="block w-full py-3 px-1 mt-2 bg-yellow-100
+  <form class=" p-5 mt-10">
+    <!-- Name Input -->
+    <label class="block font-minecraftia text-xs font-semibold text-black">My name is:</label>
+    <input name="name" id="name" type="text" placeholder="Username" class="block w-full py-3 px-1 mt-2 bg-yellow-100
                       text-gray-800 appearance-none
                       border-4 border-black
                       focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
 
-            <!-- Location Input -->
-            <label class="block font-minecraftia text-xs font-semibold text-black">I am from:</label>
-            <input type="text" name="name" id="location" placeholder="name" class="block w-full py-3 px-1 mt-2 bg-yellow-100
+    <!-- Location Input -->
+    <label class="block font-minecraftia text-xs font-semibold text-black">I am from:</label>
+    <input type="text" name="name" id="location" placeholder="I'm from" class="block w-full py-3 px-1 mt-2 bg-yellow-100
           text-gray-800 appearance-none
           border-4 border-black
           focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
-            <br>
 
-            <!-- Auth Buttton -->
-            <button type="button" onClick="nextButton()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
+    <!-- Flowername Input -->
+    <label class="block font-minecraftia text-xs font-semibold text-black">Name your flower:</label>
+    <input type="text" name="name" id="flowername" placeholder="Flowername" class="block w-full py-3 px-1 mt-2 bg-yellow-100
+        text-gray-800 appearance-none
+        border-4 border-black
+        focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
+
+    <!-- Auth Buttton -->
+    <button type="button" onClick="nextButton()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
           font-minecraftia text-black uppercase
           focus:outline-none button-shadow">
-              next
-            </button>
-          </form>
-        </div>
+      next
+    </button>
+  </form>
+</div>
 
         <div id="flower-selection" class="grid place-items-center mx-2 my-20 sm:my-auto p-8 hidden">
           <p id="selection-label" class="font-minecraftia">
@@ -143,7 +149,7 @@
         </h2>
         <p id="plant-type" class="font-minecraftia">Plant type</p>
         <div id="plant-image">
-          <img src=".\svg\hibiscus.svg" class="w-40 m-10">
+          <img src="./svg/hibiscus.svg" class="w-40 m-10">
         </div>
         <div class="text-l leading-loose overflow-y-scroll h-56 border-b-2 border-t-2 border-black">
           <p class="font-nokia">Name of user:</p>
@@ -179,6 +185,7 @@
           </button>
         </div>
       </div>
+    </div>
     </div>
 </body>
 
