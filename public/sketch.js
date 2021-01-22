@@ -9,6 +9,7 @@ let plantInfoPopup;
 let addPopup;
 let steps;
 let n = 0;
+let frame;
 let helperMsg;
 let isAboutModalOpen;
 let isAddModalOpen;
@@ -56,6 +57,7 @@ function setup() {
   addPopup = document.getElementById("popup_add_plant");
   helperMsg = document.getElementById("helper_message");
   body = document.getElementById("body");
+  frame = document.getElementById("frame");
   mapboxCanvas = select("#defaultCanvas0");
   imageMode(CENTER);
   // createFlower();
