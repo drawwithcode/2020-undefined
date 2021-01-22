@@ -17,6 +17,7 @@ let isFlowertDetailsModalOpen;
 let mapboxCanvas;
 let addMode;
 let lStorage;
+let selectedFlower;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -60,7 +61,6 @@ function setup() {
   frame = document.getElementById("frame");
   mapboxCanvas = select("#defaultCanvas0");
   imageMode(CENTER);
-  // createFlower();
   // keep emit at the end, so it executes
   // when everything else has already been loaded
   socket.emit("firstConnection");
@@ -175,46 +175,52 @@ function closeFlowerDetailsModal(){
 }
 
 function nextButton() {
-  //Store form data
-  saveFormData();
-  console.log("local storage:", lStorage);
-  //switch the modal
-  // TODO - Beautify this code
-  document.getElementById(steps[n].getAttribute("id")).classList.add("hidden");
-  document
-    .getElementById(steps[n + 1].getAttribute("id"))
-    .classList.remove("hidden");
-  n++;
-}
+  //Get input data
+  let nameInput = select("#name");
+  let locationInput = select("#location");
 
-function saveFormData() {
-  lStorage.name = document.getElementById("name").value;
-  lStorage.location = document.getElementById("email").value;
+  let nameString = nameInput.elt.value.trim();
+  let locationString = locationInput.elt.value.trim();
+
+  if (!nameString == ""){
+    if (!locationString == ""){
+      lStorage.name = nameString;
+      lStorage.location = locationString;
+
+      select("#input-form").elt.classList.add("hidden");
+      select("#flower-selection").elt.classList.remove("hidden");
+
+    } else {
+      locationInput.elt.classList.add("border-red-600");
+    }
+  } else {
+    nameInput.elt.classList.add("border-red-600");
+  }
 }
 
 function savePlantChoice(type) {
   lStorage.type = type;
 }
 
-// function submitForm() {
-//   //createFlower(lStorage);
-//   toggleAddModal(false);
-// }
+function submitForm() {
+  if (typeof lStorage.type == "number") {
+    createFlower();
+  } else {
+    select("#selection-label").elt.classList.add("text-red-600");
+  }
+
+}
 
 function createFlower() {
-  // random numbers are added for testing
-  let r1 = random(-10, 10) / 1000;
-  let r2 = random(-10, 10) / 1000;
-
   let flower = {
     flower_coordinates: {
-      lat: 45.4642 + r1,
-      lng: 9.19 + r2,
+      lat: lStorage.lat,
+      lng: lStorage.lng
     },
-    flower_type: 0,
+    flower_type: lStorage.type,
     flower_name: "Flower Name",
-    user_name: "Username Testname",
-    user_location: "City, Country",
+    user_name: lStorage.name,
+    user_location: lStorage.location,
   };
   socket.emit("createFlower", flower);
 }
