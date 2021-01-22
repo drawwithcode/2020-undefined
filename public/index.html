@@ -53,8 +53,7 @@
     </div>
   </div>
   <!-- POPUP ADD PLANT -->
-  <div id="popup_add_plant" class="absolute w-full flex flex-col h-screen hidden z-30 hidden"
-    style="background-image: radial-gradient( #000000 2px, transparent 2px); background-size: 20px 20px">
+  <div id="popup_add_plant" class="absolute w-full flex flex-col h-screen hidden z-30 hidden" style="background-image: radial-gradient( #000000 2px, transparent 2px); background-size: 20px 20px">
     <!-- Auth Card Container -->
     <div class="grid place-items-center mx-2 my-20 sm:my-auto">
       <!-- Auth Card -->
@@ -62,7 +61,7 @@
 
         <!-- Card Title -->
         <div class="border-b-4 border-black flex justify-between">
-          <h2 id="title" class="flex justify-center p-3 font-nokia text-lg  text-black">
+          <h2 class="flex justify-center p-3 font-nokia text-lg  text-black">
             Plant a flower
           </h2>
           <button class="flex-end p-2" onclick="closeAddModal()">
@@ -71,36 +70,36 @@
         </div>
 
         <div id="input-form">
-  <form class=" p-5 mt-10">
-    <!-- Name Input -->
-    <label class="block font-minecraftia text-xs font-semibold text-black">My name is:</label>
-    <input name="name" id="name" type="text" placeholder="Username" class="block w-full py-3 px-1 mt-2 bg-yellow-100
+          <form class=" p-5 mt-10">
+            <!-- Name Input -->
+            <label class="block font-minecraftia text-xs font-semibold text-black">My name is:</label>
+            <input name="name" id="name" type="text" placeholder="Username" class="block w-full py-3 px-1 mt-2 bg-yellow-100
                       text-gray-800 appearance-none
                       border-4 border-black
                       focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
 
-    <!-- Location Input -->
-    <label class="block font-minecraftia text-xs font-semibold text-black">I am from:</label>
-    <input type="text" name="name" id="location" placeholder="I'm from" class="block w-full py-3 px-1 mt-2 bg-yellow-100
+            <!-- Location Input -->
+            <label class="block font-minecraftia text-xs font-semibold text-black">I am from:</label>
+            <input type="text" name="name" id="location" placeholder="I'm from" class="block w-full py-3 px-1 mt-2 bg-yellow-100
           text-gray-800 appearance-none
           border-4 border-black
           focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
 
-    <!-- Flowername Input -->
-    <label class="block font-minecraftia text-xs font-semibold text-black">Name your flower:</label>
-    <input type="text" name="name" id="flowername" placeholder="Flowername" class="block w-full py-3 px-1 mt-2 bg-yellow-100
+            <!-- Flowername Input -->
+            <label class="block font-minecraftia text-xs font-semibold text-black">Name your flower:</label>
+            <input type="text" name="name" id="flowername" placeholder="Flowername" class="block w-full py-3 px-1 mt-2 bg-yellow-100
         text-gray-800 appearance-none
         border-4 border-black
         focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
 
-    <!-- Auth Buttton -->
-    <button type="button" onClick="nextButton()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
+            <!-- Auth Buttton -->
+            <button type="button" onClick="nextButton()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
           font-minecraftia text-black uppercase
           focus:outline-none button-shadow">
-      next
-    </button>
-  </form>
-</div>
+              next
+            </button>
+          </form>
+        </div>
 
         <div id="flower-selection" class="grid place-items-center mx-2 my-20 sm:my-auto p-8 hidden">
           <p id="selection-label" class="font-minecraftia">
@@ -136,7 +135,74 @@
     </div>
   </div>
 </div>
+<div id="water_modal" class="absolute w-full flex flex-col h-screen hidden z-30 hidden" style="background-image: radial-gradient( #000000 2px, transparent 2px); background-size: 20px 20px">
+  <!-- Auth Card Container -->
+  <div class="grid place-items-center mx-2 my-20 sm:my-auto">
+    <!-- Auth Card -->
+    <div class="w-4/12  bg-yellow-100 border-4 border-black">
 
+      <!-- Card Title -->
+      <div class="border-b-4 border-black flex justify-between">
+        <h2 id="title" class="flex justify-center p-3 font-nokia text-lg  text-black">
+          Water a flower
+        </h2>
+        <button class="flex-end p-2" onclick="closeWaterModal()">
+          <img src="images/close.svg" />
+        </button>
+      </div>
+
+      <div id="water-input-form">
+        <form class=" p-5 mt-10">
+          <!-- Name Input -->
+          <label class="block font-minecraftia text-xs font-semibold text-black">My name is:</label>
+          <input name="name" id="water-name" type="text" placeholder="Username" class="block w-full py-3 px-1 mt-2 bg-yellow-100
+                    text-gray-800 appearance-none
+                    border-4 border-black
+                    focus:text-gray-500 focus:outline-none focus:border-gray-200" required />
+
+          <!-- Auth Buttton -->
+          <button type="button" onClick="waterFlower()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
+        font-minecraftia text-black uppercase
+        focus:outline-none button-shadow">
+            water
+          </button>
+        </form>
+      </div>
+
+      <div id="flower-selection" class="grid place-items-center mx-2 my-20 sm:my-auto p-8 hidden">
+        <p id="selection-label" class="font-minecraftia">
+          Select a flower:
+        </p>
+        <div class="grid grid-cols-3 gap-6">
+          <button onclick="savePlantChoice(0)">
+            <img src="/images/flower_0.png" />
+          </button>
+          <button onclick="savePlantChoice(1)">
+            <img src="/images/flower_1.png" />
+          </button>
+          <button onclick="savePlantChoice(2)">
+            <img src="/images/flower_2.png" />
+          </button>
+          <button onclick="savePlantChoice(3)">
+            <img src="/images/flower_3.png" />
+          </button>
+          <button onclick="savePlantChoice(4)">
+            <img src="/images/flower_4.png" />
+          </button>
+          <button onclick="savePlantChoice(5)">
+            <img src="/images/flower_5.png" />
+          </button>
+        </div>
+        <div class="py-6 px-16">
+          <button class="font-nokia text-md px-4 py-3 bg-white border-4 border-black text-black button-shadow"
+            type="button" onclick="submitForm()">
+            Submit
+          </button>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
   <!-- POPUP PLANT INFORMATION -->
   <div id="popup_plant_info" class="absolute grid place-items-center z-20 h-screen rinset-y-0 right-0 mr-10 py-10 hidden">
     <div class="w-100 bg-yellow-100 border-4 border-black flex-1 shadow relative">
@@ -185,8 +251,9 @@
         </div>
         <div class="py-6 px-16">
           <button class="font-nokia text-md px-4 py-3 bg-white border-4 border-black text-black button-shadow"
-            type="button">
-            Maintain
+            type="button"
+            onclick="openWaterModal()">
+            Water
             this plant
           </button>
         </div>

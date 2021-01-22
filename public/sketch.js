@@ -18,6 +18,7 @@ let mapboxCanvas;
 let addMode;
 let lStorage;
 let selectedFlower;
+let selectedFlowerId;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -127,13 +128,31 @@ function closeAddModal() {
     modal.elt.classList.add("hidden");
 }
 
+function openWaterModal() {
+  let modal = select("#water_modal");
+  modal.elt.classList.remove("hidden");
+  for (let i = 0; i < allFlowers.length; i++) {
+    if (allFlowers[i].id == selectedFlowerId) {
+      let data = allFlowers[i].getFlowerData();
+      select("#title").html("Water " + data.flowerName);
+    }
+  }
+  closeFlowerDetailsModal();
+}
+
+function closeWaterModal() {
+  let modal = select("#water_modal");
+  modal.elt.classList.add("hidden");
+}
+
 //// Plant Info modal
 function openFlowerDetailsModal(data) {
-  console.log(data);
   let modal = select("#popup_plant_info");
   if(modal.elt.classList.contains("hidden")) {
     modal.elt.classList.remove("hidden");
   }
+
+  selectedFlowerId = data.id;
 
   let flowerType = "";
 switch (data.flowerType) {
@@ -262,6 +281,7 @@ function createFlower() {
 
 socket.on("updateFlowers", function (data) {
   // when server emits a new array of flowers, update local flowers
+  allFlowers = [];
   for (let i = 0; i < data.length; i++) {
     allFlowers.push(
       new Flower(
@@ -336,14 +356,42 @@ function mouseMoved() {
   }
 }
 
-function waterFlower(user, flowerId) {
-  console.log("Water flower!");
-  let data = {
-    user: user,
-    id: flowerId,
-  };
-  socket.emit("waterFlower", data);
+function waterFlower() {
+
+  //Get input data
+  let nameInput = select("#water-name");
+  let nameString = nameInput.elt.value.trim();
+
+  if (!nameString == "") {
+
+        console.log("Water flower!");
+        let data = {
+          user: nameString,
+          id: selectedFlowerId,
+        };
+        socket.emit("waterFlower", data);
+
+        for (let i = 0; i < allFlowers.length; i++) {
+          if (allFlowers[i].id == selectedFlowerId) {
+            let data = allFlowers[i].getFlowerData();
+            setTimeout(function() {
+              closeWaterModal();
+              openFlowerDetailsModal(data);
+            }, 1000)
+          }
+        }
+
+
+
+
+
+
+  } else {
+    nameInput.elt.classList.add("border-red-600");
+  }
 }
+
+
 
 class Flower {
   constructor(

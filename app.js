@@ -84,7 +84,7 @@ function newConnection(socket) {
 
       setTimeout(function() {
         getFromDatabase();
-      }, 1000)
+      }, 500)
 
   });
 
