@@ -177,10 +177,8 @@ function closeThankYouModal() {
   for (let i = 0; i < allFlowers.length; i++) {
     if(allFlowers[i].id == currentFlower.id) {
       let data = allFlowers[i].getFlowerData();
-      setTimeout(function() {
         closeWaterModal();
         openFlowerDetailsModal(data);
-      }, 1000)
     }
   }
 }
