@@ -17,10 +17,11 @@ let isAboutModalOpen;
 let isAddModalOpen;
 let isFlowertDetailsModalOpen;
 let mapboxCanvas;
-let addMode;
+let deactivateClick;
+let addMode = false;
 let lStorage;
 let selectedFlower;
-let selectedFlowerId;
+let currentFlower;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -52,7 +53,7 @@ function setup() {
   isAboutModalOpen = false;
   isAddModalOpen = false;
   isFlowertDetailsModalOpen = false;
-  addMode = false;
+  deactivateClick = false;
   lStorage = { lng: null, lat: null, name: "", location: "", flowername: "" };
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
@@ -87,6 +88,8 @@ function drawFlowers() {
 }
 
 function openHelperMessage() {
+  addMode = false;
+  deactivateClick = true;
   let modal = select("#helper_message");
     modal.elt.classList.remove("hidden");
     mapboxCanvas.elt.classList.add("border-8", "border-green-500");
@@ -100,11 +103,12 @@ function closeHelperMessage() {
   let modal = select("#helper_message");
     modal.elt.classList.add("hidden");
     mapboxCanvas.elt.classList.remove("border-8", "border-green-500");
-    addMode = false;
+      deactivateClick = false;
 }
 
 //// About modal
 function openAboutModal() {
+  deactivateClick = true;
   let modal = select("#popup_about");
     modal.elt.classList.remove("hidden");
     closeFlowerDetailsModal();
@@ -115,6 +119,7 @@ function openAboutModal() {
 function closeAboutModal() {
   let modal = select("#popup_about");
     modal.elt.classList.add("hidden");
+      deactivateClick = false;
 }
 
 //// Add new plant modal
@@ -126,56 +131,53 @@ function openAddModal() {
   closeFlowerDetailsModal();
   closeAboutModal();
   closeHelperMessage();
+  deactivateClick = true;
 }
 
 function closeAddModal() {
   let modal = select("#popup_add_plant");
     select("body").elt.classList.remove("preventScroll");
     modal.elt.classList.add("hidden");
+    setTimeout(function() {
+      deactivateClick = false;
+    }, 1000)
 }
 
 function openWaterModal() {
+  deactivateClick = true;
   let modal = select("#water_modal");
   modal.elt.classList.remove("hidden");
-  for (let i = 0; i < allFlowers.length; i++) {
-    if (allFlowers[i].id == selectedFlowerId) {
-      let data = allFlowers[i].getFlowerData();
+
+      let data = currentFlower;
       select("#title").html("Water " + data.flowerName);
-    }
-  }
+
   closeFlowerDetailsModal();
 }
 
 function closeWaterModal() {
   let modal = select("#water_modal");
   modal.elt.classList.add("hidden");
-  for (let i = 0; i < allFlowers.length; i++) {
-    if (allFlowers[i].id == selectedFlowerId) {
-      let data = allFlowers[i].getFlowerData();
-      setTimeout(function() {
-        openFlowerDetailsModal(data);
-      }, 500)
-    }
-  }
 }
 
-function openThankYouModal(data) {
+function openThankYouModal() {
+  deactivateClick = true;
   let modal = select("#thank-you-modal");
   let text = select("#thank-you-message");
   modal.elt.classList.remove("hidden");
-  text.html("Thank you for taking care of " + data.userName + "'s flower.")
+  text.html("Thank you for taking care of " + currentFlower.userName + "'s flower.")
 }
 
 function closeThankYouModal() {
+  deactivateClick = false;
   let modal = select("#thank-you-modal");
   modal.elt.classList.add("hidden");
   for (let i = 0; i < allFlowers.length; i++) {
-    if (allFlowers[i].id == selectedFlowerId) {
+    if(allFlowers[i].id == currentFlower.id) {
       let data = allFlowers[i].getFlowerData();
       setTimeout(function() {
         closeWaterModal();
         openFlowerDetailsModal(data);
-      }, 500)
+      }, 1000)
     }
   }
 }
@@ -187,7 +189,7 @@ function openFlowerDetailsModal(data) {
     modal.elt.classList.remove("hidden");
   }
 
-  selectedFlowerId = data.id;
+currentFlower = data;
 
   let flowerset = 3;
   if(data.no_water >= 0 && data.no_water <= 3) {
@@ -360,13 +362,14 @@ function mouseClicked() {
 
   // check if add mode is on and if not clicked to any of buttons
   if (addMode) {
+    deactivateClick = false;
     addMode = false;
     lStorage.lng = position.lng;
     lStorage.lat = position.lat;
     mapboxCanvas.removeClass("cursorCrosshair");
     closeHelperMessage();
     openAddModal();
-  } else {
+  } else if (!deactivateClick){
   // check if cursor is over one of the flowers
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
@@ -407,21 +410,20 @@ function waterFlower() {
   if (!nameString == "") {
 
         console.log("Water flower!");
-        let data = {
+        let waterThis = {
           user: nameString,
-          id: selectedFlowerId,
+          id: currentFlower.id,
         };
-        socket.emit("waterFlower", data);
+        socket.emit("waterFlower", waterThis);
 
-        for (let i = 0; i < allFlowers.length; i++) {
-          if (allFlowers[i].id == selectedFlowerId) {
-            let data = allFlowers[i].getFlowerData();
+
+
+            let data = currentFlower;
             setTimeout(function() {
-              openThankYouModal(data);
+              openThankYouModal();
               closeWaterModal();
-            }, 500)
-          }
-        }
+            }, 1000)
+
 
   } else {
     nameInput.elt.classList.add("border-red-600");
