@@ -12,26 +12,6 @@
   cursor: crosshair !important;
 }
 
-.preventScroll {
-  position: fixed;
-  overflow: hidden;
-}
-
-.border {
-  position: fixed;
-  top: 0;
-  left: 0;
-  border: 4px solid red;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  z-index: 10;
-  pointer-events: none;
-  background: none;
-}
-
  /* Custom scrollbar  */
 /* width */
 ::-webkit-scrollbar {
@@ -44,7 +24,7 @@
   border: 3px solid black;
   padding: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
   content: '';
@@ -61,7 +41,7 @@
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: black; 
+  background: black;
 }
 
 /* Arrows up and down */
@@ -79,13 +59,13 @@
   background-repeat: no-repeat;
 }
 
-button.shadow:hover { 
+button.shadow:hover {
 	left: 20px;
   top: 20px;
   /* transition: .3s ease; */
 }
 
-button.shadow:hover:before { 
+button.shadow:hover:before {
 	left: 0;
   top: 0;
 }
@@ -114,4 +94,9 @@ button.shadow:hover:before {
   left: 12px;
   box-shadow: 0 0 0 0 black;
   color: blue;
+}
+
+.bg-pattern {
+  background-image: radial-gradient( #000000 2px, transparent 2px);
+  background-size: 20px 20px
 }
