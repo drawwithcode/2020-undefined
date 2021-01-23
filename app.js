@@ -191,7 +191,7 @@ function getDate() {
   // substract days to test if the difference works
   let d2 = now.subtract('0', 'day');
   let day = {
-    date: d2.format("MMM DD YY"),
+    date: d2.format("MMM.DD.YY"),
     time: now.format("HH:mm:ss")
   }
   return day
