@@ -149,6 +149,35 @@ function openWaterModal() {
 function closeWaterModal() {
   let modal = select("#water_modal");
   modal.elt.classList.add("hidden");
+  for (let i = 0; i < allFlowers.length; i++) {
+    if (allFlowers[i].id == selectedFlowerId) {
+      let data = allFlowers[i].getFlowerData();
+      setTimeout(function() {
+        openFlowerDetailsModal(data);
+      }, 500)
+    }
+  }
+}
+
+function openThankYouModal(data) {
+  let modal = select("#thank-you-modal");
+  let text = select("#thank-you-message");
+  modal.elt.classList.remove("hidden");
+  text.html("Thank you for taking care of " + data.userName + "'s flower.")
+}
+
+function closeThankYouModal() {
+  let modal = select("#thank-you-modal");
+  modal.elt.classList.add("hidden");
+  for (let i = 0; i < allFlowers.length; i++) {
+    if (allFlowers[i].id == selectedFlowerId) {
+      let data = allFlowers[i].getFlowerData();
+      setTimeout(function() {
+        closeWaterModal();
+        openFlowerDetailsModal(data);
+      }, 500)
+    }
+  }
 }
 
 //// Plant Info modal
@@ -371,7 +400,6 @@ function mouseMoved() {
 }
 
 function waterFlower() {
-
   //Get input data
   let nameInput = select("#water-name");
   let nameString = nameInput.elt.value.trim();
@@ -389,16 +417,11 @@ function waterFlower() {
           if (allFlowers[i].id == selectedFlowerId) {
             let data = allFlowers[i].getFlowerData();
             setTimeout(function() {
+              openThankYouModal(data);
               closeWaterModal();
-              openFlowerDetailsModal(data);
-            }, 1000)
+            }, 500)
           }
         }
-
-
-
-
-
 
   } else {
     nameInput.elt.classList.add("border-red-600");
