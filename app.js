@@ -68,20 +68,24 @@ function newConnection(socket) {
 
   socket.on("waterFlower", function(data) {
     console.log("Water flower with ID: " + data.id);
+    // Declare the object with updated data for the database
     let id = data.id;
     let water = {
       user: data.user,
       date: getDate()
     };
 
+    // Update the data by appending the object to the array
     firebase
       .firestore()
       .collection("flowers")
       .doc(id)
       .update({
+        // Here we append the object rather than overwriting it
         watered: firebase.firestore.FieldValue.arrayUnion(water)
       });
 
+      // after a slight delay, load the new data and emit it to the clients
       setTimeout(function() {
         getFromDatabase();
       }, 500)
