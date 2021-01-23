@@ -215,7 +215,8 @@ switch (data.flowerType) {
   let participants = select("#gardeners");
   if (Array.isArray(watered) && watered.length > 0) {
     participants.html("");
-  for (let i = 0; i < watered.length; i++) {
+    // loop backwards through the array to display newest to oldest entries
+  for (let i = watered.length - 1; i >= 0 ; i--) {
     participants.html("<p><span class='font-black'>" + watered[i].date.date + ":</span> " + watered[i].user + "</p>", true);
   }
 } else {
