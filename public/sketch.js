@@ -3,7 +3,9 @@ let body;
 let myMap;
 let allFlowers = [];
 let socket = io();
-let imgs = [];
+let perfectFlowerImgs = [];
+let mediumFlowerImgs = [];
+let badFlowerImgs = [];
 let aboutPopup;
 // let plantInfoPopup;
 let addPopup;
@@ -39,7 +41,9 @@ const mapOptions = {
 
 function preload() {
   for (var i = 0; i < 6; i++) {
-    imgs[i] = loadImage("images/flower_" + i + ".png");
+    perfectFlowerImgs[i]= loadImage("images/flowerset_1/flower_" + i + ".png");
+    mediumFlowerImgs[i] = loadImage("images/flowerset_2/flower_" + i + ".png");
+    badFlowerImgs[i]    = loadImage("images/flowerset_3/flower_" + i + ".png");
   }
 }
 
@@ -421,18 +425,15 @@ class Flower {
   }
 
   display(posX, posY) {
-    image(imgs[this.type], posX, posY, 40, 40);
-  }
+    if(this.no_water >= 0 && this.no_water <= 3) {
+      image(perfectFlowerImgs[this.type], posX, posY, 40, 40);
+    } else if (this.no_water >= 4 && this.no_water <= 7) {
+      image(mediumFlowerImgs[this.type], posX, posY, 30, 30);
+    } else {
+      image(badFlowerImgs[this.type], posX, posY, 25, 25);
+    }
 
-  // the following has to be moved to the server in order to update the database
-  // water(username) {
-  //   // here we will also add a username
-  //   let data = {
-  //     user: username,
-  //     date: getDate()
-  //   }
-  //   this.watered.push(data);
-  // }
+  }
 
   isClicked(mousePosX, mousePosY, mapZoom) {
     let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
