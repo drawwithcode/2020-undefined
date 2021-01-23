@@ -439,7 +439,7 @@ class Flower {
     let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.03 here because we are using coordinates and not pixels
     // when changin keep in mind that the image might have transparency
-    if (d < 0.001 / zoom) {
+    if (d < 0.008 / zoom) {
       return true;
     } else {
       return false;
