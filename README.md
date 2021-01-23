@@ -26,8 +26,7 @@ Be sure to have node installed: https://nodejs.org/
 
 # Coding Challenges
 
-## User Clicks a Flower
-
+### User Clicks a Flower
 One of the difficulties we encountered is to check if a flower is clicked by the user. Here we have to keep in mind that the the flower's position depends on it's geographic coordinates, not the canvas' pixel coordinates. In order to overcome this issue, we have to convert the mouse X and Y coordinates to `position.lat` (latitude) and the `position.lng` (longitude). We then pass it to the flower class.
 
 **Inside the mouseClicked() function in** `sketch.js`
@@ -56,7 +55,7 @@ isClicked(mousePosX, mousePosY, mapZoom) {
   }
 }
 ```
-## User Waters a Flower
+### User Waters a Flower
 
 Once the user waters a flower their name will be stored in the database. In our case we wanted to not only show one user, but a history of users who "watered" the flower. In order to do that we had to come up with a way to update the data while keeping previous data.
 
