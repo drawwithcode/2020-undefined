@@ -16,11 +16,11 @@ Be sure to have node installed: https://nodejs.org/
 
 # About the Project
 
-## Idea
+### Idea
 
-## Goals
+### Goals
 
-## Context
+### Context
 
 # Design Challenges
 
