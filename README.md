@@ -90,14 +90,14 @@ socket.on("waterFlower", function(data) {
 });
 ```
 
-# Credits
+# Credits:
 
 ##### Team Members
 * [Alia Kaouel](#)
 * [Marija Nikolic](#)
-* [Tim Olbrich]("https:timolbrich.com")
+* [Tim Olbrich]("https://timolbrich.com")
 
-##### Course
+##### Course:
 **[Creative Coding 2020/2021](https://drawwithcode.github.io/2020/)**<br>
 **Politecnico di Milano:** School of Design<br>
 **Faculty:** Michele Mauri, Andrea Benedetti, Tommaso Elli.
