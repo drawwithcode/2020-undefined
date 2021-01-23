@@ -157,6 +157,9 @@ function openWaterModal() {
 function closeWaterModal() {
   let modal = select("#water_modal");
   modal.elt.classList.add("hidden");
+  setTimeout(function() {
+    deactivateClick = false;
+  }, 500)
 }
 
 function openThankYouModal() {
