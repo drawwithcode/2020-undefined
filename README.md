@@ -9,7 +9,8 @@ A Connected Garden is a project built within the course [Creative Coding](https:
 5. [Credits](#credits)
 
 # How to Run
-Be sure to have node installed: https://nodejs.org/
+See the [demo](https://github.com/drawwithcode/2020-undefined/deployments/activity_log?environment=a-connected-garden) or
+be sure to have node installed: https://nodejs.org/
 * Install node dependencies: `npm install`
 * Run local server: `node app.js`
 * Open: `localhost:3000`
