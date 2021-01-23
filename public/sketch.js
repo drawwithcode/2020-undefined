@@ -85,6 +85,7 @@ function drawFlowers() {
 function openHelperMessage() {
   let modal = select("#helper_message");
     modal.elt.classList.remove("hidden");
+    mapboxCanvas.elt.classList.add("border-8", "border-green-500");
     closeFlowerDetailsModal();
     closeAddModal();
     closeAboutModal();
@@ -94,6 +95,7 @@ function openHelperMessage() {
 function closeHelperMessage() {
   let modal = select("#helper_message");
     modal.elt.classList.add("hidden");
+    mapboxCanvas.elt.classList.remove("border-8", "border-green-500");
     addMode = false;
 }
 
