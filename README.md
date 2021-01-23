@@ -1,5 +1,5 @@
 # A Connected Garden
-A Connected Garden is a project built within the course [Creative Coding](https://drawwithcode.github.io/2020/) at the Politecnico di Milano. It makes use of the [p5.js](https://p5js.org) library and [Mappa.js](https://mappa.js.org). In addition to that, it stores the data on [firebase](https://mappa.js.org).
+A Connected Garden is a project built within the course [Creative Coding](https://drawwithcode.github.io/2020/) at the Politecnico di Milano. It makes use of the [p5.js](https://p5js.org) library and [Mappa.js](https://mappa.js.org). In addition, [firebase](https://mappa.js.org) is used to store the data while [tailwindcss](https://github.com/tailwindlabs/tailwindcss) takes care of most of the styling.
 
 # Table of Contents
 1. [How to Run](#how-to-run)
