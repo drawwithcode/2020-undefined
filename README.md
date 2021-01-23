@@ -59,7 +59,7 @@ isClicked(mousePosX, mousePosY, mapZoom) {
 
 Once the user waters a flower their name will be stored in the database. In our case we wanted to not only show one user, but a history of users who "watered" the flower. In order to do that we had to come up with a way to update the data while keeping previous data.
 
-The solution is to use an array field in the database and make use of the arrayUnion() function, which appends elements to field.
+The solution is to use an array field in the database and make use of the [arrayUnion()](https://firebase.google.com/docs/firestore/manage-data/add-data) function, which appends elements to field.
 
 **Inside waterFlower() function in** `app.js`
 ```javascript
