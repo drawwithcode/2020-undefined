@@ -160,6 +160,16 @@ function openFlowerDetailsModal(data) {
 
   selectedFlowerId = data.id;
 
+  let flowerset = 3;
+  if(data.no_water >= 0 && data.no_water <= 3) {
+    flowerset = 1;
+  } else if (data.no_water >= 4 && data.no_water <= 7) {
+    flowerset = 2
+  }
+
+  let path = "/images/flowerset_" + flowerset + "/flower_" + data.flowerType + ".png";
+  select("#plant-image").html("<img src = '" + path + "' class='h-full my-10 mx-auto'>")
+
   let flowerType = "";
 switch (data.flowerType) {
   case 0:
@@ -211,9 +221,6 @@ switch (data.flowerType) {
 } else {
   participants.html("<p>No one watered this plant yet</p>");
 }
-  // The following line is for testing
-  // pass the username and the flower_id
-  // waterFlower("Tim", "uaH46IbwMffA1PsXXEK2");
 }
 
 function closeFlowerDetailsModal(){
