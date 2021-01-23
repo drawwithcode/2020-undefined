@@ -26,11 +26,11 @@ Be sure to have node installed: https://nodejs.org/
 
 # Coding Challenges
 
-### User Clicks a Flower
+## User Clicks a Flower
 
 One of the difficulties we encountered is to check if a flower is clicked by the user. Here we have to keep in mind that the the flower's position depends on it's geographic coordinates, not the canvas' pixel coordinates. In order to overcome this issue, we have to convert the mouse X and Y coordinates to `position.lat` (latitude) and the `position.lng` (longitude). We then pass it to the flower class.
 
-**Inside the mouseClicked() function:**
+**Inside the mouseClicked() function in** `sketch.js`
 ```javascript
 for (let i = 0; i < allFlowers.length; i++) {
   if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
@@ -42,7 +42,7 @@ for (let i = 0; i < allFlowers.length; i++) {
 
 Now it is possible to compare the mouse's position to the flowers's position. The benefit of using geographic coordinates is that the position does not depend on the canvas size anymore, which is important when working with maps.
 
-**Inside the Flower Class:**
+**Inside the Flower Class in** `sketch.js`
 ```javascript
 isClicked(mousePosX, mousePosY, mapZoom) {
   let d = dist(mousePosX, mousePosY, this.position.lat, this.position.lng);
@@ -56,8 +56,40 @@ isClicked(mousePosX, mousePosY, mapZoom) {
   }
 }
 ```
+## User Waters a Flower
 
+Once the user waters a flower their name will be stored in the database. In our case we wanted to not only show one user, but a history of users who "watered" the flower. In order to do that we had to come up with a way to update the data while keeping previous data.
 
+The solution is to use an array field in the database and make use of the arrayUnion() function, which appends elements to field.
+
+**Inside waterFlower() function in** `app.js`
+```javascript
+socket.on("waterFlower", function(data) {
+  console.log("Water flower with ID: " + data.id);
+  // Declare the object with updated data for the database
+  let id = data.id;
+  let water = {
+    user: data.user,
+    date: getDate()
+  };
+
+  // Update the data by appending the object to the array
+  firebase
+    .firestore()
+    .collection("flowers")
+    .doc(id)
+    .update({
+      // Here we append the object rather than overwriting it
+      watered: firebase.firestore.FieldValue.arrayUnion(water)
+    });
+
+    // after a slight delay, load the new data and emit it to the clients
+    setTimeout(function() {
+      getFromDatabase();
+    }, 500)
+
+});
+```
 
 # Credits
 
