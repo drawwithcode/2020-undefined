@@ -9,7 +9,7 @@
 5. [Credits](#credits)
 
 # :running_woman: How to Run
-See the [demo](https://github.com/drawwithcode/2020-undefined/deployments/activity_log?environment=a-connected-garden) or
+See the [demo](https://a-connected-garden.herokuapp.com) or
 be sure to have node installed: https://nodejs.org/
 * Install node dependencies: `npm install`
 * Run local server: `node app.js`
