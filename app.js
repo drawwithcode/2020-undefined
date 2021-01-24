@@ -1,6 +1,7 @@
 let express = require("express");
 let socket = require("socket.io");
 let dayjs = require("dayjs");
+var customParseFormat = require('dayjs/plugin/customParseFormat')
 let firebase = require("firebase/app");
 require("firebase/firestore");
 
@@ -23,6 +24,8 @@ let port = process.env.PORT || 3000;
 let server = app.listen(port);
 let io = socket(server);
 
+let dateOffset = 0;
+
 let allFlowers = [];
 
 let maxNoWaterDays = 10;
@@ -41,6 +44,8 @@ app.get("/mappa.js", function(req, res) {
 app.use(express.static("public"));
 console.log("Server is running!")
 
+dayjs.extend(customParseFormat);
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -57,6 +62,12 @@ function newConnection(socket) {
 
   socket.on("firstConnection", function() {
     io.emit("updateFlowers", allFlowers);
+  });
+
+  socket.on("dayOffset", function(data) {
+    dateOffset = data;
+    console.log("Date Offset: " + dateOffset);
+    getFromDatabase();
   });
 
   socket.on("createFlower", function(data) {
@@ -136,7 +147,10 @@ function getFromDatabase() {
     .then(function(querySnapshot) {
       let data = [];
       querySnapshot.forEach(function(doc) {
-        // deleteInDatabase(doc.id);
+        let deleteData = false;
+        if (deleteData) {
+        deleteInDatabase(doc.id);
+      } else {
         // compares the date when the flower was added with the current day
         let date_added = doc.data().date_added.date;
         let age = getDateDifference(date_added);
@@ -148,7 +162,9 @@ function getFromDatabase() {
         if (Array.isArray(wateredList)) {
           let lastWatered = wateredList[wateredList.length - 1];
           noWaterDays = getDateDifference(lastWatered.date.date);
+          console.log(lastWatered, noWaterDays);
         } else {
+          console.log(date_added);
           noWaterDays = getDateDifference(date_added);
         }
 
@@ -165,6 +181,7 @@ function getFromDatabase() {
           }
           data.push(docData);
         }
+      }
       });
       allFlowers = data;
       // console.log(data);
@@ -198,8 +215,10 @@ function getDate() {
 }
 
 function getDateDifference(inputDate) {
-  let difference = dayjs().diff(inputDate, "day");
+  let date = dayjs(inputDate, "DD.MM.YY", true);
+  console.log(date);
+  let difference = dayjs().diff(date, "day");
   // add a bigger difference for testing
-  // difference = difference + 6
+  difference = difference + dateOffset;
   return difference
 }
