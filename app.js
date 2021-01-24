@@ -157,9 +157,7 @@ function getFromDatabase() {
         if (Array.isArray(wateredList)) {
           let lastWatered = wateredList[wateredList.length - 1];
           noWaterDays = getDateDifference(lastWatered.date.date);
-          console.log(lastWatered, noWaterDays);
         } else {
-          console.log(date_added);
           noWaterDays = getDateDifference(date_added);
         }
 
