@@ -473,11 +473,11 @@ class Flower {
 
   display(posX, posY) {
     if(this.no_water >= 0 && this.no_water <= 3) {
-      image(perfectFlowerImgs[this.type], posX, posY, 40, 40);
+      image(perfectFlowerImgs[this.type], posX, posY, 20, 20);
     } else if (this.no_water >= 4 && this.no_water <= 7) {
-      image(mediumFlowerImgs[this.type], posX, posY, 30, 30);
+      image(mediumFlowerImgs[this.type], posX, posY, 15, 15);
     } else {
-      image(badFlowerImgs[this.type], posX, posY, 25, 25);
+      image(badFlowerImgs[this.type], posX, posY, 10, 10);
     }
 
   }
@@ -489,7 +489,7 @@ class Flower {
     let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.03 here because we are using coordinates and not pixels
     // when changin keep in mind that the image might have transparency
-    if (d < 0.008 / zoom) {
+    if (d < 0.001 / zoom) {
       return true;
     } else {
       return false;
