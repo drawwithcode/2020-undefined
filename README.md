@@ -18,10 +18,28 @@ be sure to have node installed: https://nodejs.org/
 # About the Project
 
 ### Idea
+We live in a world where majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technology development entering our lives. <br>
+Every action needs a first step, and sometimes we forget how easy it is to just plant a seed that will later have an impact in our lives especially if everyone does the same.
+This is the idea behind Connected gardens, it is the first step showing how easy it to make Milan more green, just by simple interactions.
+
+
 
 ### Goals
+Connected gardens is a collaborative experience that aims at inciting people to think about the importance of having a city more green. <br>
+The idea is to show how easy it is to extend the green area in the city, just by collaborating together, and taking care of each other’s plants. <br>
+Visitors can plant endangered flowers that are giving from a list and read some information about them. Each flower has a lifetime duration  and has to be watered. If the plant is not maintained after a certain amount time, it will disappear after a period of time.
+
+
 
 ### Context
+"Connected gardens" is a website that can be used in diverse contexts that are related to the environment. <br>
+First, it is accessible in daily life through computer and smartphone, to make it at the disposal of people. <br>
+The website can also be used to promote environmental organizations to incite people to donate or make other actions. <br>
+But most importantly “Connected Gardens” can be found in specific environmental related events like conferences or expositions, such as:  <br>
+-Day of Forests <br>
+-Earth Day <br>
+-The European Conference of Sustainability, Energy and the Environment <br>
+-Earth Overshoot Day <br>
 
 # Design Challenges
 
