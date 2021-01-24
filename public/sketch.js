@@ -154,13 +154,13 @@ function openWaterModal() {
   closeFlowerDetailsModal();
 }
 
-function closeWaterModal() {
-  let modal = select("#water_modal");
-  modal.elt.classList.add("hidden");
-  setTimeout(function() {
-    deactivateClick = false;
-  }, 500)
-}
+// function closeWaterModal() {
+//   let modal = select("#water_modal");
+//   modal.elt.classList.add("hidden");
+//   setTimeout(function() {
+//     deactivateClick = false;
+//   }, 500)
+// }
 
 function openThankYouModal() {
   deactivateClick = true;
@@ -171,7 +171,6 @@ function openThankYouModal() {
 }
 
 function closeThankYouModal() {
-  deactivateClick = false;
   let modal = select("#thank-you-modal");
   modal.elt.classList.add("hidden");
   for (let i = 0; i < allFlowers.length; i++) {
@@ -181,6 +180,9 @@ function closeThankYouModal() {
         openFlowerDetailsModal(data);
     }
   }
+  setTimeout(function() {
+    deactivateClick = false;
+  }, 500)
 }
 
 //// Plant Info modal
