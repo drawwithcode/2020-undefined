@@ -1,6 +1,7 @@
 let express = require("express");
 let socket = require("socket.io");
 let dayjs = require("dayjs");
+var customParseFormat = require('dayjs/plugin/customParseFormat')
 let firebase = require("firebase/app");
 require("firebase/firestore");
 
@@ -23,6 +24,8 @@ let port = process.env.PORT || 3000;
 let server = app.listen(port);
 let io = socket(server);
 
+let dateOffset = 0;
+
 let allFlowers = [];
 
 let maxNoWaterDays = 10;
@@ -31,15 +34,12 @@ app.get("/mappa.js", function(req, res) {
   res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
 });
 
-
-// Following lines can be deleted
-// app.get("/config.js", function(req, res) {
-//     res.sendFile(__dirname + "/config.js");
-// });
-
 // set public directory
 app.use(express.static("public"));
 console.log("Server is running!")
+
+// Enable custom date format
+dayjs.extend(customParseFormat);
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -51,12 +51,17 @@ getFromDatabase();
 io.on("connection", newConnection);
 
 function newConnection(socket) {
-  console.log("Client connected at: " + getDate().time);
-
-
+  console.log("New client connected at: " + getDate().time);
 
   socket.on("firstConnection", function() {
     io.emit("updateFlowers", allFlowers);
+  });
+
+  socket.on("dayOffset", function(data) {
+    dateOffset = data;
+    console.log("Date Offset: " + dateOffset);
+    io.emit("updateOffset", dateOffset);
+    getFromDatabase();
   });
 
   socket.on("createFlower", function(data) {
@@ -97,6 +102,7 @@ function newConnection(socket) {
   });
 }
 
+// Write data into firestore
 function writeToDatabase(data) {
   console.log("New flower added to database");
   let flower_coordinates = {
@@ -127,6 +133,7 @@ function writeToDatabase(data) {
     })
 }
 
+// Receive data from firestore
 function getFromDatabase() {
   console.log("Receive updated list of flowers!");
   firebase
@@ -136,7 +143,10 @@ function getFromDatabase() {
     .then(function(querySnapshot) {
       let data = [];
       querySnapshot.forEach(function(doc) {
-        // deleteInDatabase(doc.id);
+        let deleteData = false;
+        if (deleteData) {
+        deleteInDatabase(doc.id);
+      } else {
         // compares the date when the flower was added with the current day
         let date_added = doc.data().date_added.date;
         let age = getDateDifference(date_added);
@@ -165,6 +175,7 @@ function getFromDatabase() {
           }
           data.push(docData);
         }
+      }
       });
       allFlowers = data;
       // console.log(data);
@@ -175,6 +186,7 @@ function getFromDatabase() {
     });
 }
 
+// Delete entries in firestore
 function deleteInDatabase(data){
   console.log("Delete flower with ID: " + data);
   let id = data
@@ -185,21 +197,21 @@ function deleteInDatabase(data){
     .delete();
 }
 
-
+// Get the current date and time
 function getDate() {
   let now = dayjs();
-  // substract days to test if the difference works
-  let d2 = now.subtract('0', 'day');
   let day = {
-    date: d2.format("DD.MM.YY"),
+    date: now.format("DD.MM.YY"),
     time: now.format("HH:mm:ss")
   }
   return day
 }
 
+// Get the difference of a given date and today
 function getDateDifference(inputDate) {
-  let difference = dayjs().diff(inputDate, "day");
+  let date = dayjs(inputDate, "DD.MM.YY", true);
+  let difference = dayjs().diff(date, "day");
   // add a bigger difference for testing
-  // difference = difference + 6
+  difference = difference + dateOffset;
   return difference
 }

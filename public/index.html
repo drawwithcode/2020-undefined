@@ -6,7 +6,6 @@
   <meta name="viewport" width="device-width," initial-scale="1.0," maximum-scale="1.0," user-scalable="0" />
   <link rel="stylesheet" href="./css/tailwind.css" />
   <link rel="stylesheet" href="./css/style.css" />
-  <script src="https://kit.fontawesome.com/4f99054617.js" crossorigin="anonymous"></script>
   <script src="p5.min.js"></script>
   <script src="../socket.io/socket.io.js"></script>
   <script src="./mappa.js"></script>
@@ -14,7 +13,10 @@
 </head>
 
 <body id="body" class="body leading-8 overflow-hidden">
-  <!-- <div id="frame"></div> -->
+  <div id="presentationMode" class="absolute z-20 left-10 bottom-10 hidden">
+    <p>Presentation Mode: On</p>
+    <p>Days without water offset: <span id="offset">0</span></p>
+  </div>
   <!-- BUTTONS -->
   <div class="absolute z-20 top-10 left-10">
     <button class="relative w-24 h-24 display-block bg-white border-4 border-black mr-4 font-minecraftia shadow"
@@ -106,29 +108,38 @@
           </form>
         </div>
 
-        <div id="flower-selection" class="grid place-items-center mx-2 my-20 sm:my-auto p-8 hidden">
+        <div id="flower-selection" class="grid place-items-center mx-2 my-20 sm:my-auto p-8  hidden">
           <p id="selection-label" class="font-minecraftia">
             Select a flower:
           </p>
           <div class="radio-toolbar grid grid-cols-3 gap-6">
-            <input type="radio" onclick="savePlantChoice(0)" id="radio0" checked>
+            <input type="radio" onclick="savePlantChoice(0)" checked>
             <label for="radio0" class="p-10 border-4 border-black  w-full h-full">
               <img src="/images/flowerset_1/flower_0.png" /></label>
-            <input type="radio" onclick="savePlantChoice(1)" id="radio1" />
+            <input type="radio" onclick="savePlantChoice(1)" />
             <label for="radio1" class="p-10 border-4 border-black  w-full h-full"> <img
                 src="/images/flowerset_1/flower_1.png" class="m-auto" /></label>
-            <input type="radio" onclick="savePlantChoice(2)" id="radio2" />
+            <input type="radio" onclick="savePlantChoice(2)" />
             <label for="radio2" class="p-10 border-4 border-black  w-full h-full"> <img
                 src="/images/flowerset_1/flower_2.png" class="m-auto" /></label>
-            <input type="radio" onclick="savePlantChoice(3)" id="radio3">
+            <input type="radio" onclick="savePlantChoice(3)">
             <label for="radio3" class="p-10 border-4 border-black  w-full h-full"> <img
                 src="/images/flowerset_1/flower_3.png" class="m-auto" /></label>
-            <input type="radio" onclick="savePlantChoice(4)" id="radio4" />
+            <input type="radio" onclick="savePlantChoice(4)" />
             <label for="radio4" class="p-10 border-4 border-black  w-full h-full"> <img
                 src="/images/flowerset_1/flower_4.png" class="m-auto" /></label>
-            <input type="radio" onclick="savePlantChoice(5)" id="radio5" />
+            <input type="radio" onclick="savePlantChoice(5)" />
             <label for="radio5" class="p-10 border-4 border-black  w-full h-full"> <img
                 src="/images/flowerset_1/flower_5.png" class="m-auto" /></label>
+            <input type="radio" onclick="savePlantChoice(6)" />
+            <label for="radio5" class="p-10 border-4 border-black  w-full h-full"> <img
+                src="/images/flowerset_1/flower_6.png" class="m-auto" /></label>
+            <input type="radio" onclick="savePlantChoice(7)" />
+            <label for="radio5" class="p-10 border-4 border-black  w-full h-full"> <img
+                src="/images/flowerset_1/flower_7.png" class="m-auto" /></label>
+            <input type="radio" onclick="savePlantChoice(8)" />
+            <label for="radio5" class="p-10 border-4 border-black  w-full h-full"> <img
+                src="/images/flowerset_1/flower_8.png" class="m-auto" /></label>
           </div>
           <div class="font-nokia border-t-2 border-b-2 border-black w-full py-4 mt-3">
             <div id="flower_description-0" class="flower_descriptions">
@@ -137,11 +148,16 @@
             </div>
             <div id="flower_description-1" class="hidden flower_descriptions">
               <h3>Amorphophallus titanum</h3>
-              <p>The titan arum, is a flowering plant with the largest unbranched inflorescence in the world. The titan arum's inflorescence can reach over 3 metres in height. The titan arum's berries arrange in a regular cylindrical form that resemble the packing of spheres inside a cylindrical confinement. Those structures are also called columnar structures or crystals.</p>
+              <p>The titan arum, is a flowering plant with the largest unbranched inflorescence in the world. The titan
+                arum's inflorescence can reach over 3 metres in height. The titan arum's berries arrange in a regular
+                cylindrical form that resemble the packing of spheres inside a cylindrical confinement. Those structures
+                are also called columnar structures or crystals.</p>
             </div>
             <div id="flower_description-2" class="hidden flower_descriptions">
               <h3>Ashe magnolia</h3>
-              <p>is a small tree with a broad, round top. The blossoms are fragrant, creamy white and up to 6 inches long and about half as wide. This very rare species is found in only six counties in the Florida panhandle. It is named for William Willard Ashe (1872-1932), a forester of the U.S. Forest Service.</p>
+              <p>is a small tree with a broad, round top. The blossoms are fragrant, creamy white and up to 6 inches
+                long and about half as wide. This very rare species is found in only six counties in the Florida
+                panhandle. It is named for William Willard Ashe (1872-1932), a forester of the U.S. Forest Service.</p>
             </div>
             <div id="flower_description-3" class="hidden flower_descriptions">
               <h3>Flower title</h3>
@@ -154,7 +170,10 @@
             <div id="flower_description-5" class="hidden flower_descriptions">
               <h3>Rafflesia arnoldii</h3>
               <p>
-                is thought to be the largest flower on the planet. The flower itself does not have a structural stem, leaves, or roots. But what it does have is the pungent odors of decomposing flesh, hence the nickname corpse flower. It grows three feet in diameter and weighs up to 24 pounds. The Rafflesia is parasitic, growing on the Tetrastigma vine in the forests of Borneo and Sumatra.
+                is thought to be the largest flower on the planet. The flower itself does not have a structural stem,
+                leaves, or roots. But what it does have is the pungent odors of decomposing flesh, hence the nickname
+                corpse flower. It grows three feet in diameter and weighs up to 24 pounds. The Rafflesia is parasitic,
+                growing on the Tetrastigma vine in the forests of Borneo and Sumatra.
               </p>
             </div>
           </div>
@@ -179,9 +198,6 @@
           <h2 id="title" class="flex justify-center p-3 font-nokia text-lg  text-black">
             Water a flower
           </h2>
-          <!-- <button class="flex-end p-2" onclick="closeWaterModal()">
-          <img src="images/close.svg" />
-        </button> -->
         </div>
 
         <div id="water-input-form">
@@ -215,9 +231,6 @@
           <h2 class="flex justify-center p-3 font-nokia text-lg  text-black">
             Water a flower
           </h2>
-          <!-- <button class="flex-end p-2" onclick="closeWaterModal()">
-          <img src="images/close.svg" />
-        </button> -->
         </div>
         <div>
           <form class=" p-5 mt-10">
@@ -249,7 +262,7 @@
         </button>
       </div>
       <div class="m-5">
-        <h2 id="plant-name" class=" p-b-3 font-nokia text-2xl tracking-widest text-black">
+        <h2 id="plant-name" class=" p-b-3 font-nokia text-2xl tracking-widest text-black truncate max-w-xs">
           Plant Name
         </h2>
         <p id="plant-type" class="font-minecraftia">Plant type</p>
