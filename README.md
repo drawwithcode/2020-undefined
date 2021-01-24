@@ -1,7 +1,7 @@
 # A Connected Garden
-A Connected Garden is a project built within the course [Creative Coding](https://drawwithcode.github.io/2020/) at the Politecnico di Milano. It makes use of the [p5.js](https://p5js.org) library and [Mappa.js](https://mappa.js.org). In addition, [firebase](https://mappa.js.org) is used to store the data while [tailwindcss](https://github.com/tailwindlabs/tailwindcss) takes care of most of the styling.
+*A Connected Garden* is a project built within the course [Creative Coding](https://drawwithcode.github.io/2020/) at the Politecnico di Milano. It makes use of the [p5.js](https://p5js.org) library and [Mappa.js](https://mappa.js.org). In addition, [firebase](https://mappa.js.org) is used to store the data while [tailwindcss](https://github.com/tailwindlabs/tailwindcss) takes care of most of the styling.
 
-# Table of Contents
+# :compass: Table of Contents
 1. [How to Run](#how-to-run)
 2. [About the Project](#about-the-project)
 3. [Design Challenges](#design-challenges)
@@ -18,37 +18,26 @@ be sure to have node installed: https://nodejs.org/
 # About the Project
 
 ### Idea
-We live in a world where majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technology development entering our lives. <br>
-Every action needs a first step, and sometimes we forget how easy it is to just plant a seed that will later have an impact in our lives especially if everyone does the same.
+We live in a world where the majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technological developments entering our lives.
+Every action needs a first step, and sometimes we forget how easy it is to just plant a seed that will later have an impact.
 This is the idea behind Connected gardens, it is the first step showing how easy it to make Milan more green, just by simple interactions.
 
-
-
 ### Goals
-Connected gardens is a collaborative experience that aims at inciting people to think about the importance of having a city more green. <br>
-The idea is to show how easy it is to extend the green area in the city, just by collaborating together, and taking care of each other’s plants. <br>
-Visitors can plant endangered flowers that are giving from a list and read some information about them. Each flower has a lifetime duration  and has to be watered. If the plant is not maintained after a certain amount time, it will disappear after a period of time.
-
-
+*A Connected Garden* is a collaborative experience which aims spread the thought about a more green city. Moreover, it shows how easy it is to make a change by collaborating with each other, and taking care of each other’s creations.
+Visitors can plant endangered flowers from a list and read information about them. Each flower has a lifetime duration and has to be watered *(taken care of)*. If the plant is not maintained after a certain amount time, it will change its appearance and eventually completely disappear.
 
 ### Context
-"Connected gardens" is a website that can be used in diverse contexts that are related to the environment. <br>
-First, it is accessible in daily life through computer and smartphone, to make it at the disposal of people. <br>
-The website can also be used to promote environmental organizations to incite people to donate or make other actions. <br>
-But most importantly “Connected Gardens” can be found in specific environmental related events like conferences or expositions, such as:  <br>
--Day of Forests <br>
--Earth Day <br>
--The European Conference of Sustainability, Energy and the Environment <br>
--Earth Overshoot Day <br>
+The website can be used in diverse contexts that are related to the environment. Therefore, it is accessible in daily life through computer and smartphone, to make it at the disposal of people. The website can also be used to promote environmental organizations or projects to incite people to donate or take other actions. However, most importantly *A Connected Garden* can be found in specific environmental related events like conferences or expositions, such as:  <br>
+* Day of Forests
+* Earth Day
+* The European Conference of Sustainability, Energy and the Environment
+* Earth Overshoot Day
 
 # Design Challenges
 
-Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could fit the website. <br>
-First, we were inspired by an old-style, that could feel more organic and connected to nature (gif/moodboard).<br>
-But what was missing, is for it to look more digital and virtual. The players are indeed planting flowers, but we wanted to accentuate more that these were just numerical ones. At the same time, we wanted a style that could be fun and eye-catching for the player. <br>
-In the end, we opted for a vintage style, looking like the 90’s computer programs, with pixelated flowers.<br>
+Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could suit the website. First, we were inspired by the style of old natural science books, which could feel organic and connected to nature (gif/moodboard).
 
-
+Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics.
 
 # Coding Challenges
 
@@ -119,9 +108,9 @@ socket.on("waterFlower", function(data) {
 # Credits:
 
 ##### Team Members
-* [Alia Kaouel](#)
-* [Marija Nikolic](#)
-* [Tim Olbrich]("https://timolbrich.com")
+* [Alia Kaouel](https://github.com/Maariaah)
+* [Marija Nikolic](https://github.com/aliakaouel)
+* [Tim Olbrich](https://timolbrich.com)
 
 ##### Course:
 **[Creative Coding 2020/2021](https://drawwithcode.github.io/2020/)**<br>
