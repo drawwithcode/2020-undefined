@@ -42,6 +42,16 @@ But most importantly “Connected Gardens” can be found in specific environmen
 -Earth Overshoot Day <br>
 
 # Design Challenges
+*Style & colors <br>
+-Choosing the style that corresponds the most  <br>
+-Pixels or classic  <br>  <br>
+How to represent the flowers <br>
+-The flower style: detailed or more abstract <br>
+-Represented by points or with the image of the flower <br>
+-gifs <br>  <br>
+The interface <br>
+-Architecture <br>
+-Screenshots*
 
 # Coding Challenges
 
