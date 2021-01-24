@@ -1,31 +1,45 @@
 # A Connected Garden
-A Connected Garden is a project built within the course [Creative Coding](https://drawwithcode.github.io/2020/) at the Politecnico di Milano. It makes use of the [p5.js](https://p5js.org) library and [Mappa.js](https://mappa.js.org). In addition, [firebase](https://mappa.js.org) is used to store the data while [tailwindcss](https://github.com/tailwindlabs/tailwindcss) takes care of most of the styling.
+*A Connected Garden* is a collaborative project built within the course [Creative Coding](https://drawwithcode.github.io/2020/) at the Politecnico di Milano. It makes use of the [p5.js](https://p5js.org) library and [Mappa.js](https://mappa.js.org). In addition, [firebase](https://mappa.js.org) is used to store the data while [tailwindcss](https://github.com/tailwindlabs/tailwindcss) takes care of most of the styling.
 
-# Table of Contents
+# :compass: Table of Contents
 1. [How to Run](#how-to-run)
 2. [About the Project](#about-the-project)
 3. [Design Challenges](#design-challenges)
 4. [Coding Challenges](#coding-challenges)
 5. [Credits](#credits)
 
-# How to Run
+# :running_woman: How to Run
 See the [demo](https://github.com/drawwithcode/2020-undefined/deployments/activity_log?environment=a-connected-garden) or
 be sure to have node installed: https://nodejs.org/
 * Install node dependencies: `npm install`
 * Run local server: `node app.js`
 * Open: `localhost:3000`
 
-# About the Project
+# :bulb: About the Project
 
 ### Idea
+We live in a world where the majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technological developments entering our lives.
+We tend to run away form the feeling of responsibility towards environmental maintenance. Ofcaurse, every action needs a first step, but we sometimes forget how easy and simple it is to just plant a seed that will later have an impact.
+This is the idea behind Connected gardens, it is the first step showing how easy it to make Milan more green, just by simple interactions.
 
 ### Goals
+*A Connected Garden* is a collaborative experience which aims spread the thought about a more green city. Moreover, it shows how easy it is to make a change by collaborating with each other, and taking care of each other’s creations.
+Visitors can plant endangered flowers from a list and read information about them. Each flower has a lifetime duration and has to be watered *(taken care of)*. If the plant is not maintained after a certain amount time, it will change its appearance and eventually completely disappear.
 
 ### Context
+The website can be used in diverse contexts that are related to the environment. Therefore, it is accessible in daily life through computer and smartphone, to make it at the disposal of people. The website can also be used to promote environmental organizations or projects to incite people to donate or take other actions. However, most importantly *A Connected Garden* can be found in specific environmental related events like conferences or expositions, such as:  <br>
+* Day of Forests
+* Earth Day
+* The European Conference of Sustainability, Energy and the Environment
+* Earth Overshoot Day
 
-# Design Challenges
+# :artist: Design Challenges
 
-# Coding Challenges
+Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could suit the website. First, we were inspired by the style of old natural science books, which could feel organic and connected to nature (gif/moodboard).
+
+Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics to communicate criticism towards outdated idea of planting a flower, which we easily forgot about.
+
+# :technologist: Coding Challenges
 
 ### User Clicks a Flower
 One of the difficulties we encountered is to check if a flower is clicked by the user. Here we have to keep in mind that the the flower's position depends on it's geographic coordinates, not the canvas' pixel coordinates. In order to overcome this issue, we have to convert the mouse X and Y coordinates to `position.lat` (latitude) and the `position.lng` (longitude). We then pass it to the flower class.
@@ -91,12 +105,12 @@ socket.on("waterFlower", function(data) {
 });
 ```
 
-# Credits:
+# :medal_military: Credits:
 
 ##### Team Members
-* [Alia Kaouel](#)
-* [Marija Nikolic](#)
-* [Tim Olbrich]("https://timolbrich.com")
+* [Alia Kaouel](https://github.com/Maariaah)
+* [Marija Nikolic](https://github.com/aliakaouel)
+* [Tim Olbrich](https://timolbrich.com)
 
 ##### Course:
 **[Creative Coding 2020/2021](https://drawwithcode.github.io/2020/)**<br>

@@ -17,10 +17,11 @@ let isAboutModalOpen;
 let isAddModalOpen;
 let isFlowertDetailsModalOpen;
 let mapboxCanvas;
-let addMode;
+let deactivateClick;
+let addMode = false;
 let lStorage;
 let selectedFlower;
-let selectedFlowerId;
+let currentFlower;
 
 const key =
   "pk.eyJ1IjoidG9sYnJpIiwiYSI6ImNranBxd2tzdjM5amYycW83aGFoM3UzeXkifQ.U6_rp72ab8gMo6VANxpBWQ";
@@ -52,7 +53,7 @@ function setup() {
   isAboutModalOpen = false;
   isAddModalOpen = false;
   isFlowertDetailsModalOpen = false;
-  addMode = false;
+  deactivateClick = false;
   lStorage = { lng: null, lat: null, name: "", location: "", flowername: "" };
   canvas = createCanvas(windowWidth, windowHeight);
   myMap = mappa.tileMap(mapOptions);
@@ -87,9 +88,11 @@ function drawFlowers() {
 }
 
 function openHelperMessage() {
+  addMode = false;
+  deactivateClick = true;
   let modal = select("#helper_message");
     modal.elt.classList.remove("hidden");
-    mapboxCanvas.elt.classList.add("border-8", "border-green-500");
+    select(".mapboxgl-canvas").elt.classList.add("border-8", "border-green-500");
     closeFlowerDetailsModal();
     closeAddModal();
     closeAboutModal();
@@ -99,12 +102,13 @@ function openHelperMessage() {
 function closeHelperMessage() {
   let modal = select("#helper_message");
     modal.elt.classList.add("hidden");
-    mapboxCanvas.elt.classList.remove("border-8", "border-green-500");
-    addMode = false;
+    select(".mapboxgl-canvas").elt.classList.remove("border-8", "border-green-500");
+      deactivateClick = false;
 }
 
 //// About modal
 function openAboutModal() {
+  deactivateClick = true;
   let modal = select("#popup_about");
     modal.elt.classList.remove("hidden");
     closeFlowerDetailsModal();
@@ -115,40 +119,71 @@ function openAboutModal() {
 function closeAboutModal() {
   let modal = select("#popup_about");
     modal.elt.classList.add("hidden");
+      deactivateClick = false;
 }
 
 //// Add new plant modal
 function openAddModal() {
   let modal = select("#popup_add_plant");
   select("body").elt.classList.add("preventScroll");
+  select("#input-form").elt.classList.remove("hidden");
   modal.elt.classList.remove("hidden");
 
   closeFlowerDetailsModal();
   closeAboutModal();
   closeHelperMessage();
+  deactivateClick = true;
 }
 
 function closeAddModal() {
   let modal = select("#popup_add_plant");
     select("body").elt.classList.remove("preventScroll");
     modal.elt.classList.add("hidden");
+    setTimeout(function() {
+      deactivateClick = false;
+    }, 1000)
 }
 
 function openWaterModal() {
+  deactivateClick = true;
   let modal = select("#water_modal");
   modal.elt.classList.remove("hidden");
-  for (let i = 0; i < allFlowers.length; i++) {
-    if (allFlowers[i].id == selectedFlowerId) {
-      let data = allFlowers[i].getFlowerData();
+
+      let data = currentFlower;
       select("#title").html("Water " + data.flowerName);
-    }
-  }
+
   closeFlowerDetailsModal();
 }
 
 function closeWaterModal() {
   let modal = select("#water_modal");
   modal.elt.classList.add("hidden");
+  // setTimeout(function() {
+  //   deactivateClick = false;
+  // }, 500)
+}
+
+function openThankYouModal() {
+  deactivateClick = true;
+  let modal = select("#thank-you-modal");
+  let text = select("#thank-you-message");
+  modal.elt.classList.remove("hidden");
+  text.html("Thank you for taking care of <span class = 'font-black text-red-500'>" + currentFlower.userName + "'s</span> flower.")
+}
+
+function closeThankYouModal() {
+  let modal = select("#thank-you-modal");
+  modal.elt.classList.add("hidden");
+  for (let i = 0; i < allFlowers.length; i++) {
+    if(allFlowers[i].id == currentFlower.id) {
+      let data = allFlowers[i].getFlowerData();
+        closeWaterModal();
+        openFlowerDetailsModal(data);
+    }
+  }
+  setTimeout(function() {
+    deactivateClick = false;
+  }, 500)
 }
 
 //// Plant Info modal
@@ -158,7 +193,17 @@ function openFlowerDetailsModal(data) {
     modal.elt.classList.remove("hidden");
   }
 
-  selectedFlowerId = data.id;
+currentFlower = data;
+
+  let flowerset = 3;
+  if(data.no_water >= 0 && data.no_water <= 3) {
+    flowerset = 1;
+  } else if (data.no_water >= 4 && data.no_water <= 7) {
+    flowerset = 2
+  }
+
+  let path = "/images/flowerset_" + flowerset + "/flower_" + data.flowerType + ".png";
+  select("#plant-image").html("<img src = '" + path + "' class='h-full my-10 mx-auto'>")
 
   let flowerType = "";
 switch (data.flowerType) {
@@ -185,13 +230,24 @@ switch (data.flowerType) {
     break;
 }
 
+  let color = select("#plant_info_color");
   let waterNeed = "";
   if(data.no_water >= 0 && data.no_water <= 3) {
-    waterNeed = "Alive and fresh";
+    waterNeed = "Well watered!";
+    color.elt.classList.remove("bg-gray-100");
+    color.elt.classList.remove("bg-yellow-100");
+    color.elt.classList.add("bg-yellow-200");
+
   } else if (data.no_water >= 4 && data.no_water <= 7) {
-    waterNeed = "It's getting hot";
+    waterNeed = "Could be better!";
+    color.elt.classList.remove("bg-gray-100");
+    color.elt.classList.remove("bg-yellow-200");
+    color.elt.classList.add("bg-yellow-100");
   } else {
-    waterNeed = "Needs water immediately";
+    waterNeed = "Needs water!";
+    color.elt.classList.remove("bg-yellow-100");
+    color.elt.classList.remove("bg-yellow-200");
+    color.elt.classList.add("bg-gray-100");
   }
 
   select("#plant-name").html(data.flowerName);
@@ -199,21 +255,25 @@ switch (data.flowerType) {
   select("#user-name").html(data.userName);
   select("#user-location").html(data.userLocation);
   select("#green-level").html(waterNeed);
-  select("#age").html(data.age + " days old");
+
+  if(data.age == null) {
+    select("#age").html("Planted today");
+  } else {
+    select("#age").html(data.age + " days old");
+  }
+
 
   let watered = data.watered;
   let participants = select("#gardeners");
   if (Array.isArray(watered) && watered.length > 0) {
     participants.html("");
-  for (let i = 0; i < watered.length; i++) {
+    // loop backwards through the array to display newest to oldest entries
+  for (let i = watered.length - 1; i >= 0 ; i--) {
     participants.html("<p><span class='font-black'>" + watered[i].date.date + ":</span> " + watered[i].user + "</p>", true);
   }
 } else {
   participants.html("<p>No one watered this plant yet</p>");
 }
-  // The following line is for testing
-  // pass the username and the flower_id
-  // waterFlower("Tim", "uaH46IbwMffA1PsXXEK2");
 }
 
 function closeFlowerDetailsModal(){
@@ -323,13 +383,14 @@ function mouseClicked() {
 
   // check if add mode is on and if not clicked to any of buttons
   if (addMode) {
+    deactivateClick = true;
     addMode = false;
     lStorage.lng = position.lng;
     lStorage.lat = position.lat;
     mapboxCanvas.removeClass("cursorCrosshair");
     closeHelperMessage();
     openAddModal();
-  } else {
+  } else if (!deactivateClick){
   // check if cursor is over one of the flowers
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
@@ -363,7 +424,6 @@ function mouseMoved() {
 }
 
 function waterFlower() {
-
   //Get input data
   let nameInput = select("#water-name");
   let nameString = nameInput.elt.value.trim();
@@ -371,25 +431,19 @@ function waterFlower() {
   if (!nameString == "") {
 
         console.log("Water flower!");
-        let data = {
+        let waterThis = {
           user: nameString,
-          id: selectedFlowerId,
+          id: currentFlower.id,
         };
-        socket.emit("waterFlower", data);
+        socket.emit("waterFlower", waterThis);
 
-        for (let i = 0; i < allFlowers.length; i++) {
-          if (allFlowers[i].id == selectedFlowerId) {
-            let data = allFlowers[i].getFlowerData();
+
+
+            let data = currentFlower;
             setTimeout(function() {
+              openThankYouModal();
               closeWaterModal();
-              openFlowerDetailsModal(data);
             }, 1000)
-          }
-        }
-
-
-
-
 
 
   } else {
@@ -426,11 +480,19 @@ class Flower {
 
   display(posX, posY) {
     if(this.no_water >= 0 && this.no_water <= 3) {
-      image(perfectFlowerImgs[this.type], posX, posY, 40, 40);
+      push();
+      image(perfectFlowerImgs[this.type], posX, posY, 20, 20);
+      pop();
     } else if (this.no_water >= 4 && this.no_water <= 7) {
-      image(mediumFlowerImgs[this.type], posX, posY, 30, 30);
+      push();
+      tint(255, 180);
+      image(mediumFlowerImgs[this.type], posX, posY, 20, 20);
+      pop();
     } else {
-      image(badFlowerImgs[this.type], posX, posY, 25, 25);
+      push();
+      tint(255, 80);
+      image(badFlowerImgs[this.type], posX, posY, 20, 20);
+      pop();
     }
 
   }
@@ -442,7 +504,7 @@ class Flower {
     let zoom = map(mapZoom, 11, 22, 1, 150);
     // we're using 0.03 here because we are using coordinates and not pixels
     // when changin keep in mind that the image might have transparency
-    if (d < 0.008 / zoom) {
+    if (d < 0.001 / zoom) {
       return true;
     } else {
       return false;
