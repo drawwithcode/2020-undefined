@@ -23,10 +23,10 @@ be sure to have node installed: https://nodejs.org/
 ### Idea
 We live in a world where the majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technological developments entering our lives.
 We tend to run away from the feeling of responsibility towards environmental maintenance. Of course, every action needs a first step, but we sometimes forget how easy and simple it is to just plant a seed that will later have an impact.
-This is the idea behind Connected gardens, it is the first step showing how easy it to make Milan more green, just by simple interactions.
+This is the idea behind *A Connected Garden*, it is the first step showing how easy it to make Milan more green, just by simple interactions.
 
 ### Goals
-*A Connected Garden* is a collaborative experience which aims spread the thought about a more green city. Moreover, it shows how easy it is to make a change by collaborating with each other, and taking care of each other’s creations.
+*A Connected Garden* is a collaborative experience which aims to spread the thought about a more green city. Moreover, it shows how easy it is to make a change by collaborating with each other, and taking care of each other’s creations.
 Visitors can plant endangered flowers from a list and read information about them. Each flower has a lifetime duration and has to be watered *(taken care of)*. If the plant is not maintained after a certain amount time, it will change its appearance and eventually completely disappear.
 
 ### Context
@@ -38,15 +38,16 @@ The website can be used in diverse contexts that are related to the environment.
 
 # :artist: Design Challenges
 
-Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could suit the website. First, we were inspired by the style of old natural science books, which could feel organic and connected to nature (gif/moodboard).
+Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could suit the website. First, we were inspired by the style of old natural science books, which could feel organic and connected to nature .
+<img src="public/images/designprocess.gif"/>
 
 Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics to communicate criticism towards outdated idea of planting a flower, which we easily forgot about.
-  <img src="public/images/designprocess.gif"/>
+  <img src="public/images/Screenshot-1.png"/>
 
 # :technologist: Coding Challenges
 
 ### User Clicks a Flower
-One of the difficulties we encountered is to check if a flower is clicked by the user. Here we have to keep in mind that the the flower's position depends on it's geographic coordinates, not the canvas' pixel coordinates. In order to overcome this issue, we have to convert the mouse X and Y coordinates to `position.lat` (latitude) and the `position.lng` (longitude). We then pass it to the flower class.
+One of the difficulties we encountered is to check if a flower is clicked by the user. Here we have to keep in mind that the  flower's position depends on it's geographic coordinates, not the canvas' pixel coordinates. In order to overcome this issue, we have to convert the mouse X and Y coordinates to `position.lat` (latitude) and the `position.lng` (longitude). We then pass it to the flower class.
 
 **Inside the mouseClicked() function in** `sketch.js`
 ```javascript
@@ -58,7 +59,7 @@ for (let i = 0; i < allFlowers.length; i++) {
 }
 ```
 
-Now it is possible to compare the mouse's position to the flowers's position. The benefit of using geographic coordinates is that the position does not depend on the canvas size anymore, which is important when working with maps.
+Now it is possible to compare the mouse's position to the flowers' position. The benefit of using geographic coordinates is that the position does not depend on the canvas size anymore, which is important when working with maps.
 
 **Inside the Flower Class in** `sketch.js`
 ```javascript
@@ -112,8 +113,8 @@ socket.on("waterFlower", function(data) {
 # :medal_military: Credits:
 
 ##### Team Members
-* [Alia Kaouel](https://github.com/Maariaah)
-* [Marija Nikolic](https://github.com/aliakaouel)
+* [Alia Kaouel](https://alia-kaouel.myportfolio.com)
+* [Marija Nikolic](https://github.com/Maariaah)
 * [Tim Olbrich](https://timolbrich.com)
 
 ##### Course:

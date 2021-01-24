@@ -239,7 +239,7 @@ function openFlowerDetailsModal(data) {
       flowerType = "Guaiacum Sanctum";
       break;
     case 1:
-      flowerType = "Amorphophallus Titanum,";
+      flowerType = "Amorphophallus Titanum";
       break;
     case 2:
       flowerType = "Bois Dentelle";
