@@ -42,7 +42,7 @@ let addMode = false;
 let lStorage;
 
 function preload() {
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 9; i++) {
     perfectFlowerImgs[i] = loadImage("images/flowerset_1/flower_" + i + ".png");
     mediumFlowerImgs[i] = loadImage("images/flowerset_2/flower_" + i + ".png");
     badFlowerImgs[i] = loadImage("images/flowerset_3/flower_" + i + ".png");
@@ -216,6 +216,15 @@ function openFlowerDetailsModal(data) {
     case 5:
       flowerType = "Rafflesia Arnoldii";
       break;
+    case 6:
+      flowerType = "Venus Fly Trap";
+      break;
+    case 7:
+      flowerType = "Lillium Iridollae";
+      break;
+    case 8:
+      flowerType = "Euphorbia Obesa";
+      break;
     default:
       flowerType = "Type Unknown";
       break;
@@ -247,7 +256,7 @@ function openFlowerDetailsModal(data) {
   select("#user-location").html(data.userLocation);
   select("#green-level").html(waterNeed);
 
-  if (data.age == null) {
+  if (data.age == null || data.age == 0) {
     select("#age").html("Planted today");
   } else {
     select("#age").html(data.age + " days old");
@@ -262,7 +271,7 @@ function openFlowerDetailsModal(data) {
       participants.html("<p><span class='font-black'>" + watered[i].date.date + ":</span> " + watered[i].user + "</p>", true);
     }
   } else {
-    participants.html("<p>No one watered this plant yet</p>");
+    participants.html("<p>No one watered this flower yet</p>");
   }
 }
 
