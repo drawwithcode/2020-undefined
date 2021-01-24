@@ -12,7 +12,10 @@ module.exports = {
       fontFamily: {
         'minecraftia': ['Minecraftia-20', 'serif'],
         'nokia': ['Nokia-Cellphone-Small', 'serif'],
-      }
+      },
+      maxHeight: {
+        '3/4': '84%'
+       }
     },
   },
   variants: {
