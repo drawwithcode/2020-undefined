@@ -126,6 +126,7 @@ function closeAboutModal() {
 function openAddModal() {
   let modal = select("#popup_add_plant");
   select("body").elt.classList.add("preventScroll");
+  select("#input-form").elt.classList.remove("hidden");
   modal.elt.classList.remove("hidden");
 
   closeFlowerDetailsModal();
@@ -376,7 +377,7 @@ function mouseClicked() {
 
   // check if add mode is on and if not clicked to any of buttons
   if (addMode) {
-    deactivateClick = false;
+    deactivateClick = true;
     addMode = false;
     lStorage.lng = position.lng;
     lStorage.lat = position.lat;
