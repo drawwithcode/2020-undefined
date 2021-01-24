@@ -328,8 +328,6 @@ function nextButton() {
 }
 
 function savePlantChoice(type) {
-  console.log('kurac')
-
   lStorage.type = type;
   const descriptions = document.getElementsByClassName("flower_descriptions");
   for (let i = 0; i < descriptions.length; i++) {
