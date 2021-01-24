@@ -130,6 +130,7 @@ function openAddModal() {
   let modal = select("#popup_add_plant");
   select("body").elt.classList.add("preventScroll");
   select("#input-form").elt.classList.remove("hidden");
+  select("#flower-selection").elt.classList.add("hidden");
   modal.elt.classList.remove("hidden");
   closeFlowerDetailsModal();
   closeAboutModal();
