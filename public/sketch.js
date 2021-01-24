@@ -42,9 +42,9 @@ const mapOptions = {
 
 function preload() {
   for (var i = 0; i < 6; i++) {
-    perfectFlowerImgs[i]= loadImage("images/flowerset_1/flower_" + i + ".png");
+    perfectFlowerImgs[i] = loadImage("images/flowerset_1/flower_" + i + ".png");
     mediumFlowerImgs[i] = loadImage("images/flowerset_2/flower_" + i + ".png");
-    badFlowerImgs[i]    = loadImage("images/flowerset_3/flower_" + i + ".png");
+    badFlowerImgs[i] = loadImage("images/flowerset_3/flower_" + i + ".png");
   }
 }
 
@@ -91,35 +91,37 @@ function openHelperMessage() {
   addMode = false;
   deactivateClick = true;
   let modal = select("#helper_message");
-    modal.elt.classList.remove("hidden");
-    select(".mapboxgl-canvas").elt.classList.add("border-8", "border-green-500");
-    closeFlowerDetailsModal();
-    closeAddModal();
-    closeAboutModal();
-
+  modal.elt.classList.remove("hidden");
+  select(".mapboxgl-canvas").elt.classList.add("border-8", "border-green-500");
+  closeFlowerDetailsModal();
+  closeAddModal();
+  closeAboutModal();
 }
 
 function closeHelperMessage() {
   let modal = select("#helper_message");
-    modal.elt.classList.add("hidden");
-    select(".mapboxgl-canvas").elt.classList.remove("border-8", "border-green-500");
-      deactivateClick = false;
+  modal.elt.classList.add("hidden");
+  select(".mapboxgl-canvas").elt.classList.remove(
+    "border-8",
+    "border-green-500"
+  );
+  deactivateClick = false;
 }
 
 //// About modal
 function openAboutModal() {
   deactivateClick = true;
   let modal = select("#popup_about");
-    modal.elt.classList.remove("hidden");
-    closeFlowerDetailsModal();
-    closeAddModal();
-    closeHelperMessage();
+  modal.elt.classList.remove("hidden");
+  closeFlowerDetailsModal();
+  closeAddModal();
+  closeHelperMessage();
 }
 
 function closeAboutModal() {
   let modal = select("#popup_about");
-    modal.elt.classList.add("hidden");
-      deactivateClick = false;
+  modal.elt.classList.add("hidden");
+  deactivateClick = false;
 }
 
 //// Add new plant modal
@@ -137,11 +139,11 @@ function openAddModal() {
 
 function closeAddModal() {
   let modal = select("#popup_add_plant");
-    select("body").elt.classList.remove("preventScroll");
-    modal.elt.classList.add("hidden");
-    setTimeout(function() {
-      deactivateClick = false;
-    }, 1000)
+  select("body").elt.classList.remove("preventScroll");
+  modal.elt.classList.add("hidden");
+  setTimeout(function () {
+    deactivateClick = false;
+  }, 1000);
 }
 
 function openWaterModal() {
@@ -149,8 +151,8 @@ function openWaterModal() {
   let modal = select("#water_modal");
   modal.elt.classList.remove("hidden");
 
-      let data = currentFlower;
-      select("#title").html("Water " + data.flowerName);
+  let data = currentFlower;
+  select("#title").html("Water " + data.flowerName);
 
   closeFlowerDetailsModal();
 }
@@ -168,76 +170,82 @@ function openThankYouModal() {
   let modal = select("#thank-you-modal");
   let text = select("#thank-you-message");
   modal.elt.classList.remove("hidden");
-  text.html("Thank you for taking care of <span class = 'font-black text-red-500'>" + currentFlower.userName + "'s</span> flower.")
+  text.html(
+    "Thank you for taking care of <span class = 'font-black text-red-500'>" +
+      currentFlower.userName +
+      "'s</span> flower."
+  );
 }
 
 function closeThankYouModal() {
   let modal = select("#thank-you-modal");
   modal.elt.classList.add("hidden");
   for (let i = 0; i < allFlowers.length; i++) {
-    if(allFlowers[i].id == currentFlower.id) {
+    if (allFlowers[i].id == currentFlower.id) {
       let data = allFlowers[i].getFlowerData();
-        closeWaterModal();
-        openFlowerDetailsModal(data);
+      closeWaterModal();
+      openFlowerDetailsModal(data);
     }
   }
-  setTimeout(function() {
+  setTimeout(function () {
     deactivateClick = false;
-  }, 500)
+  }, 500);
 }
 
 //// Plant Info modal
 function openFlowerDetailsModal(data) {
   let modal = select("#popup_plant_info");
-  if(modal.elt.classList.contains("hidden")) {
+  if (modal.elt.classList.contains("hidden")) {
     modal.elt.classList.remove("hidden");
   }
 
-currentFlower = data;
+  currentFlower = data;
 
   let flowerset = 3;
-  if(data.no_water >= 0 && data.no_water <= 3) {
+  if (data.no_water >= 0 && data.no_water <= 3) {
     flowerset = 1;
   } else if (data.no_water >= 4 && data.no_water <= 7) {
-    flowerset = 2
+    flowerset = 2;
   }
 
-  let path = "/images/flowerset_" + flowerset + "/flower_" + data.flowerType + ".png";
-  select("#plant-image").html("<img src = '" + path + "' class='h-full my-10 mx-auto'>")
+  let path =
+    "/images/flowerset_" + flowerset + "/flower_" + data.flowerType + ".png";
+  select("#plant-image").html(
+    "<img src = '" + path + "' class='h-full my-10 mx-auto'>"
+  );
 
   let flowerType = "";
-switch (data.flowerType) {
-  case 0:
-    flowerType = "Guaiacum Sanctum";
-    break;
-  case 1:
-    flowerType = "Amorphophallus Titanum,";
-    break;
-  case 2:
-    flowerType = "Bois Dentelle";
-    break;
-  case 3:
-    flowerType = "Australian Orchid";
-    break;
-  case 4:
-    flowerType = "Green Pitcher Plant";
-    break;
-  case 5:
-    flowerType = "Rafflesia Arnoldii";
-    break;
-  default:
-    flowerType = "Type Unknown";
-    break;
-}
+  switch (data.flowerType) {
+    case 0:
+      flowerType = "Guaiacum Sanctum";
+      break;
+    case 1:
+      flowerType = "Amorphophallus Titanum,";
+      break;
+    case 2:
+      flowerType = "Bois Dentelle";
+      break;
+    case 3:
+      flowerType = "Australian Orchid";
+      break;
+    case 4:
+      flowerType = "Green Pitcher Plant";
+      break;
+    case 5:
+      flowerType = "Rafflesia Arnoldii";
+      break;
+    default:
+      flowerType = "Type Unknown";
+      break;
+  }
 
   let color = select("#plant_info_color");
   let waterNeed = "";
-  if(data.no_water >= 0 && data.no_water <= 3) {
+  if (data.no_water >= 0 && data.no_water <= 3) {
     waterNeed = "Well watered!";
     color.elt.classList.remove("bg-gray-100");
     color.elt.classList.remove("bg-yellow-100");
     color.elt.classList.add("bg-yellow-200");
-
   } else if (data.no_water >= 4 && data.no_water <= 7) {
     waterNeed = "Could be better!";
     color.elt.classList.remove("bg-gray-100");
@@ -256,29 +264,35 @@ switch (data.flowerType) {
   select("#user-location").html(data.userLocation);
   select("#green-level").html(waterNeed);
 
-  if(data.age == null) {
+  if (data.age == null) {
     select("#age").html("Planted today");
   } else {
     select("#age").html(data.age + " days old");
   }
-
 
   let watered = data.watered;
   let participants = select("#gardeners");
   if (Array.isArray(watered) && watered.length > 0) {
     participants.html("");
     // loop backwards through the array to display newest to oldest entries
-  for (let i = watered.length - 1; i >= 0 ; i--) {
-    participants.html("<p><span class='font-black'>" + watered[i].date.date + ":</span> " + watered[i].user + "</p>", true);
+    for (let i = watered.length - 1; i >= 0; i--) {
+      participants.html(
+        "<p><span class='font-black'>" +
+          watered[i].date.date +
+          ":</span> " +
+          watered[i].user +
+          "</p>",
+        true
+      );
+    }
+  } else {
+    participants.html("<p>No one watered this plant yet</p>");
   }
-} else {
-  participants.html("<p>No one watered this plant yet</p>");
-}
 }
 
-function closeFlowerDetailsModal(){
+function closeFlowerDetailsModal() {
   let modal = select("#popup_plant_info");
-    modal.elt.classList.add("hidden");
+  modal.elt.classList.add("hidden");
 }
 
 function nextButton() {
@@ -300,23 +314,29 @@ function nextButton() {
 
         select("#input-form").elt.classList.add("hidden");
         select("#flower-selection").elt.classList.remove("hidden");
-
       } else {
         flowerName.elt.classList.add("border-red-600");
-        return
+        return;
       }
     } else {
       locationInput.elt.classList.add("border-red-600");
-      return
+      return;
     }
   } else {
     nameInput.elt.classList.add("border-red-600");
-    return
+    return;
   }
 }
 
 function savePlantChoice(type) {
   lStorage.type = type;
+  const descriptions = document.getElementsByClassName("flower_descriptions");
+  
+  for (let i = 0; i < descriptions.length; i++) {
+    i === type
+      ? descriptions[type].classList.remove("hidden")
+      : descriptions[i].classList.add("hidden");
+  }
 }
 
 function submitForm() {
@@ -327,14 +347,13 @@ function submitForm() {
   } else {
     select("#selection-label").elt.classList.add("text-red-600");
   }
-
 }
 
 function createFlower() {
   let flower = {
     flower_coordinates: {
       lat: lStorage.lat,
-      lng: lStorage.lng
+      lng: lStorage.lng,
     },
     flower_type: lStorage.type,
     flower_name: lStorage.flowername,
@@ -390,21 +409,21 @@ function mouseClicked() {
     mapboxCanvas.removeClass("cursorCrosshair");
     closeHelperMessage();
     openAddModal();
-  } else if (!deactivateClick){
-  // check if cursor is over one of the flowers
-  for (let i = 0; i < allFlowers.length; i++) {
-    if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
-      let data = allFlowers[i].getFlowerData();
-      openFlowerDetailsModal(data);
+  } else if (!deactivateClick) {
+    // check if cursor is over one of the flowers
+    for (let i = 0; i < allFlowers.length; i++) {
+      if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
+        let data = allFlowers[i].getFlowerData();
+        openFlowerDetailsModal(data);
+      }
     }
   }
 }
-}
 
 function emitAddPlantMode() {
-  setTimeout(function() {
+  setTimeout(function () {
     addMode = true;
-  }, 500)
+  }, 500);
   mapboxCanvas.addClass("cursorCrosshair");
   openHelperMessage();
   closeAddModal();
@@ -429,29 +448,22 @@ function waterFlower() {
   let nameString = nameInput.elt.value.trim();
 
   if (!nameString == "") {
+    console.log("Water flower!");
+    let waterThis = {
+      user: nameString,
+      id: currentFlower.id,
+    };
+    socket.emit("waterFlower", waterThis);
 
-        console.log("Water flower!");
-        let waterThis = {
-          user: nameString,
-          id: currentFlower.id,
-        };
-        socket.emit("waterFlower", waterThis);
-
-
-
-            let data = currentFlower;
-            setTimeout(function() {
-              openThankYouModal();
-              closeWaterModal();
-            }, 1000)
-
-
+    let data = currentFlower;
+    setTimeout(function () {
+      openThankYouModal();
+      closeWaterModal();
+    }, 1000);
   } else {
     nameInput.elt.classList.add("border-red-600");
   }
 }
-
-
 
 class Flower {
   constructor(
@@ -479,7 +491,7 @@ class Flower {
   }
 
   display(posX, posY) {
-    if(this.no_water >= 0 && this.no_water <= 3) {
+    if (this.no_water >= 0 && this.no_water <= 3) {
       push();
       image(perfectFlowerImgs[this.type], posX, posY, 20, 20);
       pop();
@@ -494,7 +506,6 @@ class Flower {
       image(badFlowerImgs[this.type], posX, posY, 20, 20);
       pop();
     }
-
   }
 
   isClicked(mousePosX, mousePosY, mapZoom) {
@@ -529,7 +540,7 @@ class Flower {
       dateAdded: this.date,
       watered: this.watered,
       age: this.age,
-      no_water: this.no_water
+      no_water: this.no_water,
     };
     return data;
   }
