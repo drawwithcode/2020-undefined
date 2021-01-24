@@ -8,14 +8,14 @@
 4. [Coding Challenges](#coding-challenges)
 5. [Credits](#credits)
 
-# How to Run
+# :running_woman: How to Run
 See the [demo](https://github.com/drawwithcode/2020-undefined/deployments/activity_log?environment=a-connected-garden) or
 be sure to have node installed: https://nodejs.org/
 * Install node dependencies: `npm install`
 * Run local server: `node app.js`
 * Open: `localhost:3000`
 
-# About the Project
+# :bulb: About the Project
 
 ### Idea
 We live in a world where the majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technological developments entering our lives.
@@ -33,13 +33,13 @@ The website can be used in diverse contexts that are related to the environment.
 * The European Conference of Sustainability, Energy and the Environment
 * Earth Overshoot Day
 
-# Design Challenges
+# :artist: Design Challenges
 
 Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could suit the website. First, we were inspired by the style of old natural science books, which could feel organic and connected to nature (gif/moodboard).
 
 Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics.
 
-# Coding Challenges
+# :technologist: Coding Challenges
 
 ### User Clicks a Flower
 One of the difficulties we encountered is to check if a flower is clicked by the user. Here we have to keep in mind that the the flower's position depends on it's geographic coordinates, not the canvas' pixel coordinates. In order to overcome this issue, we have to convert the mouse X and Y coordinates to `position.lat` (latitude) and the `position.lng` (longitude). We then pass it to the flower class.
@@ -105,7 +105,7 @@ socket.on("waterFlower", function(data) {
 });
 ```
 
-# Credits:
+# :medal_military: Credits:
 
 ##### Team Members
 * [Alia Kaouel](https://github.com/Maariaah)
