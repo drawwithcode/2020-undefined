@@ -42,9 +42,12 @@ Choosing the style that corresponds most to the project has been a little challe
 <img src="public/images/designprocess.gif"/>
 
 Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics to communicate criticism towards outdated idea of planting a flower, which we easily forgot about.
-  <img src="public/images/Screenshot-1.png"/>
+  <img src="public/images/newscreens.gif"/>
+  <img src="public/images/flowers-evolutions.gif"/>
 
 # :technologist: Coding Challenges
+### Architecture map
+<img src="public/images/architecturemap.png"/>
 
 ### User Clicks a Flower
 One of the difficulties we encountered is to check if a flower is clicked by the user. Here we have to keep in mind that the  flower's position depends on it's geographic coordinates, not the canvas' pixel coordinates. In order to overcome this issue, we have to convert the mouse X and Y coordinates to `position.lat` (latitude) and the `position.lng` (longitude). We then pass it to the flower class.
