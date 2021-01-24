@@ -6,7 +6,6 @@
   <meta name="viewport" width="device-width," initial-scale="1.0," maximum-scale="1.0," user-scalable="0" />
   <link rel="stylesheet" href="./css/tailwind.css" />
   <link rel="stylesheet" href="./css/style.css" />
-  <script src="https://kit.fontawesome.com/4f99054617.js" crossorigin="anonymous"></script>
   <script src="p5.min.js"></script>
   <script src="../socket.io/socket.io.js"></script>
   <script src="./mappa.js"></script>
@@ -15,28 +14,24 @@
 
 <body id="body" class="body leading-8 overflow-hidden">
   <div id="presentationMode" class="absolute z-20 left-10 bottom-10 hidden">
-  <p>Presentation Mode: On</p>
-  <p>Days without water offset: <span id="offset">0</span></p>
-</div>
-  <!-- <div id="frame"></div> -->
+    <p>Presentation Mode: On</p>
+    <p>Days without water offset: <span id="offset">0</span></p>
+  </div>
   <!-- BUTTONS -->
   <div class="absolute z-20 top-10 left-10">
-    <button class="relative w-24 h-24 display-block bg-white border-4 border-black mr-4 font-minecraftia shadow"
-      onclick="openAboutModal()" id='about_button'>
+    <button class="relative w-24 h-24 display-block bg-white border-4 border-black mr-4 font-minecraftia shadow" onclick="openAboutModal()" id='about_button'>
       ?
       </br>
       about
     </button>
-    <button class="relative w-24 h-24 display-block bg-green-400 border-4 border-black font-minecraftia shadow"
-      onclick="emitAddPlantMode()" id="add_button">
+    <button class="relative w-24 h-24 display-block bg-green-400 border-4 border-black font-minecraftia shadow" onclick="emitAddPlantMode()" id="add_button">
       +
       </br>
       plant
     </button>
   </div>
   <!-- POPUP ABOUT -->
-  <div id="popup_about"
-    class="absolute left-0 right-0 w-96 z-20 bg-white border-4 border-black mx-auto top-60 hidden">
+  <div id="popup_about" class="absolute left-0 right-0 w-96 z-20 bg-white border-4 border-black mx-auto top-60 hidden">
     <div class="popup_heading flex border-b-4 flex justify-between border-black">
       <h2 class=" p-3 font-nokia text-md text-black">
         Information
@@ -134,82 +129,75 @@
             </button>
           </div>
           <div class="py-6 px-16">
-            <button class="font-nokia text-md px-4 py-3 bg-white border-4 border-black text-black button-shadow"
-              type="button" onclick="submitForm()">
+            <button class="font-nokia text-md px-4 py-3 bg-white border-4 border-black text-black button-shadow" type="button" onclick="submitForm()">
               Submit
             </button>
           </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div id="water_modal" class="absolute w-full flex flex-col h-screen hidden z-30 hidden bg-dots-1">
-  <!-- Auth Card Container -->
-  <div class="grid place-items-center mx-2 my-20 sm:my-auto">
-    <!-- Auth Card -->
-    <div class="w-4/12  bg-yellow-200 border-4 border-black">
+  <div id="water_modal" class="absolute w-full flex flex-col h-screen hidden z-30 hidden bg-dots-1">
+    <!-- Auth Card Container -->
+    <div class="grid place-items-center mx-2 my-20 sm:my-auto">
+      <!-- Auth Card -->
+      <div class="w-4/12  bg-yellow-200 border-4 border-black">
 
-      <!-- Card Title -->
-      <div class="border-b-4 border-black flex justify-between">
-        <h2 id="title" class="flex justify-center p-3 font-nokia text-lg  text-black">
-          Water a flower
-        </h2>
-        <!-- <button class="flex-end p-2" onclick="closeWaterModal()">
-          <img src="images/close.svg" />
-        </button> -->
-      </div>
+        <!-- Card Title -->
+        <div class="border-b-4 border-black flex justify-between">
+          <h2 id="title" class="flex justify-center p-3 font-nokia text-lg  text-black">
+            Water a flower
+          </h2>
+        </div>
 
-      <div id="water-input-form">
-        <form class=" p-5 mt-10">
-          <!-- Name Input -->
-          <label class="block font-minecraftia text-xs font-semibold text-black">My name is:</label>
-          <input name="name" id="water-name" type="text" placeholder="Username" class="font-nokia block w-full py-3 px-1 mt-2 bg-yellow-200
+        <div id="water-input-form">
+          <form class=" p-5 mt-10">
+            <!-- Name Input -->
+            <label class="block font-minecraftia text-xs font-semibold text-black">My name is:</label>
+            <input name="name" id="water-name" type="text" placeholder="Username" class="font-nokia block w-full py-3 px-1 mt-2 bg-yellow-200
                     text-gray-800 appearance-none
                     border-4 border-black
                     focus:text-black focus:outline-none focus:border-yellow-500" required />
 
-          <!-- Auth Buttton -->
-          <button type="button" onClick="waterFlower()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
+            <!-- Auth Buttton -->
+            <button type="button" onClick="waterFlower()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
         font-minecraftia text-black uppercase
         focus:outline-none button-shadow">
-            water
-          </button>
-        </form>
+              water
+            </button>
+          </form>
+        </div>
       </div>
+    </div>
   </div>
-</div>
-</div>
-<div id="thank-you-modal" class="absolute w-full flex flex-col h-screen hidden z-30 hidden bg-dots-1">
-  <!-- Auth Card Container -->
-  <div class="grid place-items-center mx-2 my-20 sm:my-auto">
-    <!-- Auth Card -->
-    <div class="w-4/12  bg-yellow-200 border-4 border-black">
+  <div id="thank-you-modal" class="absolute w-full flex flex-col h-screen hidden z-30 hidden bg-dots-1">
+    <!-- Auth Card Container -->
+    <div class="grid place-items-center mx-2 my-20 sm:my-auto">
+      <!-- Auth Card -->
+      <div class="w-4/12  bg-yellow-200 border-4 border-black">
 
-      <!-- Card Title -->
-      <div class="border-b-4 border-black flex justify-between">
-        <h2 class="flex justify-center p-3 font-nokia text-lg  text-black">
-          Water a flower
-        </h2>
-        <!-- <button class="flex-end p-2" onclick="closeWaterModal()">
-          <img src="images/close.svg" />
-        </button> -->
-      </div>
-      <div>
-        <form class=" p-5 mt-10">
-          <p id="thank-you-message" class="font-minecraftia p-10">Thank you for taking care of this flower.</p>
+        <!-- Card Title -->
+        <div class="border-b-4 border-black flex justify-between">
+          <h2 class="flex justify-center p-3 font-nokia text-lg  text-black">
+            Water a flower
+          </h2>
+        </div>
+        <div>
+          <form class=" p-5 mt-10">
+            <p id="thank-you-message" class="font-minecraftia p-10">Thank you for taking care of this flower.</p>
 
-          <!-- Auth Buttton -->
-          <button type="button" onClick="closeThankYouModal()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
+            <!-- Auth Buttton -->
+            <button type="button" onClick="closeThankYouModal()" class="w-full px-10 py-5  mt-16 bg-white border-4 border-black
         font-minecraftia text-black uppercase
         focus:outline-none button-shadow">
-            ok
-          </button>
-        </form>
-      </div>
+              ok
+            </button>
+          </form>
+        </div>
 
+      </div>
+    </div>
   </div>
-</div>
-</div>
   <!-- POPUP PLANT INFORMATION -->
   <div id="popup_plant_info" class="absolute grid place-items-center z-20 h-screen rinset-y-0 right-0 mr-10 py-10 hidden">
     <div id="plant_info_color" class="w-100 bg-yellow-200 border-4 border-black flex-1 shadow relative">
@@ -257,16 +245,14 @@
           </div>
         </div>
         <div class="py-6 px-16">
-          <button class="font-nokia text-md px-4 py-3 bg-white border-4 border-black text-black button-shadow"
-            type="button"
-            onclick="openWaterModal()">
+          <button class="font-nokia text-md px-4 py-3 bg-white border-4 border-black text-black button-shadow" type="button" onclick="openWaterModal()">
             Water
             this plant
           </button>
         </div>
       </div>
     </div>
-    </div>
+  </div>
 </body>
 
 </html>

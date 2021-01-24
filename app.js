@@ -34,16 +34,11 @@ app.get("/mappa.js", function(req, res) {
   res.sendFile(__dirname + "/node_modules/mappa-mundi/dist/mappa.js");
 });
 
-
-// Following lines can be deleted
-// app.get("/config.js", function(req, res) {
-//     res.sendFile(__dirname + "/config.js");
-// });
-
 // set public directory
 app.use(express.static("public"));
 console.log("Server is running!")
 
+// Enable custom date format
 dayjs.extend(customParseFormat);
 
 // Initialize Firebase
@@ -56,9 +51,7 @@ getFromDatabase();
 io.on("connection", newConnection);
 
 function newConnection(socket) {
-  console.log("Client connected at: " + getDate().time);
-
-
+  console.log("New client connected at: " + getDate().time);
 
   socket.on("firstConnection", function() {
     io.emit("updateFlowers", allFlowers);
@@ -108,6 +101,7 @@ function newConnection(socket) {
   });
 }
 
+// Write data into firestore
 function writeToDatabase(data) {
   console.log("New flower added to database");
   let flower_coordinates = {
@@ -138,6 +132,7 @@ function writeToDatabase(data) {
     })
 }
 
+// Receive data from firestore
 function getFromDatabase() {
   console.log("Receive updated list of flowers!");
   firebase
@@ -192,6 +187,7 @@ function getFromDatabase() {
     });
 }
 
+// Delete entries in firestore
 function deleteInDatabase(data){
   console.log("Delete flower with ID: " + data);
   let id = data
@@ -202,21 +198,19 @@ function deleteInDatabase(data){
     .delete();
 }
 
-
+// Get the current date and time
 function getDate() {
   let now = dayjs();
-  // substract days to test if the difference works
-  let d2 = now.subtract('0', 'day');
   let day = {
-    date: d2.format("DD.MM.YY"),
+    date: now.format("DD.MM.YY"),
     time: now.format("HH:mm:ss")
   }
   return day
 }
 
+// Get the difference of a given date and today
 function getDateDifference(inputDate) {
   let date = dayjs(inputDate, "DD.MM.YY", true);
-  console.log(date);
   let difference = dayjs().diff(date, "day");
   // add a bigger difference for testing
   difference = difference + dateOffset;
