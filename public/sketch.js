@@ -369,7 +369,7 @@ function savePlantChoice(type) {
 }
 
 function submitForm() {
-  playSound(buttonSound);
+  playSound(thankYouSound);
   if (typeof lStorage.type == "number") {
     createFlower();
     closeAddModal();
