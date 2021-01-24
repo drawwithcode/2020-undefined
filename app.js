@@ -60,6 +60,7 @@ function newConnection(socket) {
   socket.on("dayOffset", function(data) {
     dateOffset = data;
     console.log("Date Offset: " + dateOffset);
+    io.emit("updateOffset", dateOffset);
     getFromDatabase();
   });
 

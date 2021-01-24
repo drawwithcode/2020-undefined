@@ -84,6 +84,11 @@ function keyPressed() {
   }
 }
 
+socket.on("updateOffset", function(data) {
+  dayOffset = data;
+  select("#offset").html(dayOffset);
+});
+
 ////////////////////////////////
 /////// Popups Start Here //////
 ////////////////////////////////
