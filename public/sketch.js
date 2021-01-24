@@ -62,9 +62,9 @@ function setup() {
   myMap = mappa.tileMap(mapOptions);
   myMap.overlay(canvas);
   myMap.onChange(drawFlowers);
-  if (presentationMode) {
+  presentationMode &&
     select("#presentationMode").elt.classList.remove("hidden");
-  }
+
   mapboxCanvas = select("#defaultCanvas0");
   imageMode(CENTER);
   // keep emit at the end, so it executes
@@ -195,9 +195,8 @@ function closeThankYouModal() {
 
 function openFlowerDetailsModal(data) {
   let modal = select("#popup_plant_info");
-  if (modal.elt.classList.contains("hidden")) {
+  modal.elt.classList.contains("hidden") &&
     modal.elt.classList.remove("hidden");
-  }
 
   currentFlower = data;
 
@@ -273,11 +272,9 @@ function openFlowerDetailsModal(data) {
   select("#user-location").html(data.userLocation);
   select("#green-level").html(waterNeed);
 
-  if (data.age == null || data.age == 0) {
-    select("#age").html("Planted today");
-  } else {
-    select("#age").html(data.age + " days old");
-  }
+  data.age == null || data.age == 0
+    ? select("#age").html("Planted today")
+    : select("#age").html(data.age + " days old");
 
   let watered = data.watered;
   let participants = select("#gardeners");
@@ -384,7 +381,6 @@ function drawFlowers() {
       typeof coordinates.lat == "number" &&
       typeof coordinates.lng == "number"
     ) {
-      console,log('coordinates', flowerData)
       pos = myMap.latLngToPixel(coordinates.lat, coordinates.lng);
       allFlowers[i].display(pos.x, pos.y);
     }
