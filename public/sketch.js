@@ -233,18 +233,18 @@ switch (data.flowerType) {
   let color = select("#plant_info_color");
   let waterNeed = "";
   if(data.no_water >= 0 && data.no_water <= 3) {
-    waterNeed = "Alive and fresh";
+    waterNeed = "Well watered!";
     color.elt.classList.remove("bg-gray-100");
     color.elt.classList.remove("bg-yellow-100");
     color.elt.classList.add("bg-yellow-200");
 
   } else if (data.no_water >= 4 && data.no_water <= 7) {
-    waterNeed = "It's getting hot";
+    waterNeed = "Could be better!";
     color.elt.classList.remove("bg-gray-100");
     color.elt.classList.remove("bg-yellow-200");
     color.elt.classList.add("bg-yellow-100");
   } else {
-    waterNeed = "Needs water immediately";
+    waterNeed = "Needs water!";
     color.elt.classList.remove("bg-yellow-100");
     color.elt.classList.remove("bg-yellow-200");
     color.elt.classList.add("bg-gray-100");
@@ -255,7 +255,13 @@ switch (data.flowerType) {
   select("#user-name").html(data.userName);
   select("#user-location").html(data.userLocation);
   select("#green-level").html(waterNeed);
-  select("#age").html(data.age + " days old");
+
+  if(data.age == null) {
+    select("#age").html("Planted today");
+  } else {
+    select("#age").html(data.age + " days old");
+  }
+
 
   let watered = data.watered;
   let participants = select("#gardeners");
@@ -474,11 +480,19 @@ class Flower {
 
   display(posX, posY) {
     if(this.no_water >= 0 && this.no_water <= 3) {
+      push();
       image(perfectFlowerImgs[this.type], posX, posY, 20, 20);
+      pop();
     } else if (this.no_water >= 4 && this.no_water <= 7) {
-      image(mediumFlowerImgs[this.type], posX, posY, 15, 15);
+      push();
+      tint(255, 180);
+      image(mediumFlowerImgs[this.type], posX, posY, 20, 20);
+      pop();
     } else {
-      image(badFlowerImgs[this.type], posX, posY, 10, 10);
+      push();
+      tint(255, 80);
+      image(badFlowerImgs[this.type], posX, posY, 20, 20);
+      pop();
     }
 
   }
