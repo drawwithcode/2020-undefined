@@ -67,11 +67,21 @@
 /***** Custom Shadow *****/
 /*************************/
 button.shadow:hover {
-  left: 20px;
-  top: 20px;
+  left: 5px;
+  top: 5px;
 }
 
 button.shadow:hover:before {
+  left: 10px;
+  top: 10px;
+}
+
+button.shadow:active {
+  left: 10px;
+  top: 10px;
+}
+
+button.shadow:active:before {
   left: 0;
   top: 0;
 }
@@ -92,11 +102,15 @@ button.shadow:hover:before {
 
 .button-shadow {
   position: relative;
-  box-shadow: 12px 12px 0 0 black;
+  box-shadow: 10px 10px 0 0 black;
 }
 
 .button-shadow:hover {
-  top: 12px;
-  left: 12px;
+  background-color: #DBD7FB;
+}
+
+.button-shadow:active {
+  top: 10px;
+  left: 10px;
   box-shadow: 0 0 0 0 black;
 }

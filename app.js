@@ -145,6 +145,7 @@ function getFromDatabase() {
       querySnapshot.forEach(function(doc) {
         let deleteData = false;
         if (deleteData) {
+        deleteInDatabase(doc.id);
       } else {
         // compares the date when the flower was added with the current day
         let date_added = doc.data().date_added.date;

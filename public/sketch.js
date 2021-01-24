@@ -27,6 +27,12 @@ let perfectFlowerImgs = [];
 let mediumFlowerImgs = [];
 let badFlowerImgs = [];
 
+//Interaction sounds
+let buttonSound;
+let plantedSound;
+let thankYouSound;
+let waterSound;
+
 // Flowers
 let allFlowers = [];
 let currentFlower;
@@ -42,6 +48,11 @@ let addMode = false;
 let lStorage;
 
 function preload() {
+  buttonSound = loadSound("sounds/button.mp3");
+  plantedSound = loadSound("sounds/planted.wav");
+  thankYouSound = loadSound("sounds/thank_you.wav");
+  waterSound = loadSound("sounds/water.wav");
+  plantClickSound =loadSound("sounds/plant_click.wav");
   for (var i = 0; i < 9; i++) {
     perfectFlowerImgs[i] = loadImage("images/flowerset_1/flower_" + i + ".png");
     mediumFlowerImgs[i] = loadImage("images/flowerset_2/flower_" + i + ".png");
@@ -104,6 +115,7 @@ function openHelperMessage() {
   closeFlowerDetailsModal();
   closeAddModal();
   closeAboutModal();
+  playSound(buttonSound);
 }
 
 function closeHelperMessage() {
@@ -113,6 +125,7 @@ function closeHelperMessage() {
     "border-8",
     "border-green-500"
   );
+  playSound(buttonSound);
   deactivateClick = false;
 }
 
@@ -123,12 +136,14 @@ function openAboutModal() {
   closeFlowerDetailsModal();
   closeAddModal();
   closeHelperMessage();
+  playSound(buttonSound);
 }
 
 function closeAboutModal() {
   let modal = select("#popup_about");
   modal.elt.classList.add("hidden");
   deactivateClick = false;
+  playSound(buttonSound);
 }
 
 function openAddModal() {
@@ -147,6 +162,7 @@ function closeAddModal() {
   let modal = select("#popup_add_plant");
   select("body").elt.classList.remove("preventScroll");
   modal.elt.classList.add("hidden");
+  playSound(buttonSound);
   setTimeout(function () {
     deactivateClick = false;
   }, 1000);
@@ -157,6 +173,7 @@ function openWaterModal() {
   let modal = select("#water_modal");
   modal.elt.classList.remove("hidden");
   let data = currentFlower;
+  playSound(waterSound);
   select("#title").html("Water " + data.flowerName);
   closeFlowerDetailsModal();
 }
@@ -164,6 +181,7 @@ function openWaterModal() {
 function closeWaterModal() {
   let modal = select("#water_modal");
   modal.elt.classList.add("hidden");
+  playSound(buttonSound);
 }
 
 function openThankYouModal() {
@@ -176,11 +194,13 @@ function openThankYouModal() {
       currentFlower.userName +
       "'s</span> flower."
   );
+  playSound(thankYouSound);
 }
 
 function closeThankYouModal() {
   let modal = select("#thank-you-modal");
   modal.elt.classList.add("hidden");
+  playSound(buttonSound);
   for (let i = 0; i < allFlowers.length; i++) {
     if (allFlowers[i].id == currentFlower.id) {
       let data = allFlowers[i].getFlowerData();
@@ -299,6 +319,7 @@ function openFlowerDetailsModal(data) {
 function closeFlowerDetailsModal() {
   let modal = select("#popup_plant_info");
   modal.elt.classList.add("hidden");
+  playSound(buttonSound);
 }
 
 function nextButton() {
@@ -310,6 +331,8 @@ function nextButton() {
   let nameString = nameInput.elt.value.trim();
   let locationString = locationInput.elt.value.trim();
   let flowerNameString = flowerName.elt.value.trim();
+
+  playSound(buttonSound);
 
   if (!nameString == "") {
     if (!locationString == "") {
@@ -342,16 +365,27 @@ function savePlantChoice(type) {
       ? descriptions[type].classList.remove("hidden")
       : descriptions[i].classList.add("hidden");
   }
+  playSound(buttonSound);
 }
 
 function submitForm() {
+  playSound(buttonSound);
   if (typeof lStorage.type == "number") {
     createFlower();
     closeAddModal();
     select("#flower-selection").elt.classList.add("hidden");
+    lStorage = {};
   } else {
     select("#selection-label").elt.classList.add("text-red-600");
   }
+}
+
+////////////////////////////////
+// Sound Interaction Start Here /
+////////////////////////////////
+
+function playSound(sound) {
+    sound.play();
 }
 
 ////////////////////////////////
@@ -425,6 +459,7 @@ function mouseClicked() {
     for (let i = 0; i < allFlowers.length; i++) {
       if (allFlowers[i].isClicked(position.lat, position.lng, mapZoom)) {
         let data = allFlowers[i].getFlowerData();
+        playSound(plantClickSound);
         openFlowerDetailsModal(data);
       }
     }
@@ -432,6 +467,7 @@ function mouseClicked() {
 }
 
 function emitAddPlantMode() {
+  playSound(buttonSound);
   setTimeout(function () {
     addMode = true;
   }, 500);
@@ -456,6 +492,7 @@ function mouseMoved() {
 function waterFlower() {
   let nameInput = select("#water-name");
   let nameString = nameInput.elt.value.trim();
+  playSound(waterSound);
 
   if (!nameString == "") {
     let waterThis = {
