@@ -76,11 +76,13 @@ function keyPressed() {
   if (presentationMode) {
     if (keyCode === LEFT_ARROW) {
       dayOffset--;
+      socket.emit("dayOffset", dayOffset);
+      select("#offset").html(dayOffset);
     } else if (keyCode === RIGHT_ARROW) {
       dayOffset++;
+      socket.emit("dayOffset", dayOffset);
+      select("#offset").html(dayOffset);
     }
-    socket.emit("dayOffset", dayOffset);
-    select("#offset").html(dayOffset);
   }
 }
 
@@ -414,17 +416,6 @@ socket.on("updateFlowers", function (data) {
 function mouseClicked() {
   const mapZoom = myMap.zoom();
   const position = myMap.pixelToLatLng(mouseX, mouseY);
-
-  // const currentTarget = event.target;
-  // let aboutButton = document.getElementById("about_button");
-  // let addButton = document.getElementById("add_button");
-
-  //if clicked outside if about popup, close it
-  // if (aboutPopup !== currentTarget) {
-  //   toggleAboutModal(false);
-  // }
-
-  // check if add mode is on and if not clicked to any of buttons
   if (addMode) {
     deactivateClick = true;
     addMode = false;

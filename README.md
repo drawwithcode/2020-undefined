@@ -15,6 +15,9 @@ be sure to have node installed: https://nodejs.org/
 * Run local server: `node app.js`
 * Open: `localhost:3000`
 
+### Presentation Mode
+*A Connected Garden* comes with a presentation mode to imitate passing of time by using the arrow keys. This is helpful to demonstrate time relevant features, such as the aging of a flower. The feature can be enabled by setting `presentationMode = true;`
+
 # :bulb: About the Project
 
 ### Idea
