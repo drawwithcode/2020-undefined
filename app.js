@@ -158,6 +158,7 @@ function getFromDatabase() {
         if (Array.isArray(wateredList)) {
           let lastWatered = wateredList[wateredList.length - 1];
           noWaterDays = getDateDifference(lastWatered.date.date);
+          console.log(noWaterDays);
         } else {
           noWaterDays = getDateDifference(date_added);
         }
@@ -200,8 +201,9 @@ function deleteInDatabase(data){
 // Get the current date and time
 function getDate() {
   let now = dayjs();
+  let d2 = now.subtract(dateOffset, "day");
   let day = {
-    date: now.format("DD.MM.YY"),
+    date: d2.format("DD.MM.YY"),
     time: now.format("HH:mm:ss")
   }
   return day
@@ -212,6 +214,6 @@ function getDateDifference(inputDate) {
   let date = dayjs(inputDate, "DD.MM.YY", true);
   let difference = dayjs().diff(date, "day");
   // add a bigger difference for testing
-  difference = difference + dateOffset;
+  difference = difference;
   return difference
 }
