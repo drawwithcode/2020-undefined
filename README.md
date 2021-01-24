@@ -42,7 +42,7 @@ But most importantly “Connected Gardens” can be found in specific environmen
 -Earth Overshoot Day <br>
 
 # Design Challenges
-*Style & colors <br>
+
 Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could fit the website. <br>
 First, we were inspired by an old-style, that could feel more organic and connected to nature (gif/moodboard).<br>
 But what was missing, is for it to look more digital and virtual. The players are indeed planting flowers, but we wanted to accentuate more that these were just numerical ones. At the same time, we wanted a style that could be fun and eye-catching for the player. <br>
