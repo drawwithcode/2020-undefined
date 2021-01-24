@@ -18,7 +18,7 @@ be sure to have node installed: https://nodejs.org/
 # About the Project
 
 ### Idea
-We live in a world where majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technology development entering our lives. <br>
+We live in a world where the majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technology development entering our lives. <br>
 Every action needs a first step, and sometimes we forget how easy it is to just plant a seed that will later have an impact in our lives especially if everyone does the same.
 This is the idea behind Connected gardens, it is the first step showing how easy it to make Milan more green, just by simple interactions.
 
