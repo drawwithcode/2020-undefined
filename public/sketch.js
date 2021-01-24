@@ -167,7 +167,7 @@ function openThankYouModal() {
   let text = select("#thank-you-message");
   modal.elt.classList.remove("hidden");
   text.html(
-    "Thank you for taking care of <span class = 'font-black text-red-500'>" +
+    "Thank you for taking care of <span class = 'font-black text-purple-100'>" +
       currentFlower.userName +
       "'s</span> flower."
   );
