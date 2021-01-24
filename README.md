@@ -19,7 +19,7 @@ be sure to have node installed: https://nodejs.org/
 
 ### Idea
 We live in a world where the majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technological developments entering our lives.
-Every action needs a first step, and sometimes we forget how easy it is to just plant a seed that will later have an impact.
+We tend to run away form the feeling of responsibility towards environmental maintenance. Ofcaurse, every action needs a first step, but we sometimes forget how easy and simple it is to just plant a seed that will later have an impact.
 This is the idea behind Connected gardens, it is the first step showing how easy it to make Milan more green, just by simple interactions.
 
 ### Goals
@@ -37,7 +37,7 @@ The website can be used in diverse contexts that are related to the environment.
 
 Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could suit the website. First, we were inspired by the style of old natural science books, which could feel organic and connected to nature (gif/moodboard).
 
-Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics.
+Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics to communicate criticism towards outdated idea of planting a flower, which we easily forgot about.
 
 # :technologist: Coding Challenges
 
