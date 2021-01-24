@@ -227,13 +227,24 @@ switch (data.flowerType) {
     break;
 }
 
+  let color = select("#plant_info_color");
   let waterNeed = "";
   if(data.no_water >= 0 && data.no_water <= 3) {
     waterNeed = "Alive and fresh";
+    color.elt.classList.remove("bg-gray-100");
+    color.elt.classList.remove("bg-yellow-100");
+    color.elt.classList.add("bg-yellow-200");
+
   } else if (data.no_water >= 4 && data.no_water <= 7) {
     waterNeed = "It's getting hot";
+    color.elt.classList.remove("bg-gray-100");
+    color.elt.classList.remove("bg-yellow-200");
+    color.elt.classList.add("bg-yellow-100");
   } else {
     waterNeed = "Needs water immediately";
+    color.elt.classList.remove("bg-yellow-100");
+    color.elt.classList.remove("bg-yellow-200");
+    color.elt.classList.add("bg-gray-100");
   }
 
   select("#plant-name").html(data.flowerName);
