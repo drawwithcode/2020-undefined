@@ -326,9 +326,10 @@ function nextButton() {
 }
 
 function savePlantChoice(type) {
+  console.log('kurac')
+
   lStorage.type = type;
   const descriptions = document.getElementsByClassName("flower_descriptions");
-  console.log('kurac')
   for (let i = 0; i < descriptions.length; i++) {
     i === type
       ? descriptions[type].classList.remove("hidden")
