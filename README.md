@@ -25,6 +25,9 @@ We live in a world where the majority of people pollute everyday, but almost nev
 We tend to run away from the feeling of responsibility towards environmental maintenance. Of course, every action needs a first step, but we sometimes forget how easy and simple it is to just plant a seed that will later have an impact.
 This is the idea behind *A Connected Garden*, it is the first step showing how easy it to make Milan more green, just by simple interactions.
 
+We choose city of Milan because that's the place where we all met. We all have a connection to it. Moreover, in the moment when we all started Politecnico there, Milan was  second on the list of the most polluted cities in Europe. 
+So we got inspired to make a change here and now. Ofcaurse, as a future vision, there can be a list of cities in hierarchical order by pollution level where you choose to plant.
+
 ### Idea 
 *A Connected Garden* is a collaborative experience which aims to spread the thought about a more green city. Moreover, it shows how easy it is to make a change by collaborating with each other, and taking care of each other’s creations.
 Visitors can plant endangered flowers from a list of endangered plant speices and learn about them. Each flower has a lifetime duration and has to be watered *(taken care of)*. If the plant is not maintained after a certain amount time, it will change its appearance and eventually completely disappear.
@@ -43,6 +46,8 @@ Choosing the style that corresponds most to the project has been a little challe
 
 Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics to communicate criticism towards "outdated idea" of planting a flower.
   <img src="public/images/newscreens.gif"/>
+  
+  
   <img src="public/images/flowers-evolutions.gif"/>
 
 # :technologist: Coding Challenges
