@@ -20,12 +20,12 @@ be sure to have node installed: https://nodejs.org/
 
 # :bulb: About the Project
 
-### Idea
+### Goals
 We live in a world where the majority of people pollute everyday, but almost never plant a flower. The connection with nature is getting lost with all these technological developments entering our lives.
 We tend to run away from the feeling of responsibility towards environmental maintenance. Of course, every action needs a first step, but we sometimes forget how easy and simple it is to just plant a seed that will later have an impact.
 This is the idea behind *A Connected Garden*, it is the first step showing how easy it to make Milan more green, just by simple interactions.
 
-### Goals
+### Idea 
 *A Connected Garden* is a collaborative experience which aims to spread the thought about a more green city. Moreover, it shows how easy it is to make a change by collaborating with each other, and taking care of each other’s creations.
 Visitors can plant endangered flowers from a list and read information about them. Each flower has a lifetime duration and has to be watered *(taken care of)*. If the plant is not maintained after a certain amount time, it will change its appearance and eventually completely disappear.
 
@@ -41,7 +41,7 @@ The website can be used in diverse contexts that are related to the environment.
 Choosing the style that corresponds most to the project has been a little challenging. Throughout the design process, we tried different styles that could suit the website. First, we were inspired by the style of old natural science books, which could feel organic and connected to nature .
 <img src="public/images/designprocess.gif"/>
 
-Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics to communicate criticism towards outdated idea of planting a flower, which we easily forgot about.
+Nevertheless, we were missing the digital, technological component. The players are indeed planting flowers, but we wanted to underline that these were not real ones. At the same time, we wanted a style that could be fun and eye-catching for the visitor. In the end, we opted for a vintage look, feeling like the 90’s computer programs, with pixelated graphics to communicate criticism towards "outdated idea" of planting a flower.
   <img src="public/images/newscreens.gif"/>
   <img src="public/images/flowers-evolutions.gif"/>
 
