@@ -27,7 +27,7 @@ This is the idea behind *A Connected Garden*, it is the first step showing how e
 
 ### Idea 
 *A Connected Garden* is a collaborative experience which aims to spread the thought about a more green city. Moreover, it shows how easy it is to make a change by collaborating with each other, and taking care of each other’s creations.
-Visitors can plant endangered flowers from a list and read information about them. Each flower has a lifetime duration and has to be watered *(taken care of)*. If the plant is not maintained after a certain amount time, it will change its appearance and eventually completely disappear.
+Visitors can plant endangered flowers from a list of endangered plant speices and learn about them. Each flower has a lifetime duration and has to be watered *(taken care of)*. If the plant is not maintained after a certain amount time, it will change its appearance and eventually completely disappear.
 
 ### Context
 The website can be used in diverse contexts that are related to the environment. Therefore, it is accessible in daily life through computer and smartphone, to make it at the disposal of people. The website can also be used to promote environmental organizations or projects to incite people to donate or take other actions. However, most importantly *A Connected Garden* can be found in specific environmental related events like conferences or expositions, such as:  <br>
@@ -112,6 +112,10 @@ socket.on("waterFlower", function(data) {
 
 });
 ```
+
+### Space for improvments
+
+As there is a few relatively small images, they are currently in the images/ directory. However, if the number of offered flowers should increase, storing them in Firebase storage would be a better option.
 
 # :medal_military: Credits:
 
