@@ -1,5 +1,5 @@
 // Toggle presentation mode here
-let presentationMode = true;
+let presentationMode = false;
 
 // Map options
 let mapboxCanvas;
